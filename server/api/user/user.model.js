@@ -21,7 +21,7 @@ var UserSchema = new Schema({
     required: true
   },
   provider: String,
-  friends: [{type: Schema.Types.ObjectId, ref: 'User'}],
+  friends: [{type: String}],
   salt: String
 });
 

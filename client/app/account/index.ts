@@ -7,13 +7,15 @@ import routing from './account.routes';
 import login from './login';
 import settings from './settings';
 import signup from './signup';
+import friend from './friends';
 
 
 export default angular.module('projectTestApp.account', [
     uiRouter,
     login,
     settings,
-    signup
+    signup,
+    friend,
 ])
     .config(routing)
 

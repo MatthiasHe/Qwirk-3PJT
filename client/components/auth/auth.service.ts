@@ -206,7 +206,19 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
      */
     getToken() {
       return $cookies.get('token');
+    },
+
+    searchFriend(nickname) {
+      return User.searchFriend({}, {nickname});
+    },
+
+    addFriend(nickname) {
+      User.addFriend({ id: currentUser._id }, {nickname});
+        // .then(response =>  {
+        //   return response.data;
+        // });
     }
+
   };
 
   return Auth;

@@ -115,6 +115,36 @@ export function me(req, res, next) {
 }
 
 /**
+ * Add a friend
+ */
+export function addFriend(req, res) {
+  var userId = req.user._id;
+  var newFriendId = req.body.idFriend;
+
+  return User.findById(userId).exec()
+    .then(user => {
+      user.update({_id: userId}, {$push: {friends: newFriendId}});
+  });
+}
+
+export function searchFriend(req, res) {
+  console.log('ICI');
+  var results;
+  var name = req.body.nickname;
+  console.log(name);
+  User.find({name: new RegExp('^' + name)}).exec()
+    .then(response => {
+      results = response;
+      console.log(results);
+      return res.json(results);
+  });
+/*  User.find({name: `/^${name}/`}).exec()
+    .then(response => {
+      console.log(res.json(response));
+  });*/
+}
+
+/**
  * Authentication callback
  */
 export function authCallback(req, res) {

@@ -46,9 +46,10 @@ export default function seedDatabaseIfNeeded() {
 
     User.find({}).remove()
       .then(() => {
+        console.log('seeeeeed OK');
         User.create({
           provider: 'local',
-          name: 'Test User',
+          name: 'matt',
           email: 'test@example.com',
           password: 'test'
         }, {

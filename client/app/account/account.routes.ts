@@ -34,6 +34,13 @@ export default function routes($stateProvider) {
         controller: 'SettingsController',
         controllerAs: 'vm',
         authenticate: true
+      })
+      .state('addFriend', {
+        url: '/addfriend',
+        template: require('./friends/friend.html'),
+        controller: 'FriendCtrl',
+        controllerAs: 'friendCtrl',
+        authenticate: true
       });
 }
 

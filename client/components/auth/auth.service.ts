@@ -212,8 +212,8 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
       return User.searchFriend({}, {nickname});
     },
 
-    addFriend(idFriend) {
-      User.addFriend({ id: currentUser._id }, {idFriend});
+    addFriend(nickname) {
+      User.addFriend({ id: currentUser._id }, {nickname});
         // .then(response =>  {
         //   return response.data;
         // });

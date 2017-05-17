@@ -119,12 +119,16 @@ export function me(req, res, next) {
  */
 export function addFriend(req, res) {
   var userId = req.user._id;
-  var newFriendId = req.body.idFriend;
+  var name = req.body.nickname;
+  var newFriendId;
 
-  return User.findById(userId).exec()
-    .then(user => {
-      user.update({_id: userId}, {$push: {friends: newFriendId}});
-  });
+  User.find({name: new RegExp('^' + name)}).exec()
+    .then(response => {
+      var results = response;
+      newFriendId = results[0]._id.toString();
+      console.log(newFriendId);
+      return User.findByIdAndUpdate(userId, {$push: {friends: newFriendId}});
+    });
 }
 
 export function searchFriend(req, res) {
@@ -135,7 +139,7 @@ export function searchFriend(req, res) {
   User.find({name: new RegExp('^' + name)}).exec()
     .then(response => {
       results = response;
-      console.log(results);
+      console.log(results[0]._id);
       return res.json(results);
   });
 /*  User.find({name: `/^${name}/`}).exec()

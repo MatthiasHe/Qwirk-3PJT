@@ -22,12 +22,7 @@ export default class FriendsCtrl {
   addFriend() {
     this.submitted = true;
     console.log(this.nickname);
-    console.log(this.searchFriend(this.nickname));
-/*      this.$http.get('/api/users/me').then(response => {
-        this.data = response.data;
-      });
-      console.log(this.data);*/
-    // this.Auth.addFriend('196e793466a91f927d69db');
+    this.Auth.addFriend(this.nickname);
   }
 
   searchFriend(nickname) {

@@ -23,7 +23,7 @@ import main from './main/main.component';
 import constants from './app.constants';
 import util from '../components/util/util.module';
 import socket from '../components/socket/socket.service';
-import chat from './chat';
+import room from './room';
 
 
 
@@ -48,7 +48,7 @@ angular.module('projectTestApp', [
   constants,
   socket,
   util,
-  chat
+  room
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

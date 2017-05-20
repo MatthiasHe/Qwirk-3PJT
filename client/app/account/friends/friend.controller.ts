@@ -19,6 +19,11 @@ export default class FriendsCtrl {
     this.Auth = Auth;
   }
 
+  $onInit() {
+    this.Auth.addFriend('matt');
+    this.Auth.addFriend('jean');
+  }
+
   addFriend() {
     this.submitted = true;
     console.log(this.nickname);

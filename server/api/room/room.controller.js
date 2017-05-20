@@ -1,17 +1,20 @@
+/* eslint-disable no-unused-vars,no-duplicate-imports */
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/privates              ->  index
- * POST    /api/privates              ->  create
- * GET     /api/privates/:id          ->  show
- * PUT     /api/privates/:id          ->  upsert
- * PATCH   /api/privates/:id          ->  patch
- * DELETE  /api/privates/:id          ->  destroy
+ * GET     /api/rooms              ->  index
+ * POST    /api/rooms              ->  create
+ * GET     /api/rooms/:id          ->  show
+ * PUT     /api/rooms/:id          ->  upsert
+ * PATCH   /api/rooms/:id          ->  patch
+ * DELETE  /api/rooms/:id          ->  destroy
  */
 
 'use strict';
 
 import jsonpatch from 'fast-json-patch';
-import Private from './private.model';
+import Room from './room.model';
+import {Message} from './room.model';
+
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -63,54 +66,54 @@ function handleError(res, statusCode) {
   };
 }
 
-// Gets a list of Privates
+// Gets a list of Rooms
 export function index(req, res) {
-  return Private.find().exec()
+  return Room.find().exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Gets a single Private from the DB
+// Gets a single Room from the DB
 export function show(req, res) {
-  return Private.findById(req.params.id).exec()
+  return Room.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Creates a new Private in the DB
+// Creates a new Room in the DB
 export function create(req, res) {
-  return Private.create(req.body)
+  return Room.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
 
-// Upserts the given Private in the DB at the specified ID
+// Upserts the given Room in the DB at the specified ID
 export function upsert(req, res) {
   if(req.body._id) {
     delete req.body._id;
   }
-  return Private.findOneAndUpdate({_id: req.params.id}, req.body, {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
+  return Room.findOneAndUpdate({_id: req.params.id}, req.body, {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
 
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Updates an existing Private in the DB
+// Updates an existing Room in the DB
 export function patch(req, res) {
   if(req.body._id) {
     delete req.body._id;
   }
-  return Private.findById(req.params.id).exec()
+  return Room.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(patchUpdates(req.body))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Deletes a Private from the DB
+// Deletes a Room from the DB
 export function destroy(req, res) {
-  return Private.findById(req.params.id).exec()
+  return Room.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));

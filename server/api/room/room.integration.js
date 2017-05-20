@@ -5,38 +5,38 @@
 var app = require('../..');
 import request from 'supertest';
 
-var newChat;
+var newRoom;
 
-describe('Chat API:', function() {
-  describe('GET /api/chats', function() {
-    var chats;
+describe('Room API:', function() {
+  describe('GET /api/rooms', function() {
+    var rooms;
 
     beforeEach(function(done) {
       request(app)
-        .get('/api/chats')
+        .get('/api/rooms')
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
           if(err) {
             return done(err);
           }
-          chats = res.body;
+          rooms = res.body;
           done();
         });
     });
 
     it('should respond with JSON array', function() {
-      chats.should.be.instanceOf(Array);
+      rooms.should.be.instanceOf(Array);
     });
   });
 
-  describe('POST /api/chats', function() {
+  describe('POST /api/rooms', function() {
     beforeEach(function(done) {
       request(app)
-        .post('/api/chats')
+        .post('/api/rooms')
         .send({
-          name: 'New Chat',
-          info: 'This is the brand new chat!!!'
+          name: 'New Room',
+          info: 'This is the brand new room!!!'
         })
         .expect(201)
         .expect('Content-Type', /json/)
@@ -44,53 +44,53 @@ describe('Chat API:', function() {
           if(err) {
             return done(err);
           }
-          newChat = res.body;
+          newRoom = res.body;
           done();
         });
     });
 
-    it('should respond with the newly created chat', function() {
-      newChat.name.should.equal('New Chat');
-      newChat.info.should.equal('This is the brand new chat!!!');
+    it('should respond with the newly created room', function() {
+      newRoom.name.should.equal('New Room');
+      newRoom.info.should.equal('This is the brand new room!!!');
     });
   });
 
-  describe('GET /api/chats/:id', function() {
-    var chat;
+  describe('GET /api/rooms/:id', function() {
+    var room;
 
     beforeEach(function(done) {
       request(app)
-        .get(`/api/chats/${newChat._id}`)
+        .get(`/api/rooms/${newRoom._id}`)
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
           if(err) {
             return done(err);
           }
-          chat = res.body;
+          room = res.body;
           done();
         });
     });
 
     afterEach(function() {
-      chat = {};
+      room = {};
     });
 
-    it('should respond with the requested chat', function() {
-      chat.name.should.equal('New Chat');
-      chat.info.should.equal('This is the brand new chat!!!');
+    it('should respond with the requested room', function() {
+      room.name.should.equal('New Room');
+      room.info.should.equal('This is the brand new room!!!');
     });
   });
 
-  describe('PUT /api/chats/:id', function() {
-    var updatedChat;
+  describe('PUT /api/rooms/:id', function() {
+    var updatedRoom;
 
     beforeEach(function(done) {
       request(app)
-        .put(`/api/chats/${newChat._id}`)
+        .put(`/api/rooms/${newRoom._id}`)
         .send({
-          name: 'Updated Chat',
-          info: 'This is the updated chat!!!'
+          name: 'Updated Room',
+          info: 'This is the updated room!!!'
         })
         .expect(200)
         .expect('Content-Type', /json/)
@@ -98,48 +98,48 @@ describe('Chat API:', function() {
           if(err) {
             return done(err);
           }
-          updatedChat = res.body;
+          updatedRoom = res.body;
           done();
         });
     });
 
     afterEach(function() {
-      updatedChat = {};
+      updatedRoom = {};
     });
 
-    it('should respond with the updated chat', function() {
-      updatedChat.name.should.equal('Updated Chat');
-      updatedChat.info.should.equal('This is the updated chat!!!');
+    it('should respond with the updated room', function() {
+      updatedRoom.name.should.equal('Updated Room');
+      updatedRoom.info.should.equal('This is the updated room!!!');
     });
 
-    it('should respond with the updated chat on a subsequent GET', function(done) {
+    it('should respond with the updated room on a subsequent GET', function(done) {
       request(app)
-        .get(`/api/chats/${newChat._id}`)
+        .get(`/api/rooms/${newRoom._id}`)
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
           if(err) {
             return done(err);
           }
-          let chat = res.body;
+          let room = res.body;
 
-          chat.name.should.equal('Updated Chat');
-          chat.info.should.equal('This is the updated chat!!!');
+          room.name.should.equal('Updated Room');
+          room.info.should.equal('This is the updated room!!!');
 
           done();
         });
     });
   });
 
-  describe('PATCH /api/chats/:id', function() {
-    var patchedChat;
+  describe('PATCH /api/rooms/:id', function() {
+    var patchedRoom;
 
     beforeEach(function(done) {
       request(app)
-        .patch(`/api/chats/${newChat._id}`)
+        .patch(`/api/rooms/${newRoom._id}`)
         .send([
-          { op: 'replace', path: '/name', value: 'Patched Chat' },
-          { op: 'replace', path: '/info', value: 'This is the patched chat!!!' }
+          { op: 'replace', path: '/name', value: 'Patched Room' },
+          { op: 'replace', path: '/info', value: 'This is the patched room!!!' }
         ])
         .expect(200)
         .expect('Content-Type', /json/)
@@ -147,25 +147,25 @@ describe('Chat API:', function() {
           if(err) {
             return done(err);
           }
-          patchedChat = res.body;
+          patchedRoom = res.body;
           done();
         });
     });
 
     afterEach(function() {
-      patchedChat = {};
+      patchedRoom = {};
     });
 
-    it('should respond with the patched chat', function() {
-      patchedChat.name.should.equal('Patched Chat');
-      patchedChat.info.should.equal('This is the patched chat!!!');
+    it('should respond with the patched room', function() {
+      patchedRoom.name.should.equal('Patched Room');
+      patchedRoom.info.should.equal('This is the patched room!!!');
     });
   });
 
-  describe('DELETE /api/chats/:id', function() {
+  describe('DELETE /api/rooms/:id', function() {
     it('should respond with 204 on successful removal', function(done) {
       request(app)
-        .delete(`/api/chats/${newChat._id}`)
+        .delete(`/api/rooms/${newRoom._id}`)
         .expect(204)
         .end(err => {
           if(err) {
@@ -175,9 +175,9 @@ describe('Chat API:', function() {
         });
     });
 
-    it('should respond with 404 when chat does not exist', function(done) {
+    it('should respond with 404 when room does not exist', function(done) {
       request(app)
-        .delete(`/api/chats/${newChat._id}`)
+        .delete(`/api/rooms/${newRoom._id}`)
         .expect(404)
         .end(err => {
           if(err) {

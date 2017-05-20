@@ -21,7 +21,7 @@ var UserSchema = new Schema({
     required: true
   },
   provider: String,
-  friends: [{type: String}],
+  friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
   salt: String
 });
 

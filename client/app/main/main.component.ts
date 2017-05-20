@@ -7,11 +7,14 @@ export class MainController {
   socket;
   awesomeThings = [];
   newThing = '';
+  Auth;
+  friends = [];
 
   /*@ngInject*/
-  constructor($http, $scope, socket) {
+  constructor($http, $scope, socket, Auth) {
     this.$http = $http;
     this.socket = socket;
+    this.Auth = Auth;
 
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('thing');
@@ -23,6 +26,12 @@ export class MainController {
       this.awesomeThings = response.data;
       this.socket.syncUpdates('thing', this.awesomeThings);
     });
+
+    this.Auth.getFriends().$promise
+      .then(response => {
+        this.friends = response;
+        console.log(this.friends);
+      });
   }
 
   addThing() {

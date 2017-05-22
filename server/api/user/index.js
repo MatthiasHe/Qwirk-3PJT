@@ -14,5 +14,6 @@ router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', controller.create);
 router.put('/:id/addfriend', auth.isAuthenticated(), controller.addFriend);
 router.post('/searchfriend', auth.isAuthenticated(), controller.searchFriend);
+router.get('/:id/getfriends', auth.isAuthenticated(), controller.getFriends);
 
 module.exports = router;

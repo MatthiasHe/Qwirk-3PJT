@@ -24,6 +24,13 @@ export function UserResource($resource) {
       },
       isArray: true
     },
+    getFriends: {
+      method: 'GET',
+      params: {
+        controller: 'getfriends'
+      },
+      isArray: true
+    },
     get: {
       method: 'GET',
       params: {

@@ -125,8 +125,10 @@ export function addFriend(req, res) {
   User.find({name: new RegExp('^' + name)}).exec()
     .then(response => {
       var results = response;
-      newFriendId = results[0]._id.toString();
+      newFriendId = results[0]._id;
       console.log(newFriendId);
+      User.findByIdAndUpdate(newFriendId, {$push: {friends: userId}}).then( newresponse => {
+      });
       return User.findByIdAndUpdate(userId, {$push: {friends: newFriendId}});
     });
 }
@@ -142,12 +144,21 @@ export function searchFriend(req, res) {
       console.log(results[0]._id);
       return res.json(results);
   });
-/*  User.find({name: `/^${name}/`}).exec()
-    .then(response => {
-      console.log(res.json(response));
-  });*/
 }
 
+export function getFriends(req, res) {
+  var userId = req.user._id;
+  console.log('USEEEEEEER = ' + userId);
+  User.find({friends: userId}).exec()
+    .then(users => { // don't ever give out the password or salt
+      console.log('USEEEEEEER = ' + users);
+      if(!users) {
+        return res.status(401).end();
+      }
+      return res.json(users);
+    })
+    .catch(err => next(err));
+}
 /**
  * Authentication callback
  */

@@ -1,17 +1,20 @@
+/* eslint-disable no-unused-vars,no-duplicate-imports */
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/chats              ->  index
- * POST    /api/chats              ->  create
- * GET     /api/chats/:id          ->  show
- * PUT     /api/chats/:id          ->  upsert
- * PATCH   /api/chats/:id          ->  patch
- * DELETE  /api/chats/:id          ->  destroy
+ * GET     /api/rooms              ->  index
+ * POST    /api/rooms              ->  create
+ * GET     /api/rooms/:id          ->  show
+ * PUT     /api/rooms/:id          ->  upsert
+ * PATCH   /api/rooms/:id          ->  patch
+ * DELETE  /api/rooms/:id          ->  destroy
  */
 
 'use strict';
 
 import jsonpatch from 'fast-json-patch';
-import Chat from './chat.model';
+import Room from './room.model';
+import {Message} from './room.model';
+
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -63,54 +66,54 @@ function handleError(res, statusCode) {
   };
 }
 
-// Gets a list of Chats
+// Gets a list of Rooms
 export function index(req, res) {
-  return Chat.find().exec()
+  return Room.find().exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Gets a single Chat from the DB
+// Gets a single Room from the DB
 export function show(req, res) {
-  return Chat.findById(req.params.id).exec()
+  return Room.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Creates a new Chat in the DB
+// Creates a new Room in the DB
 export function create(req, res) {
-  return Chat.create(req.body)
+  return Room.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
 
-// Upserts the given Chat in the DB at the specified ID
+// Upserts the given Room in the DB at the specified ID
 export function upsert(req, res) {
   if(req.body._id) {
     delete req.body._id;
   }
-  return Chat.findOneAndUpdate({_id: req.params.id}, req.body, {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
+  return Room.findOneAndUpdate({_id: req.params.id}, req.body, {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
 
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Updates an existing Chat in the DB
+// Updates an existing Room in the DB
 export function patch(req, res) {
   if(req.body._id) {
     delete req.body._id;
   }
-  return Chat.findById(req.params.id).exec()
+  return Room.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(patchUpdates(req.body))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Deletes a Chat from the DB
+// Deletes a Room from the DB
 export function destroy(req, res) {
-  return Chat.findById(req.params.id).exec()
+  return Room.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));

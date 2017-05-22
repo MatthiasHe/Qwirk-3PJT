@@ -1,6 +1,6 @@
 'use strict';
 
-export default class ChatCtrl {
+export default class RoomCtrl {
   message: string;
 
   /*@ngInject*/

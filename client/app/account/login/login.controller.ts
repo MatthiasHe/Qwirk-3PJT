@@ -33,7 +33,7 @@ export default class LoginController {
       })
       .then(() => {
         // Logged in, redirect to home
-        this.$state.go('chat');
+        this.$state.go('addFriend');
       })
       .catch(err => {
         this.errors.login = err.message;

@@ -5,6 +5,27 @@
     </div>
     <div class="col-sm-12">
       <form class="form" name="form" ng-submit="friendCtrl.addFriend()" novalidate>
+        <md-autocomplete md-selected-item="friendCtrl.selectedItem" md-search-text="friendCtrl.searchText" md-items="item in friendCtrl.querySearch(friendCtrl.searchText)" md-item-text="item.display">
+        </md-autocomplete>
+
+
+<!--        <md-autocomplete
+          ng-disabled="friendCtrl.isDisabled"
+          md-no-cache="friendCtrl.noCache"
+          md-selected-item="friendCtrl.selectedItem"gulp
+          md-search-text-change="friendCtrl.searchTextChange(ctrl.searchText)"
+          md-search-text="friendCtrl.searchText"
+          md-selected-item-change="friendCtrl.selectedItemChange(item)"
+          md-items="item in friendCtrl.querySearch(ctrl.searchText)"
+          md-min-length="0"
+          placeholder="What is your favorite US state?">
+          <md-item-template>
+            <span md-highlight-text="friendCtrl.searchText"</span>
+          </md-item-template>
+          <md-not-found>
+            No states matching "{{friendCtrl.searchText}}" were found.
+          </md-not-found>
+        </md-autocomplete>-->
 
         <div class="form-group">
           <label>Name</label>

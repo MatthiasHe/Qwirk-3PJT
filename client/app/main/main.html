@@ -25,4 +25,23 @@
       </span>
     </p>
   </form>
+
+  <md-input-container class="md-block" flex-gt-sm="">
+    <label>Password</label>
+    <input type="password" name="password" class="form-control" ng-model="vm.user.password"
+           ng-minlength="8"
+           required
+           mongoose-error/>
+    <div ng-messages="form.password.$error">
+      <div ng-message="required">
+        Password is required
+      </div>
+      <div ng-message="minlength">
+        Password must be at least 8 characters
+      </div>
+      <div ng-message="mongoose">
+        {{vm.errors.password}}
+      </div>
+    </div>
+
 </div>

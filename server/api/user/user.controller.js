@@ -127,7 +127,9 @@ export function addFriend(req, res) {
       var results = response;
       newFriendId = results[0]._id;
       console.log(newFriendId);
-      User.findByIdAndUpdate(newFriendId, {$push: {friends: userId}});
+      User.findByIdAndUpdate(newFriendId, {$push: {friends: userId}}).then( newresponse => {
+        console.log();
+      });
       return User.findByIdAndUpdate(userId, {$push: {friends: newFriendId}});
     });
 }

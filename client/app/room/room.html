@@ -1,7 +1,25 @@
-<div>{{roomCtrl.message}}</div>
+<h1>
+  Chit-Chat<br>
+  <small>Go Chat</small>
+</h1>
 
-<ul id="messages"></ul>
-<form ng-submit="roomCtrl.test()">
-  <input id="m" autocomplete="off"/>
-  <button>Send</button>
-</form>
+</div>
+
+<div class="message-history">
+  <div class="form-group">
+    <div id="chat" ng-model="chatLines" style="height: 60%;overflow:auto;"></div>
+  </div>
+
+  <form role="form" ng-submit="sendMsg()">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="input-group">
+          <input ng-model="typedInput" type="text" class="form-control" />
+          <div class="input-group-btn">
+            <button type="submit" class="btn">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

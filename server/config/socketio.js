@@ -38,7 +38,6 @@ export default function(socketio) {
 
   socketio.on('connection', function(socket) {
     socket.address = `${socket.request.connection.remoteAddress}:${socket.request.connection.remotePort}`;
-    console.log('a yeaaaaah user connected');
     socket.connectedAt = new Date();
 
     socket.log = function(...data) {

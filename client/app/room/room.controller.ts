@@ -2,13 +2,9 @@
 
 export default class RoomCtrl {
   message: string;
+  io;
 
   /*@ngInject*/
   constructor() {
-    this.message = 'hello';
-  }
-
-  test() {
-    this.message = 'yo';
   }
 }

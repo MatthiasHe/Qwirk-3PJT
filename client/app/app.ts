@@ -4,7 +4,7 @@ const angular = require('angular');
 const ngCookies = require('angular-cookies');
 const ngResource = require('angular-resource');
 const ngSanitize = require('angular-sanitize');
-const uiChat = require('angular-ui-chat');
+
 import 'angular-socket-io';
 
 const uiRouter = require('angular-ui-router');
@@ -34,7 +34,6 @@ angular.module('projectTestApp', [
   ngCookies,
   ngResource,
   ngSanitize,
-  uiChat,
 
   'btford.socket-io',
 

@@ -25,4 +25,21 @@
       </span>
     </p>
   </form>
+
+  <form>
+    <input type="text" class="form-control" placeholder="Create a new room" ng-model="$ctrl.roomName">
+    <span class="input-group-btn">
+        <button type="submit" class="btn btn-primary" ng-click="$ctrl.createRoom()">Create room</button>
+    </span>
+  </form>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 class="page-header">Features:</h1>
+        <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="room in $ctrl.rooms">
+          <li><a ui-sref='room({roomId: room._id})' uib-tooltip="{{room.name}}">{{room.name}}</a>
+        </ul>
+      </div>
+    </div>
 </div>

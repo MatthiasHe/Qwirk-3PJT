@@ -1,7 +1,12 @@
 <div>{{roomCtrl.message}}</div>
+<div ng-repeat="message in roomCtrl.messages">
+  <div>{{message.text}}</div>
+</div>
 
 <ul id="messages"></ul>
-<form ng-submit="roomCtrl.test()">
-  <input id="m" autocomplete="off"/>
-  <button>Send</button>
+<form ng-submit="roomCtrl.sendMessage()">
+  <input type="text" name="message" class="form-control" ng-model="roomCtrl.message" required/>
+  <button class="btn btn-inverse btn-lg btn-register" type="submit">
+    Send message
+  </button>
 </form>

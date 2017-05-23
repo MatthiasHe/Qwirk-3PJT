@@ -9,12 +9,17 @@ export class MainController {
   newThing = '';
   Auth;
   friends = [];
+  roomName = '';
+  currentUser;
+  rooms = [];
+  $state;
 
   /*@ngInject*/
-  constructor($http, $scope, socket, Auth) {
+  constructor($http, $scope, socket, Auth, $state) {
     this.$http = $http;
     this.socket = socket;
     this.Auth = Auth;
+    this.$state = $state;
 
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('thing');
@@ -22,6 +27,12 @@ export class MainController {
   }
 
   $onInit() {
+    this.$http.get('api/users/me').then(response => {
+      this.currentUser = response.data;
+    });
+    this.$http.get('api/rooms').then(response => {
+      this.rooms = response.data;
+    });
     this.$http.get('/api/things').then(response => {
       this.awesomeThings = response.data;
       this.socket.syncUpdates('thing', this.awesomeThings);
@@ -43,6 +54,10 @@ export class MainController {
 
   deleteThing(thing) {
     this.$http.delete('/api/things/' + thing._id);
+  }
+
+  createRoom() {
+    this.$http.post('/api/rooms', { name: this.roomName, adminId: this.currentUser._id, memberId: this.currentUser._id });
   }
 }
 

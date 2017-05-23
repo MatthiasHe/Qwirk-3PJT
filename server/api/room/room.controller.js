@@ -14,6 +14,7 @@
 import jsonpatch from 'fast-json-patch';
 import Room from './room.model';
 import {Message} from './room.model';
+import mongoose from 'mongoose';
 
 
 function respondWithResult(res, statusCode) {
@@ -83,9 +84,14 @@ export function show(req, res) {
 
 // Creates a new Room in the DB
 export function create(req, res) {
-  return Room.create(req.body)
-    .then(respondWithResult(res, 201))
-    .catch(handleError(res));
+  var params = {
+    admin: mongoose.Types.ObjectId(req.body.adminId),
+    members: mongoose.Types.ObjectId(req.body.memberId),
+    name: req.body.name
+  };
+  Room.create(params)
+  .then(respondWithResult(res, 201))
+  .catch(handleError(res));
 }
 
 // Upserts the given Room in the DB at the specified ID
@@ -117,4 +123,18 @@ export function destroy(req, res) {
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));
+}
+
+export function createMessage(req, res) {
+  return Message.create(req.body)
+    .then(respondWithResult(res, 201))
+    .catch(handleError(res));
+}
+
+export function getMessages(req, res) {
+  return Message.find().exec()
+    .then(response => {
+      console.log(response);
+      res.json(response);
+    });
 }

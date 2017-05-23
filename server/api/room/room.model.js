@@ -8,22 +8,17 @@ var MessageSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  name: String,
   text: String,
-  scribble: {type: Boolean, default: false},
-  roomId: mongoose.Schema.Types.ObjectId,
-  origin: mongoose.Schema.Types.ObjectId
+  roomId: [{type: mongoose.Schema.Types.ObjectId, ref: 'RoomSchema'}],
+  author: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 });
 
 var RoomSchema = new mongoose.Schema({
   messages: [MessageSchema],
   private: {type: Boolean, default: true},
   name: String,
-  admin: mongoose.Schema.Types.ObjectId,
+  admin: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
   members: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-  kind: String,
-  lastMessageDate: {type: Date, default: Date.now()},
-  img: String,
 });
 
 export default mongoose.model('Room', RoomSchema);

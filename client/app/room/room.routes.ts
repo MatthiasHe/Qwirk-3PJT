@@ -4,9 +4,9 @@ export default function routes($stateProvider) {
   'ngInject';
   $stateProvider
     .state('room', {
-      url: '/room',
+      url: '/room/:roomId',
       template: require('./room.html'),
-      controller: 'RoomController',
+      controller: 'RoomCtrl',
       controllerAs: 'roomCtrl'
     });
 }

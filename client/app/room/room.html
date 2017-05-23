@@ -1,25 +1,6 @@
-<h1>
-  Chit-Chat<br>
-  <small>Go Chat</small>
-</h1>
-
-</div>
-
-<div class="message-history">
-  <div class="form-group">
-    <div id="chat" ng-model="chatLines" style="height: 60%;overflow:auto;"></div>
-  </div>
-
-  <form role="form" ng-submit="sendMsg()">
-    <div class="row">
-      <div class="col-xs-12">
-        <div class="input-group">
-          <input ng-model="typedInput" type="text" class="form-control" />
-          <div class="input-group-btn">
-            <button type="submit" class="btn">Send</button>
-          </div>
-        </div>
-      </div>
-    </div>
+<div>
+  <form ng-submit="RoomController.sendMessage()">
+    <input ng-model="RommController.messageContent" type="text" placeholder="Type your message" />
+    <button type="submit">Send</button>
   </form>
 </div>

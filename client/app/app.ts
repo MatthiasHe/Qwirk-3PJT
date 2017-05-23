@@ -1,9 +1,11 @@
 'use strict';
 const angular = require('angular');
-// import ngAnimate from 'angular-animate';
 const ngCookies = require('angular-cookies');
 const ngResource = require('angular-resource');
 const ngSanitize = require('angular-sanitize');
+const pubnub = require('pubnub');
+const pubnubAngular = require('pubnub-angular');
+
 
 import 'angular-socket-io';
 
@@ -28,12 +30,15 @@ import room from './room';
 
 
 
+
 import './app.scss';
 
 angular.module('projectTestApp', [
   ngCookies,
   ngResource,
   ngSanitize,
+  // pubnub,
+  // pubnubAngular,
 
   'btford.socket-io',
 

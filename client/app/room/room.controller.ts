@@ -6,12 +6,15 @@ export default class RoomCtrl {
   $http;
   messages;
   currentUser;
+  roomId;
+  room;
 
   /*@ngInject*/
-  constructor(socket, $http) {
+  constructor(socket, $http, $stateParams) {
     this.message = '';
     this.socket = socket;
     this.$http = $http;
+    this.roomId = $stateParams.roomId;
   }
 
 
@@ -19,9 +22,11 @@ export default class RoomCtrl {
     this.$http.get('api/users/me').then(response => {
       this.currentUser = response.data;
     });
-    this.$http.get('api/rooms/getmessages').then(response => {
-      this.messages = response.data;
-      this.socket.syncUpdates('Message', this.messages);
+    this.$http.get(`api/rooms/${this.roomId}`).then( response => {
+      this.room = response.data;
+      this.$http.get(`api/rooms/${this.roomId}/getmessages`, {roomId: this.room._id}).then(messages => {
+        this.messages = messages.data;
+      });
     });
   }
 
@@ -30,7 +35,7 @@ export default class RoomCtrl {
   }
 
   sendMessage() {
-    this.$http.post('/api/rooms/createmessage', {text: this.message, author: this.currentUser._id});
+    this.$http.post('/api/rooms/createmessage', {text: this.message, author: this.currentUser._id, roomId: this.roomId});
     this.message = '';
   }
 }

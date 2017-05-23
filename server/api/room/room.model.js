@@ -9,8 +9,8 @@ var MessageSchema = new mongoose.Schema({
     default: Date.now
   },
   text: String,
-  roomId: [{type: mongoose.Schema.Types.ObjectId, ref: 'RoomSchema'}],
-  author: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
+  roomId: {type: mongoose.Schema.Types.ObjectId, ref: 'RoomSchema'},
+  author: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 });
 
 var RoomSchema = new mongoose.Schema({

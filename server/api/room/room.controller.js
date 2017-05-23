@@ -126,15 +126,24 @@ export function destroy(req, res) {
 }
 
 export function createMessage(req, res) {
-  return Message.create(req.body)
+  var params = {
+    text: req.body.text,
+    author: mongoose.Types.ObjectId(req.body.author),
+    roomId: mongoose.Types.ObjectId(req.body.roomId)
+  };
+  Message.create(params)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
 
 export function getMessages(req, res) {
-  return Message.find().exec()
-    .then(response => {
-      console.log(response);
-      res.json(response);
-    });
+  var roomId = req.body.roomId;
+  Message.find({roomId: req.params.id}).exec()
+    .then(messages => { // don't ever give out the password or sa@lt
+      if(!messages) {
+        return res.status(401).end();
+      }
+      return res.json(messages);
+    })
+    .catch(err => next(err));
 }

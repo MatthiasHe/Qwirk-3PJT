@@ -32,6 +32,7 @@ export class MainController {
     });
     this.$http.get('api/rooms').then(response => {
       this.rooms = response.data;
+      this.socket.syncUpdates('Room', this.rooms);
     });
     this.$http.get('/api/things').then(response => {
       this.awesomeThings = response.data;

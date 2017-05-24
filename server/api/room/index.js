@@ -15,4 +15,5 @@ router.patch('/:id', controller.patch);
 router.delete('/:id', controller.destroy);
 router.post('/createmessage', controller.createMessage);
 router.get('/:id/getmessages', auth.isAuthenticated(), controller.getMessages);
+router.get('/:id/getparticipants', auth.isAuthenticated(), controller.getParticipants);
 module.exports = router;

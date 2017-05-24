@@ -10,12 +10,13 @@ var MessageSchema = new mongoose.Schema({
     default: Date.now
   },
   text: String,
-  roomId: {type: mongoose.Schema.Types.ObjectId, ref: 'RoomSchema'},
-  author: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+  roomId: {type: mongoose.Schema.Types.ObjectId, ref: 'Room'},
+  author: String,
+  authorAvatar: String
 });
 
 var RoomSchema = new mongoose.Schema({
-  messages: [MessageSchema],
+  messages: [{type: mongoose.Schema.Types.ObjectId, ref: 'Message'}],
   private: {type: Boolean, default: true},
   name: String,
   admin: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],

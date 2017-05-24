@@ -2,6 +2,7 @@
 
 import mongoose from 'mongoose';
 import {registerEvents} from './room.events';
+import {registerEventsM} from './message.events';
 
 var MessageSchema = new mongoose.Schema({
   date: {
@@ -22,6 +23,6 @@ var RoomSchema = new mongoose.Schema({
 });
 
 registerEvents(RoomSchema);
-registerEvents(MessageSchema);
+registerEventsM(MessageSchema);
 export default mongoose.model('Room', RoomSchema);
 export var Message = mongoose.model('Message', MessageSchema);

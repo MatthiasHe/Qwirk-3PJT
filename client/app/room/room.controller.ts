@@ -30,8 +30,8 @@ export default class RoomCtrl {
         this.messages = room.data.messages;
         this.socket.syncUpdates('message', this.messages);
       });
-      this.$http.get(`api/rooms/${this.roomId}/getparticipants`, {roomId: this.room._id}).then(participants => {
-        this.users = participants.data.members;
+      this.$http.get(`api/rooms/${this.roomId}/getparticipants`, {roomId: this.room._id}).then(room => {
+        this.users = room.data.members;
       });
     });
   }

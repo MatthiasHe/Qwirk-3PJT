@@ -26,12 +26,13 @@ export default class RoomCtrl {
       this.room = response.data;
       this.$http.get(`api/rooms/${this.roomId}/getmessages`, {roomId: this.room._id}).then(messages => {
         this.messages = messages.data;
+        this.socket.syncUpdates('message', this.messages);
       });
     });
   }
 
   $onDestroy() {
-    this.socket.unsyncUpdates('Message');
+    this.socket.unsyncUpdates('message');
   }
 
   sendMessage() {

@@ -32,11 +32,7 @@ export class MainController {
     });
     this.$http.get('api/rooms').then(response => {
       this.rooms = response.data;
-      this.socket.syncUpdates('Room', this.rooms);
-    });
-    this.$http.get('/api/things').then(response => {
-      this.awesomeThings = response.data;
-      this.socket.syncUpdates('thing', this.awesomeThings);
+      this.socket.syncUpdates('room', this.rooms);
     });
 
     this.Auth.getFriends().$promise
@@ -59,6 +55,7 @@ export class MainController {
 
   createRoom() {
     this.$http.post('/api/rooms', { name: this.roomName, adminId: this.currentUser._id, memberId: this.currentUser._id });
+    this.roomName = '';
   }
 }
 

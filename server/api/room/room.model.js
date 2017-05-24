@@ -21,5 +21,7 @@ var RoomSchema = new mongoose.Schema({
   members: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
 });
 
+registerEvents(RoomSchema);
+registerEvents(MessageSchema);
 export default mongoose.model('Room', RoomSchema);
 export var Message = mongoose.model('Message', MessageSchema);

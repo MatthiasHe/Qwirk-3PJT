@@ -14,6 +14,7 @@
 import jsonpatch from 'fast-json-patch';
 import Room from './room.model';
 import {Message} from './room.model';
+import User from '../user/user.model';
 import mongoose from 'mongoose';
 
 
@@ -126,24 +127,35 @@ export function destroy(req, res) {
 }
 
 export function createMessage(req, res) {
-  var params = {
-    text: req.body.text,
-    author: mongoose.Types.ObjectId(req.body.author),
-    roomId: mongoose.Types.ObjectId(req.body.roomId)
-  };
-  Message.create(params)
-    .then(respondWithResult(res, 201))
-    .catch(handleError(res));
+  User.findById(req.body.author).then(response => {
+    console.log('gdervr = ' + response.name);
+    var params = {
+      text: req.body.text,
+      author: response.name,
+      roomId: mongoose.Types.ObjectId(req.body.roomId)
+    };
+    Message.create(params)
+      .then(response => {
+        Room.findByIdAndUpdate(response.roomId, {$push: {messages: response._id}}).then(newResponse => {
+        });
+      });
+  });
 }
 
 export function getMessages(req, res) {
-  var roomId = req.body.roomId;
-  Message.find({roomId: req.params.id}).exec()
-    .then(messages => { // don't ever give out the password or sa@lt
-      if(!messages) {
-        return res.status(401).end();
-      }
-      return res.json(messages);
-    })
-    .catch(err => next(err));
+  var roomId = req.params.id;
+  Room.findOne({_id: roomId}).populate({path: 'messages'}).exec()
+    .then(room => {
+      console.log(room);
+      return res.json(room);
+    });
+}
+
+export function getParticipants(req, res) {
+  var roomId = req.params.id;
+  Room.findOne({_id: roomId}).populate('members').exec()
+    .then(room => {
+      console.log(room);
+      return res.json(room);
+    });
 }

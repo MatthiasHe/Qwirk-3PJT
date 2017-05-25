@@ -1,11 +1,72 @@
-<div ng-repeat="message in roomCtrl.messages">
-  <div>{{message.text}}</div>
+<!--<div class="row">-->
+<!--<h4>Participants</h4>-->
+<!--<ul class="participants-list col-lg-1">-->
+<!--<li ng-repeat="participant in roomCtrl.users">-->
+<!--<a href="#">{{participant.name}}</a>-->
+<!--</li>-->
+<!--</ul>-->
+<!--<div class="col-lg-11" ng-repeat="message in roomCtrl.messages">-->
+<!--<div>{{message.text}}</div>-->
+<!--</div>-->
+<!--</div>-->
+<div class="container">
+  <div class="row " style="padding-top:40px;">
+    <h3 class="text-center">Qwirk</h3>
+    <br><br>
+    <div class="col-md-8">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+        </div>
+        <div class="panel-body" ng-repeat="message in roomCtrl.messages">
+          <ul class="media-list">
+            <li class="media">
+              <div class="media-body">
+                <div class="media">
+                  <a class="pull-left" href="#"> <img class="media-object img-circle " src="assets/img/user.png"/> </a>
+                  <div class="media-body">
+                    {{message.text}} <br>
+                    <small class="text-muted">{{message.author}} | {{message.date | date:'dd-MM-yyyy HH:mm:ss'}}</small>
+                    <hr/>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <form ng-submit="roomCtrl.sendMessage()">
+          <div class="panel-footer">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Enter Message" ng-model="roomCtrl.message" autocomplete="off" required/>
+              <span class="input-group-btn">
+                <button class="btn btn-info" type="button">SEND</button>
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          PARTICIPANTS
+        </div>
+        <div class="panel-body" ng-repeat="participant in roomCtrl.users">
+          <ul class="media-list">
+            <li class="media">
+              <div class="media-body">
+                <div class="media">
+                  <a class="pull-left" href="#">
+                    <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.png"/> </a>
+                  <div class="media-body">
+                    <h5>{{participant.name}}</h5>
+                    <small class="text-muted">Active From 3 hours</small>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-<ul id="messages"></ul>
-<form ng-submit="roomCtrl.sendMessage()">
-  <input type="text" name="message" class="form-control" ng-model="roomCtrl.message" autocomplete="off" required/>
-  <button class="btn btn-inverse btn-lg btn-register" type="submit">
-    Send message
-  </button>
-</form>

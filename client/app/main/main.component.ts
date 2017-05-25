@@ -29,17 +29,14 @@ export class MainController {
   $onInit() {
     this.$http.get('api/users/me').then(response => {
       this.currentUser = response.data;
+      this.$http.get(`api/users/${this.currentUser._id}/getfriends`).then(newResponse => {
+        this.friends = newResponse.data;
+      });
     });
     this.$http.get('api/rooms').then(response => {
       this.rooms = response.data;
       this.socket.syncUpdates('room', this.rooms);
     });
-
-    this.Auth.getFriends().$promise
-      .then(response => {
-        this.friends = response;
-        console.log(this.friends);
-      });
   }
 
   addThing() {

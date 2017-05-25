@@ -126,7 +126,6 @@ export function addFriend(req, res) {
     .then(response => {
       var results = response;
       newFriendId = results[0]._id;
-      console.log(newFriendId);
       User.findByIdAndUpdate(newFriendId, {$push: {friends: userId}}).then( newresponse => {
       });
       return User.findByIdAndUpdate(userId, {$push: {friends: newFriendId}});
@@ -134,28 +133,25 @@ export function addFriend(req, res) {
 }
 
 export function searchFriend(req, res) {
-  console.log('ICI');
-  var results;
+  var friendId;
   var name = req.body.nickname;
   console.log(name);
-  User.find({name: new RegExp('^' + name)}).exec()
+  User.findOne({name: new RegExp('^' + name)}).exec()
     .then(response => {
-      results = response;
-      console.log(results[0]._id);
-      return res.json(results);
+      friendId = response._id;
+      return res.json(friendId);
   });
 }
 
 export function getFriends(req, res) {
-  var userId = req.user._id;
-  console.log('USEEEEEEER = ' + userId);
-  User.find({friends: userId}).exec()
+  var userId = req.params.id;
+  User.findOne({_id: userId}).populate('friends').exec()
     .then(users => { // don't ever give out the password or salt
-      console.log('USEEEEEEER = ' + users);
       if(!users) {
         return res.status(401).end();
       }
-      return res.json(users);
+      console.log(users.friends);
+      return res.json(users.friends);
     })
     .catch(err => next(err));
 }

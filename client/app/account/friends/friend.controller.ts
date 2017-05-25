@@ -8,6 +8,10 @@ export default class FriendsCtrl {
   submitted = false;
   data;
   Auth;
+  currentUser;
+  friends;
+  friendTest;
+  searchResult;
   $state;
   $http;
 
@@ -22,16 +26,30 @@ export default class FriendsCtrl {
   $onInit() {
     this.Auth.addFriend('matt');
     this.Auth.addFriend('jean');
+    this.$http.get('api/users/me').then(response => {
+      this.currentUser = response.data;
+      this.$http.get(`api/users/${this.currentUser._id}/getfriends`).then(newResponse => {
+        this.friends = newResponse.data;
+      });
+    });
   }
 
   addFriend() {
     this.submitted = true;
-    console.log(this.nickname);
-    this.Auth.addFriend(this.nickname);
-  }
-
-  searchFriend(nickname) {
-    return this.Auth.searchFriend(nickname);
+    this.$http.post('api/users/searchfriend', { nickname: this.nickname }).then(response => {
+      this.searchResult = response.data;
+      this.friends.forEach( friend => {
+        if (friend._id === this.searchResult) {
+          this.friendTest = true;
+        }
+      });
+      if (this.friendTest) {
+        let friendInput = <HTMLInputElement>document.getElementById('friend-input');
+        friendInput.setCustomValidity('Cet utilisateur est déjà présent dans votre liste d\'amis.');
+      } else {
+        this.Auth.addFriend(this.nickname);
+      }
+    });
   }
 
 /*  register(form) {

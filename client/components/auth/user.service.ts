@@ -21,8 +21,7 @@ export function UserResource($resource) {
       method: 'POST',
       params: {
         controller: 'searchfriend'
-      },
-      isArray: true
+      }
     },
     getFriends: {
       method: 'GET',

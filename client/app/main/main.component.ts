@@ -9,6 +9,8 @@ export class MainController {
   newThing = '';
   Auth;
   friends = [];
+  friendsRequest;
+  awaitingRequest;
   roomName = '';
   currentUser;
   rooms = [];
@@ -31,6 +33,12 @@ export class MainController {
       this.currentUser = response.data;
       this.$http.get(`api/users/${this.currentUser._id}/getfriends`).then(newResponse => {
         this.friends = newResponse.data;
+      });
+      this.$http.get(`api/users/${this.currentUser._id}/getfriendrequest`).then(newResponse => {
+        this.friendsRequest = newResponse.data;
+      });
+      this.$http.get(`api/users/${this.currentUser._id}/getawaitingrequest`).then(newResponse => {
+        this.awaitingRequest = newResponse.data;
       });
     });
     this.$http.get('api/rooms').then(response => {

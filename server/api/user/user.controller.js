@@ -150,7 +150,6 @@ export function getFriends(req, res) {
       if(!users) {
         return res.status(401).end();
       }
-      console.log(users.friends);
       return res.json(users.friends);
     })
     .catch(err => next(err));
@@ -159,8 +158,37 @@ export function sendFriendRequest(req, res) {
   var userId = req.params.id;
   var friendId = req.body.friendId;
   User.findByIdAndUpdate(friendId, {$push: {request: userId}}).then( response => {
-    return User.findByIdAndUpdate(userId, {$push: {awaitingRequest: friendId}});
   });
+  return User.findByIdAndUpdate(userId, {$push: {awaitingRequest: friendId}}).then( response => {
+  });
+}
+
+export function getFriendRequest(req, res) {
+  var userId = req.params.id;
+  User.findOne({_id: userId}).populate('request').exec()
+    .then(user => { // don't ever give out the password or salt
+      if(!user) {
+        return res.status(401).end();
+      }
+      console.log('fergergergegregregergergergre');
+      console.log(user);
+      return res.json(user.request);
+    })
+    .catch(err => next(err));
+}
+
+export function getAwaitingRequest(req, res) {
+  var userId = req.params.id;
+  User.findOne({_id: userId}).populate('awaitingRequest').exec()
+    .then(user => { // don't ever give out the password or salt
+      if(!user) {
+        return res.status(401).end();
+      }
+      console.log('fergergergegregregergergergre');
+      console.log(user);
+      return res.json(user.awaitingRequest);
+    })
+    .catch(err => next(err));
 }
 
 /**

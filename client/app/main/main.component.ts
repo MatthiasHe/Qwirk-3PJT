@@ -62,6 +62,10 @@ export class MainController {
     this.$http.post('/api/rooms', { name: this.roomName, adminId: this.currentUser._id, memberId: this.currentUser._id });
     this.roomName = '';
   }
+
+  acceptRequest(friendId) {
+    this.$http.post(`api/users/${this.currentUser._id}/addfriend`, { friendId : friendId});
+  }
 }
 
 export default angular.module('projectTestApp.main', [

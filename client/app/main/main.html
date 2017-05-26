@@ -16,6 +16,15 @@
     </div>
   </div>
 
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">REQUEST</h1>
+      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="request in $ctrl.friendsRequest">
+        <li><a href="#" uib-tooltip="{{request.name}}">{{request.name}}<button type="button" class="close" ng-click="$ctrl.acceptRequest(request._id)">&times;</button></a></li>
+      </ul>
+    </div>
+  </div>
+
   <form class="thing-form">
     <label>Syncs in realtime across clients</label>
     <p class="input-group">

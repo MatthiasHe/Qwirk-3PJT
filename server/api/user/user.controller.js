@@ -118,18 +118,18 @@ export function me(req, res, next) {
  * Add a friend
  */
 export function addFriend(req, res) {
-  var userId = req.user._id;
-  var name = req.body.nickname;
-  var newFriendId;
+  var userId = req.params.id;
+  var newFriendId = req.body.friendId;
+  console.log(userId + newFriendId);
 
-  User.find({name: new RegExp('^' + name)}).exec()
-    .then(response => {
-      var results = response;
-      newFriendId = results[0]._id;
-      User.findByIdAndUpdate(newFriendId, {$push: {friends: userId}}).then( newresponse => {
-      });
-      return User.findByIdAndUpdate(userId, {$push: {friends: newFriendId}});
-    });
+  User.findByIdAndUpdate(newFriendId, {$push: {friends: userId}}).then( newresponse => {
+  });
+  User.findByIdAndUpdate(newFriendId, {$pull: {awaitingRequest: userId}}).then( newresponse => {
+  });
+  User.findByIdAndUpdate(userId, {$pull: {request: newFriendId}}).then( newresponse => {
+  });
+  User.findByIdAndUpdate(userId, {$push: {friends: newFriendId}}).then( newresponse => {
+  });
 }
 
 export function searchFriend(req, res) {

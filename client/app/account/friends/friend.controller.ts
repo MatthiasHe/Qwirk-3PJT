@@ -47,10 +47,8 @@ export default class FriendsCtrl {
 /*        let friendInput = <HTMLInputElement>document.getElementById('friend-input');
         friendInput.setCustomValidity('Cet utilisateur est déjà présent dans votre liste d\'amis.');*/
         this.$http.post(`api/users/${this.currentUser._id}/sendrequest`, { friendId: this.searchResult });
-
       } else {
         this.$http.post(`api/users/${this.currentUser._id}/sendrequest`, { friendId: this.searchResult });
-        this.Auth.addFriend(this.nickname);
       }
     });
   }

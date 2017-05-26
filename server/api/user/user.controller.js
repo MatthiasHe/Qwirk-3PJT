@@ -155,6 +155,14 @@ export function getFriends(req, res) {
     })
     .catch(err => next(err));
 }
+export function sendFriendRequest(req, res) {
+  var userId = req.params.id;
+  var friendId = req.body.friendId;
+  User.findByIdAndUpdate(friendId, {$push: {request: userId}}).then( response => {
+    return User.findByIdAndUpdate(userId, {$push: {awaitingRequest: friendId}});
+  });
+}
+
 /**
  * Authentication callback
  */

@@ -22,6 +22,8 @@ var UserSchema = new Schema({
   },
   provider: String,
   friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+  request: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  awaitingRequest: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   salt: String
 });
 

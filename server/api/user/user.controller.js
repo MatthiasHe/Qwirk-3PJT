@@ -4,6 +4,19 @@ import User from './user.model';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
 
+const multer = require('multer');
+var path = require('path');
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, '/Users/matt/Desktop/projectTest/server/api/user/avatar');
+  },
+  filename: function(req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
+export const upload = multer({ storage: storage });
+
+
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
   return function(err) {
@@ -121,13 +134,13 @@ export function addFriend(req, res) {
   var userId = req.params.id;
   var newFriendId = req.body.friendId;
 
-  User.findByIdAndUpdate(newFriendId, {$push: {friends: userId}}).then( newresponse => {
+  User.findByIdAndUpdate(newFriendId, {$push: {friends: userId}}).then(newresponse => {
   });
-  User.findByIdAndUpdate(newFriendId, {$pull: {awaitingRequest: userId}}).then( newresponse => {
+  User.findByIdAndUpdate(newFriendId, {$pull: {awaitingRequest: userId}}).then(newresponse => {
   });
-  User.findByIdAndUpdate(userId, {$pull: {request: newFriendId}}).then( newresponse => {
+  User.findByIdAndUpdate(userId, {$pull: {request: newFriendId}}).then(newresponse => {
   });
-  User.findByIdAndUpdate(userId, {$push: {friends: newFriendId}}).then( newresponse => {
+  User.findByIdAndUpdate(userId, {$push: {friends: newFriendId}}).then(newresponse => {
   });
 }
 
@@ -135,9 +148,9 @@ export function rejectFriend(req, res) {
   var userId = req.params.id;
   var newFriendId = req.body.friendId;
 
-  User.findByIdAndUpdate(newFriendId, {$pull: {awaitingRequest: userId}}).then( newresponse => {
+  User.findByIdAndUpdate(newFriendId, {$pull: {awaitingRequest: userId}}).then(newresponse => {
   });
-  User.findByIdAndUpdate(userId, {$pull: {request: newFriendId}}).then( newresponse => {
+  User.findByIdAndUpdate(userId, {$pull: {request: newFriendId}}).then(newresponse => {
   });
 }
 
@@ -149,7 +162,7 @@ export function searchFriend(req, res) {
     .then(response => {
       friendId = response._id;
       return res.json(friendId);
-  });
+    });
 }
 
 export function getFriends(req, res) {
@@ -166,9 +179,9 @@ export function getFriends(req, res) {
 export function sendFriendRequest(req, res) {
   var userId = req.params.id;
   var friendId = req.body.friendId;
-  User.findByIdAndUpdate(friendId, {$push: {request: userId}}).then( response => {
+  User.findByIdAndUpdate(friendId, {$push: {request: userId}}).then(response => {
   });
-  return User.findByIdAndUpdate(userId, {$push: {awaitingRequest: friendId}}).then( response => {
+  return User.findByIdAndUpdate(userId, {$push: {awaitingRequest: friendId}}).then(response => {
   });
 }
 
@@ -198,6 +211,14 @@ export function getAwaitingRequest(req, res) {
       return res.json(user.awaitingRequest);
     })
     .catch(err => next(err));
+}
+
+export function sendAvatar(req, res) {
+  const userId = req.params.id;
+  console.log(userId);
+  User.findByIdAndUpdate(userId, {avatar: req.file.path}).then(response => {
+  });
+  console.log(req.file);
 }
 
 /**

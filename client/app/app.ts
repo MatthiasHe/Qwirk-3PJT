@@ -4,7 +4,6 @@ const angular = require('angular');
 const ngCookies = require('angular-cookies');
 const ngResource = require('angular-resource');
 const ngSanitize = require('angular-sanitize');
-const ngFileUpload = require('ng-file-upload');
 import 'angular-socket-io';
 
 const uiRouter = require('angular-ui-router');
@@ -35,7 +34,6 @@ angular.module('projectTestApp', [
   ngCookies,
   ngResource,
   ngSanitize,
-  ngFileUpload,
 
   'btford.socket-io',
 

@@ -18,14 +18,12 @@ export default class SettingsController {
   Auth;
   file;
   $http;
-  Upload;
   currentUser;
 
   /*@ngInject*/
-  constructor(Auth, $http, Upload) {
+  constructor(Auth, $http) {
     this.Auth = Auth;
     this.$http = $http;
-    this.Upload = Upload;
   }
 
   $onInit() {
@@ -51,17 +49,6 @@ export default class SettingsController {
   }
 
   sendAvatar() {
-
-    /*    const photo = <HTMLInputElement>document.getElementById('photo');
-     const file = photo.files[0];
-     // var fd = new FormData();
-     // fd.append('file', file);
-     //get the total amount of files attached to the file input.
-     //create a new fromdata instance
-     //check if the filecount is greater than zero, to be sure a file was selected.
-     //append the key name 'photo' with the first file in the element
-     this.$http.post('api/users/sendavatar', {file: file});*/
-
     const photo = <HTMLInputElement>document.getElementById('photo');
     const file = photo.files[0];
     const fd = new FormData();
@@ -74,8 +61,5 @@ export default class SettingsController {
         'Content-Type': undefined
       }
     });
-    // this.$http.post('api/users/sendavatar', { data: fd }, { headers: {
-    //   'Content-Type': undefined
-    // } );
   }
 }

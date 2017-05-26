@@ -28,9 +28,7 @@ export default class FriendsCtrl {
     this.Auth.addFriend('jean');
     this.$http.get('api/users/me').then(response => {
       this.currentUser = response.data;
-      this.$http.get(`api/users/${this.currentUser._id}/getfriends`).then(newResponse => {
-        this.friends = newResponse.data;
-      });
+      this.friends = this.currentUser.friends;
     });
   }
 

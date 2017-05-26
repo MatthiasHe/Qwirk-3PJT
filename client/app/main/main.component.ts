@@ -31,15 +31,9 @@ export class MainController {
   $onInit() {
     this.$http.get('api/users/me').then(response => {
       this.currentUser = response.data;
-      this.$http.get(`api/users/${this.currentUser._id}/getfriends`).then(newResponse => {
-        this.friends = newResponse.data;
-      });
-      this.$http.get(`api/users/${this.currentUser._id}/getfriendrequest`).then(newResponse => {
-        this.friendsRequest = newResponse.data;
-      });
-      this.$http.get(`api/users/${this.currentUser._id}/getawaitingrequest`).then(newResponse => {
-        this.awaitingRequest = newResponse.data;
-      });
+      this.friends = this.currentUser.friends;
+      this.friendsRequest = this.currentUser.request;
+      this.awaitingRequest = this.currentUser.awaitingRequest;
     });
     this.$http.get('api/rooms').then(response => {
       this.rooms = response.data;

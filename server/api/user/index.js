@@ -19,6 +19,7 @@ router.get('/:id/getfriends', auth.isAuthenticated(), controller.getFriends);
 router.post('/:id/sendrequest', auth.isAuthenticated(), controller.sendFriendRequest);
 router.get('/:id/getfriendrequest', auth.isAuthenticated(), controller.getFriendRequest);
 router.get('/:id/getawaitingrequest', auth.isAuthenticated(), controller.getAwaitingRequest);
+router.post('/:id/sendavatar', controller.upload.single('file'), controller.sendAvatar);
 
 
 module.exports = router;

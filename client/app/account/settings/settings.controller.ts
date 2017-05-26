@@ -16,10 +16,20 @@ export default class SettingsController {
   message = '';
   submitted = false;
   Auth;
+  file;
+  $http;
+  currentUser;
 
   /*@ngInject*/
-  constructor(Auth) {
+  constructor(Auth, $http) {
     this.Auth = Auth;
+    this.$http = $http;
+  }
+
+  $onInit() {
+    this.$http.get('api/users/me').then(response => {
+      this.currentUser = response.data;
+    });
   }
 
   changePassword(form) {
@@ -36,5 +46,20 @@ export default class SettingsController {
           this.message = '';
         });
     }
+  }
+
+  sendAvatar() {
+    const photo = <HTMLInputElement>document.getElementById('photo');
+    const file = photo.files[0];
+    const fd = new FormData();
+    fd.append('file', file);
+    this.$http({
+      method: 'POST',
+      url: `api/users/${this.currentUser._id}/sendavatar`,
+      data: fd,
+      headers: {
+        'Content-Type': undefined
+      }
+    });
   }
 }

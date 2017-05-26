@@ -46,6 +46,15 @@
 
         <button class="btn btn-lg btn-primary" type="submit">Save changes</button>
       </form>
+
+      <form id        =  "uploadForm"
+            enctype   =  "multipart/form-data"
+            ng-submit="vm.sendAvatar()"
+      >
+        <input id="photo" type="file" name="userPhoto" ng-model="vm.file" />
+        <input type="submit" value="Upload Image" name="submit">
+      </form>
+
     </div>
   </div>
 </div>

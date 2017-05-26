@@ -28,9 +28,7 @@ export default class FriendsCtrl {
     this.Auth.addFriend('jean');
     this.$http.get('api/users/me').then(response => {
       this.currentUser = response.data;
-      this.$http.get(`api/users/${this.currentUser._id}/getfriends`).then(newResponse => {
-        this.friends = newResponse.data;
-      });
+      this.friends = this.currentUser.friends;
     });
   }
 
@@ -44,10 +42,11 @@ export default class FriendsCtrl {
         }
       });
       if (this.friendTest) {
-        let friendInput = <HTMLInputElement>document.getElementById('friend-input');
-        friendInput.setCustomValidity('Cet utilisateur est déjà présent dans votre liste d\'amis.');
+/*        let friendInput = <HTMLInputElement>document.getElementById('friend-input');
+        friendInput.setCustomValidity('Cet utilisateur est déjà présent dans votre liste d\'amis.');*/
+        this.$http.post(`api/users/${this.currentUser._id}/sendrequest`, { friendId: this.searchResult });
       } else {
-        this.Auth.addFriend(this.nickname);
+        this.$http.post(`api/users/${this.currentUser._id}/sendrequest`, { friendId: this.searchResult });
       }
     });
   }

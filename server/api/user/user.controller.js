@@ -104,7 +104,7 @@ export function changePassword(req, res) {
 export function me(req, res, next) {
   var userId = req.user._id;
 
-  return User.findOne({ _id: userId }, '-salt -password').exec()
+  return User.findOne({ _id: userId }, '-salt -password').populate('friends request awaitingRequest').exec()
     .then(user => { // don't ever give out the password or salt
       if(!user) {
         return res.status(401).end();
@@ -118,18 +118,27 @@ export function me(req, res, next) {
  * Add a friend
  */
 export function addFriend(req, res) {
-  var userId = req.user._id;
-  var name = req.body.nickname;
-  var newFriendId;
+  var userId = req.params.id;
+  var newFriendId = req.body.friendId;
 
-  User.find({name: new RegExp('^' + name)}).exec()
-    .then(response => {
-      var results = response;
-      newFriendId = results[0]._id;
-      User.findByIdAndUpdate(newFriendId, {$push: {friends: userId}}).then( newresponse => {
-      });
-      return User.findByIdAndUpdate(userId, {$push: {friends: newFriendId}});
-    });
+  User.findByIdAndUpdate(newFriendId, {$push: {friends: userId}}).then( newresponse => {
+  });
+  User.findByIdAndUpdate(newFriendId, {$pull: {awaitingRequest: userId}}).then( newresponse => {
+  });
+  User.findByIdAndUpdate(userId, {$pull: {request: newFriendId}}).then( newresponse => {
+  });
+  User.findByIdAndUpdate(userId, {$push: {friends: newFriendId}}).then( newresponse => {
+  });
+}
+
+export function rejectFriend(req, res) {
+  var userId = req.params.id;
+  var newFriendId = req.body.friendId;
+
+  User.findByIdAndUpdate(newFriendId, {$pull: {awaitingRequest: userId}}).then( newresponse => {
+  });
+  User.findByIdAndUpdate(userId, {$pull: {request: newFriendId}}).then( newresponse => {
+  });
 }
 
 export function searchFriend(req, res) {
@@ -150,11 +159,47 @@ export function getFriends(req, res) {
       if(!users) {
         return res.status(401).end();
       }
-      console.log(users.friends);
       return res.json(users.friends);
     })
     .catch(err => next(err));
 }
+export function sendFriendRequest(req, res) {
+  var userId = req.params.id;
+  var friendId = req.body.friendId;
+  User.findByIdAndUpdate(friendId, {$push: {request: userId}}).then( response => {
+  });
+  return User.findByIdAndUpdate(userId, {$push: {awaitingRequest: friendId}}).then( response => {
+  });
+}
+
+export function getFriendRequest(req, res) {
+  var userId = req.params.id;
+  User.findOne({_id: userId}).populate('request').exec()
+    .then(user => { // don't ever give out the password or salt
+      if(!user) {
+        return res.status(401).end();
+      }
+      console.log('fergergergegregregergergergre');
+      console.log(user);
+      return res.json(user.request);
+    })
+    .catch(err => next(err));
+}
+
+export function getAwaitingRequest(req, res) {
+  var userId = req.params.id;
+  User.findOne({_id: userId}).populate('awaitingRequest').exec()
+    .then(user => { // don't ever give out the password or salt
+      if(!user) {
+        return res.status(401).end();
+      }
+      console.log('fergergergegregregergergergre');
+      console.log(user);
+      return res.json(user.awaitingRequest);
+    })
+    .catch(err => next(err));
+}
+
 /**
  * Authentication callback
  */

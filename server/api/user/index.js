@@ -12,8 +12,13 @@ router.get('/me', auth.isAuthenticated(), controller.me);
 router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', controller.create);
-router.put('/:id/addfriend', auth.isAuthenticated(), controller.addFriend);
+router.post('/:id/addfriend', auth.isAuthenticated(), controller.addFriend);
+router.post('/:id/rejectrequest', auth.isAuthenticated(), controller.rejectFriend);
 router.post('/searchfriend', auth.isAuthenticated(), controller.searchFriend);
 router.get('/:id/getfriends', auth.isAuthenticated(), controller.getFriends);
+router.post('/:id/sendrequest', auth.isAuthenticated(), controller.sendFriendRequest);
+router.get('/:id/getfriendrequest', auth.isAuthenticated(), controller.getFriendRequest);
+router.get('/:id/getawaitingrequest', auth.isAuthenticated(), controller.getAwaitingRequest);
+
 
 module.exports = router;

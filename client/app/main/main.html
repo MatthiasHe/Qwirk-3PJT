@@ -21,6 +21,7 @@
       <h1 class="page-header">REQUEST</h1>
       <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="request in $ctrl.friendsRequest">
         <li><a href="#" uib-tooltip="{{request.name}}">{{request.name}}<button type="button" class="close" ng-click="$ctrl.acceptRequest(request._id)">&times;</button></a></li>
+        <li><a href="#" uib-tooltip="{{request.name}}">{{request.name}}<button type="button" class="close" ng-click="$ctrl.rejectRequest(request._id)">&times;</button></a></li>
       </ul>
     </div>
   </div>

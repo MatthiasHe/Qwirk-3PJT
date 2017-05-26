@@ -120,7 +120,6 @@ export function me(req, res, next) {
 export function addFriend(req, res) {
   var userId = req.params.id;
   var newFriendId = req.body.friendId;
-  console.log(userId + newFriendId);
 
   User.findByIdAndUpdate(newFriendId, {$push: {friends: userId}}).then( newresponse => {
   });
@@ -129,6 +128,16 @@ export function addFriend(req, res) {
   User.findByIdAndUpdate(userId, {$pull: {request: newFriendId}}).then( newresponse => {
   });
   User.findByIdAndUpdate(userId, {$push: {friends: newFriendId}}).then( newresponse => {
+  });
+}
+
+export function rejectFriend(req, res) {
+  var userId = req.params.id;
+  var newFriendId = req.body.friendId;
+
+  User.findByIdAndUpdate(newFriendId, {$pull: {awaitingRequest: userId}}).then( newresponse => {
+  });
+  User.findByIdAndUpdate(userId, {$pull: {request: newFriendId}}).then( newresponse => {
   });
 }
 

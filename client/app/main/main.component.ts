@@ -66,6 +66,9 @@ export class MainController {
   acceptRequest(friendId) {
     this.$http.post(`api/users/${this.currentUser._id}/addfriend`, { friendId : friendId});
   }
+  rejectRequest(friendId) {
+    this.$http.post(`api/users/${this.currentUser._id}/rejectrequest`, { friendId : friendId});
+  }
 }
 
 export default angular.module('projectTestApp.main', [

@@ -13,6 +13,7 @@ router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', controller.create);
 router.post('/:id/addfriend', auth.isAuthenticated(), controller.addFriend);
+router.post('/:id/rejectrequest', auth.isAuthenticated(), controller.rejectFriend);
 router.post('/searchfriend', auth.isAuthenticated(), controller.searchFriend);
 router.get('/:id/getfriends', auth.isAuthenticated(), controller.getFriends);
 router.post('/:id/sendrequest', auth.isAuthenticated(), controller.sendFriendRequest);

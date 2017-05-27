@@ -29,8 +29,6 @@ export default class RoomCtrl {
         // this.users = this.room.members;
         this.$http.get(`api/rooms/${this.roomId}/getmessages`, { roomId: this.room._id }).then(room => {
           this.messages = room.data.messages;
-          console.log(this.messages.length());
-          console.log(this.messages.empty());
           this.socket.syncUpdates('message', this.messages);
         });
         this.$http.get(`api/rooms/${this.roomId}/getparticipants`, { roomId: this.room._id} ).then(room => {

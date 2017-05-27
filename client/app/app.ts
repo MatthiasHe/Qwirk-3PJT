@@ -4,12 +4,14 @@ const angular = require('angular');
 const ngCookies = require('angular-cookies');
 const ngResource = require('angular-resource');
 const ngSanitize = require('angular-sanitize');
+require('ng-embed');
+
 import 'angular-socket-io';
+
 
 const uiRouter = require('angular-ui-router');
 const uiBootstrap = require('angular-ui-bootstrap');
-// const ngMessages = require('angular-messages');
-// import ngValidationMatch from 'angular-validation-match';
+
 
 
 import {routeConfig} from './app.config';
@@ -34,6 +36,7 @@ angular.module('projectTestApp', [
   ngCookies,
   ngResource,
   ngSanitize,
+  'ngEmbed',
 
   'btford.socket-io',
 

@@ -85,14 +85,20 @@ export function show(req, res) {
 
 // Creates a new Room in the DB
 export function create(req, res) {
+  if(req.body.private) {
+    var privateRoom = true;
+  } else {
+    var privateRoom = false;
+  }
   var params = {
     admin: mongoose.Types.ObjectId(req.body.adminId),
-    members: mongoose.Types.ObjectId(req.body.memberId),
-    name: req.body.name
+    members: [mongoose.Types.ObjectId(req.body.memberId), mongoose.Types.ObjectId(req.body.friendId)],
+    name: req.body.name,
+    private: privateRoom
   };
-  Room.create(params)
-  .then(respondWithResult(res, 201))
-  .catch(handleError(res));
+  Room.create(params).then(response => {
+    return res.json(response);
+  });
 }
 
 // Upserts the given Room in the DB at the specified ID

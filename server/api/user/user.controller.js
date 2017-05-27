@@ -71,7 +71,7 @@ export function show(req, res, next) {
       if(!user) {
         return res.status(404).end();
       }
-      res.json(user.profile);
+      res.json(user);
     })
     .catch(err => next(err));
 }
@@ -117,7 +117,7 @@ export function changePassword(req, res) {
 export function me(req, res, next) {
   var userId = req.user._id;
 
-  return User.findOne({ _id: userId }, '-salt -password').populate('friends request awaitingRequest').exec()
+  return User.findOne({ _id: userId }, '-salt -password').populate('friends.user friends.room request awaitingRequest').exec()
     .then(user => { // don't ever give out the password or salt
       if(!user) {
         return res.status(401).end();
@@ -132,15 +132,16 @@ export function me(req, res, next) {
  */
 export function addFriend(req, res) {
   var userId = req.params.id;
+  var roomId = req.body.roomId;
   var newFriendId = req.body.friendId;
 
-  User.findByIdAndUpdate(newFriendId, {$push: {friends: userId}}).then(newresponse => {
+  User.findByIdAndUpdate(newFriendId, {$push: {friends: {user: userId, room: roomId}}}).then(newresponse => {
   });
   User.findByIdAndUpdate(newFriendId, {$pull: {awaitingRequest: userId}}).then(newresponse => {
   });
   User.findByIdAndUpdate(userId, {$pull: {request: newFriendId}}).then(newresponse => {
   });
-  User.findByIdAndUpdate(userId, {$push: {friends: newFriendId}}).then(newresponse => {
+  User.findByIdAndUpdate(userId, {$push: {friends: {user: newFriendId, room: roomId}}}).then(newresponse => {
   });
 }
 
@@ -167,7 +168,7 @@ export function searchFriend(req, res) {
 
 export function getFriends(req, res) {
   var userId = req.params.id;
-  User.findOne({_id: userId}).populate('friends').exec()
+  User.findOne({_id: userId}).exec()
     .then(users => { // don't ever give out the password or salt
       if(!users) {
         return res.status(401).end();

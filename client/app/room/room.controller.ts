@@ -1,5 +1,6 @@
 'use strict';
 
+
 export default class RoomCtrl {
   message: string;
   socket;

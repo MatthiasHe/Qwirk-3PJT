@@ -9,15 +9,17 @@
 <!--<div>{{message.text}}</div>-->
 <!--</div>-->
 <!--</div>-->
+
 <div class="container">
   <div class="row " style="padding-top:40px;">
-    <h3 class="text-center">Qwirk</h3>
+    <h3 class="text-center">Qwirk 😴</h3>
+    <i class="emoticon emoticon-smile" title=":smile:"></i>
     <br><br>
     <div class="col-md-8">
       <div class="panel panel-info">
         <div class="panel-heading">
         </div>
-        <div class="media text-center" ng-if="!roomCtrl.messages.length()">Envoyez un premier message dans cette conversation !</div>
+        <div class="media text-center" ng-if="!roomCtrl.messages.length">Envoyez un premier message dans cette conversation !</div>
         <div class="panel-body" ng-repeat="message in roomCtrl.messages">
           <ul class="media-list">
             <li class="media">
@@ -25,7 +27,7 @@
                 <div class="media">
                   <a class="pull-left" href="#"> <img class="media-object img-circle " src="assets/img/user.png"/> </a>
                   <div class="media-body">
-                    {{message.text}} <br>
+                    <div ng-bind-html="message.text | embed"></div> <br>
                     <small class="text-muted">{{message.author}} | {{message.date | date:'dd-MM-yyyy HH:mm:ss'}}</small>
                     <hr/>
                   </div>
@@ -68,24 +70,27 @@
           </ul>
         </div>
 
-        <button class="btn btn-info center-block" type="button">Add a member</button>
+        <div ng-if="!roomCtrl.room.private">
+          <button class="btn btn-info center-block" type="button">Add a member</button>
 
-        <div>
-          <h2 class="text-center">Amis</h2>
-          <div class="panel-body" ng-repeat="friend in roomCtrl.friends">
-            <ul class="media-list">
-              <li class="media">
-                <div class="media-body">
-                  <div class="media">
-                    <a class="pull-left" href="#">
-                      <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.png"/> </a>
+          <div>
+            <h2 class="text-center">Amis</h2>
+            <div class="panel-body" ng-repeat="friend in roomCtrl.friends">
+              <ul class="media-list">
+                <li class="media">
+                  <div class="media-body">
+                    <div class="media">
+                      <a class="pull-left" href="#">
+                        <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.png"/> </a>
                       <button class="btn btn-info center-block" type="button" ng-click="roomCtrl.addMember(friend._id, $index)">Ajouter {{friend.name}}</button>
+                    </div>
                   </div>
-                </div>
-              </li>
-            </ul>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
+
 
 
       </div>

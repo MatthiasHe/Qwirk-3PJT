@@ -17,4 +17,5 @@ router.post('/createmessage', controller.createMessage);
 router.get('/:id/getmessages', auth.isAuthenticated(), controller.getMessages);
 router.get('/:id/getparticipants', auth.isAuthenticated(), controller.getParticipants);
 router.post('/:id/addmember', auth.isAuthenticated(), controller.addMember);
+router.post('/userrooms', auth.isAuthenticated(), controller.getUserRooms);
 module.exports = router;

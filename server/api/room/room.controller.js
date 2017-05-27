@@ -170,3 +170,11 @@ export function addMember(req, res) {
   Room.findByIdAndUpdate(roomId, {$push: {members: newMember}}).then(response => {
   });
 }
+
+export function getUserRooms(req, res) {
+  var userId = req.body.userId;
+  console.log(userId);
+  Room.find({ members: mongoose.Types.ObjectId(userId) }).then(response => {
+    return res.json(response);
+  });
+}

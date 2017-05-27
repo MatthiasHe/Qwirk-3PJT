@@ -43,7 +43,7 @@ export class MainController {
 
   acceptRequest(friendId) {
     var roomId;
-    this.$http.post('/api/rooms', { name: this.roomName, adminId: this.currentUser._id, memberId: this.currentUser._id }).then(room => {
+    this.$http.post('/api/rooms', { name: this.roomName, adminId: this.currentUser._id, memberId: this.currentUser._id, friendId: friendId, private: true }).then(room => {
       roomId = room.data._id;
       this.$http.post(`api/users/${this.currentUser._id}/addfriend`, { friendId : friendId, roomId: roomId});
     });

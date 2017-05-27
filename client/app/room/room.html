@@ -9,9 +9,11 @@
 <!--<div>{{message.text}}</div>-->
 <!--</div>-->
 <!--</div>-->
+
 <div class="container">
   <div class="row " style="padding-top:40px;">
-    <h3 class="text-center">Qwirk</h3>
+    <h3 class="text-center">Qwirk 😴</h3>
+    <i class="emoticon emoticon-smile" title=":smile:"></i>
     <br><br>
     <div class="col-md-8">
       <div class="panel panel-info">
@@ -25,7 +27,7 @@
                 <div class="media">
                   <a class="pull-left" href="#"> <img class="media-object img-circle " src="assets/img/user.png"/> </a>
                   <div class="media-body">
-                    <div ng-bind-html="message.text | linky"></div> <br>
+                    <div ng-bind-html="message.text | embed"></div> <br>
                     <small class="text-muted">{{message.author}} | {{message.date | date:'dd-MM-yyyy HH:mm:ss'}}</small>
                     <hr/>
                   </div>

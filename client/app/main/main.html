@@ -12,7 +12,7 @@
       <h1 class="page-header">Features:</h1>
       <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="friend in $ctrl.friends">
         <li><a href="#" uib-tooltip="{{friend.user.name}}">{{friend.user.name}}
-          <button type="button" class="btn" ng-click="$ctrl.deleteThing(friend)">Info</button>
+          <a class="btn" ui-sref='profile({userId: friend.user._id})'>{{friend.user._id}}Chat</a>
           <a class="btn" ui-sref='room({roomId: friend.room._id})'>Chat</a>
         </a></li>
       </ul>

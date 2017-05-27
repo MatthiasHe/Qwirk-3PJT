@@ -8,6 +8,7 @@ import login from './login';
 import settings from './settings';
 import signup from './signup';
 import friend from './friends';
+import profile from './profile';
 
 
 export default angular.module('projectTestApp.account', [
@@ -16,6 +17,7 @@ export default angular.module('projectTestApp.account', [
     settings,
     signup,
     friend,
+    profile
 ])
     .config(routing)
 

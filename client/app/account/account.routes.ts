@@ -41,6 +41,13 @@ export default function routes($stateProvider) {
         controller: 'FriendCtrl',
         controllerAs: 'friendCtrl',
         authenticate: true
+      })
+      .state('profile', {
+        url: '/profile/:userId',
+        template: require('./profile/profile.html'),
+        controller: 'ProfileCtrl',
+        controllerAs: 'profileCtrl',
+        authenticate: true
       });
 }
 

@@ -21,7 +21,7 @@ var UserSchema = new Schema({
     required: true
   },
   provider: String,
-  friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+  friends: [{id: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}, room: {type: mongoose.Schema.Types.ObjectId, ref: 'Room'}}],
   request: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
   awaitingRequest: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
   avatar: String,

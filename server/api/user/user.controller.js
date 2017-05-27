@@ -132,15 +132,16 @@ export function me(req, res, next) {
  */
 export function addFriend(req, res) {
   var userId = req.params.id;
+  var roomId = req.body.roomId;
   var newFriendId = req.body.friendId;
 
-  User.findByIdAndUpdate(newFriendId, {$push: {friends: userId}}).then(newresponse => {
+  User.findByIdAndUpdate(newFriendId, {$push: {friends: {id: userId, room: roomId}}}).then(newresponse => {
   });
   User.findByIdAndUpdate(newFriendId, {$pull: {awaitingRequest: userId}}).then(newresponse => {
   });
   User.findByIdAndUpdate(userId, {$pull: {request: newFriendId}}).then(newresponse => {
   });
-  User.findByIdAndUpdate(userId, {$push: {friends: newFriendId}}).then(newresponse => {
+  User.findByIdAndUpdate(userId, {$push: {friends: {id: newFriendId, room: roomId}}}).then(newresponse => {
   });
 }
 

@@ -90,9 +90,9 @@ export function create(req, res) {
     members: mongoose.Types.ObjectId(req.body.memberId),
     name: req.body.name
   };
-  Room.create(params)
-  .then(respondWithResult(res, 201))
-  .catch(handleError(res));
+  Room.create(params).then(response => {
+    return res.json(response);
+  });
 }
 
 // Upserts the given Room in the DB at the specified ID

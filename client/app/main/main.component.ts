@@ -6,7 +6,6 @@ export class MainController {
   $http;
   socket;
   awesomeThings = [];
-  newThing = '';
   Auth;
   friends = [];
   friendsRequest;
@@ -43,7 +42,11 @@ export class MainController {
   }
 
   acceptRequest(friendId) {
-    this.$http.post(`api/users/${this.currentUser._id}/addfriend`, { friendId : friendId});
+    var roomId;
+    this.$http.post('/api/rooms', { name: this.roomName, adminId: this.currentUser._id, memberId: this.currentUser._id }).then(room => {
+      roomId = room.data._id;
+      this.$http.post(`api/users/${this.currentUser._id}/addfriend`, { friendId : friendId, roomId: roomId});
+    });
   }
   rejectRequest(friendId) {
     this.$http.post(`api/users/${this.currentUser._id}/rejectrequest`, { friendId : friendId});

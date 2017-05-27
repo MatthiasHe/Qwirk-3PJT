@@ -17,6 +17,7 @@
       <div class="panel panel-info">
         <div class="panel-heading">
         </div>
+        <div class="media text-center" ng-if="!roomCtrl.messages.length()">Envoyez un premier message dans cette conversation !</div>
         <div class="panel-body" ng-repeat="message in roomCtrl.messages">
           <ul class="media-list">
             <li class="media">
@@ -66,6 +67,27 @@
             </li>
           </ul>
         </div>
+
+        <button class="btn btn-info center-block" type="button">Add a member</button>
+
+        <div>
+          <h2 class="text-center">Amis</h2>
+          <div class="panel-body" ng-repeat="friend in roomCtrl.friends">
+            <ul class="media-list">
+              <li class="media">
+                <div class="media-body">
+                  <div class="media">
+                    <a class="pull-left" href="#">
+                      <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.png"/> </a>
+                      <button class="btn btn-info center-block" type="button" ng-click="roomCtrl.addMember(friend._id)">Ajouter {{friend.name}}</button>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
       </div>
     </div>
   </div>

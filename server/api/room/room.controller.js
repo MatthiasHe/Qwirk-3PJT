@@ -159,3 +159,14 @@ export function getParticipants(req, res) {
       return res.json(room);
     });
 }
+
+export function addMember(req, res) {
+  var roomId = req.params.id;
+  var newMember = req.body.newMemberId;
+  console.log(roomId);
+  Room.findById(roomId).then(response => {
+    console.log(response);
+  });
+  Room.findByIdAndUpdate(roomId, {$push: {members: newMember}}).then(response => {
+  });
+}

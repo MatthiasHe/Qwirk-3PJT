@@ -24,11 +24,15 @@ export default class FriendsCtrl {
   }
 
   $onInit() {
-    this.Auth.addFriend('matt');
-    this.Auth.addFriend('jean');
     this.$http.get('api/users/me').then(response => {
       this.currentUser = response.data;
       this.friends = this.currentUser.friends;
+      // seed friend
+      this.$http.post('api/users/searchfriend', { nickname: 'mat' }).then(newresponse => {
+        this.searchResult = newresponse.data;
+        this.$http.post(`api/users/${this.currentUser._id}/addfriend`, { friendId : this.searchResult});
+      });
+      // fin du seed
     });
   }
 

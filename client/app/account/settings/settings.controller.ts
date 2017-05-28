@@ -32,6 +32,11 @@ export default class SettingsController {
     });
   }
 
+  $onChanges() {
+    const photo = <HTMLInputElement>document.getElementById('photo');
+    this.file = photo.files[0];
+  }
+
   changePassword(form) {
     this.submitted = true;
 
@@ -61,5 +66,10 @@ export default class SettingsController {
         'Content-Type': undefined
       }
     });
+  }
+
+  prepareThumbmail() {
+    const photo = <HTMLInputElement>document.getElementById('photo');
+    this.file = photo.files[0];
   }
 }

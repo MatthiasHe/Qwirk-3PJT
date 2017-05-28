@@ -45,16 +45,43 @@
         <p class="help-block"> {{ vm.message }} </p>
 
         <button class="btn btn-lg btn-primary" type="submit">Save changes</button>
+
       </form>
 
-      <form id        =  "uploadForm"
-            enctype   =  "multipart/form-data"
-            ng-submit="vm.sendAvatar()"
-      >
-        <input id="photo" type="file" name="userPhoto" ng-model="vm.file" />
-        <input type="submit" value="Upload Image" name="submit">
-      </form>
+      <br><br><br>
+      <br><br><br>
+      <br><br><br>
 
+      <div class="btn btn-lg btn-danger" ngf-select ng-model="vm.file" ngf-multiple="false" ngf-change="vm.prepareThumbmail()">Select File</div>
+      <div ngf-drop ngf-select ng-model="vm.file" class="drop-box"
+           ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="true"
+           accept="image/*,application/pdf" ngf-change="vm.prepareThumbmail()"
+           ngf-pattern="'image/*,application/pdf'"
+           style="    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    width: 200px;
+    height: 65px;
+    text-align: center;
+    padding-top: 25px;
+    margin: 10px;">Tu peux drop ton image ici également</div>
+      <img ng-src="{{vm.file}}">
+      Image thumbnail: <img ngf-thumbnail="{{vm.file}}">
+
+      <!--watching model:-->
+      <!--<div class="button" ngf-select ng-model="vm.file" ngf-multiple="false">Select File</div>-->
+      <!--Drop File:-->
+      <!--<div ngf-drop ngf-select ng-model="vm.file" class="drop-box"-->
+           <!--ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="true"-->
+           <!--accept="image/*,application/pdf"-->
+           <!--ngf-pattern="'image/*,application/pdf'">Drop pdfs or images here or click to upload</div>-->
+      <!--Files:-->
+      <!--<ul>-->
+        <!--<li style="font:smaller">{{vm.file.name}} {{vm.file.$error}} {{vm.file.$errorParam}}</li>-->
+      <!--</ul>-->
+      Image thumbnail:  <img ngf-src="vm.file">
     </div>
+    <button class="btn btn-lg btn-primary" onclick="vm.sendAvatar()" type="submit">Upload avatar</button>
+
+
   </div>
 </div>

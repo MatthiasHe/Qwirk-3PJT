@@ -52,7 +52,7 @@
       <br><br><br>
       <br><br><br>
 
-      <div class="btn btn-lg btn-danger" ngf-select ng-model="vm.file" ngf-multiple="false" ngf-change="vm.prepareThumbmail()">Select File</div>
+      <div id='photo' class="btn btn-lg btn-danger" ngf-select ng-model="vm.file" ngf-multiple="false" ngf-change="vm.prepareThumbmail()">Select File</div>
       <div ngf-drop ngf-select ng-model="vm.file" class="drop-box"
            ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="true"
            accept="image/*,application/pdf" ngf-change="vm.prepareThumbmail()"
@@ -66,21 +66,9 @@
     margin: 10px;">Tu peux drop ton image ici également</div>
       <img ng-src="{{vm.file}}">
       Image thumbnail: <img ngf-thumbnail="{{vm.file}}">
-
-      <!--watching model:-->
-      <!--<div class="button" ngf-select ng-model="vm.file" ngf-multiple="false">Select File</div>-->
-      <!--Drop File:-->
-      <!--<div ngf-drop ngf-select ng-model="vm.file" class="drop-box"-->
-           <!--ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="true"-->
-           <!--accept="image/*,application/pdf"-->
-           <!--ngf-pattern="'image/*,application/pdf'">Drop pdfs or images here or click to upload</div>-->
-      <!--Files:-->
-      <!--<ul>-->
-        <!--<li style="font:smaller">{{vm.file.name}} {{vm.file.$error}} {{vm.file.$errorParam}}</li>-->
-      <!--</ul>-->
       Image thumbnail:  <img ngf-src="vm.file">
     </div>
-    <button class="btn btn-lg btn-primary" onclick="vm.sendAvatar()" type="submit">Upload avatar</button>
+    <button class="btn btn-lg btn-primary" ng-click="vm.sendAvatar()" type="submit">Upload avatar</button>
 
 
   </div>

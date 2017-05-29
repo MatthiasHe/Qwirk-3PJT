@@ -17,32 +17,32 @@ function Socket(socketFactory) {
     return {
       socket,
 
-      // addContact(userId) {
-      //   socket.on('acceptFriend'), function (item) {
-      //
-      //   }
-      // }
-
-      syncContact(modelName, array, cb) {
+      syncFriends(modelName, array, cb) {
         cb = cb || angular.noop;
 
         /**
          * Syncs item creation/updates on 'model:save'
          */
-        socket.on(modelName + ':rejectRequest', function (item) {
+        socket.on(modelName + ':syncFriends', function (item) {
 
           // replace oldItem if it exists
           // otherwise just add item to the collection
 
           cb(event, item, array);
         });
+      },
+
+      syncRequest(modelName, array, cb) {
+        cb = cb || angular.noop;
 
         /**
-         * Syncs removed items on 'model:remove'
+         * Syncs item creation/updates on 'model:save'
          */
-        socket.on(modelName + ':remove', function (item) {
-          var event = 'deleted';
-          _.remove(array, {_id: item._id});
+        socket.on(modelName + ':syncRequest', function (item) {
+
+          // replace oldItem if it exists
+          // otherwise just add item to the collection
+
           cb(event, item, array);
         });
       },
@@ -98,6 +98,8 @@ function Socket(socketFactory) {
       unsyncUpdates(modelName) {
         socket.removeAllListeners(modelName + ':save');
         socket.removeAllListeners(modelName + ':remove');
+        socket.removeAllListeners(modelName + ':rejectRequest');
+        socket.removeAllListeners(modelName + ':syncFriends');
       }
     };
   }

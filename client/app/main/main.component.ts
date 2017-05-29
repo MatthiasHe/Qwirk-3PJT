@@ -46,11 +46,21 @@ export class MainController {
         this.socket.syncUpdates('room', this.rooms);
       });
       var self = this;
-      this.socket.syncContact('user', this.currentUser.friends, function(event, item, array){
+      this.socket.syncRequest('user', this.currentUser, function(event, item, array){
+        console.log('request');
         console.log(item);
         self.friendsRequest = item;
       });
+      this.socket.syncFriends('user', this.currentUser, function(event, item, array){
+        console.log('friends');
+        console.log(item);
+        self.friends = item;
+      });
     });
+  }
+
+  $onDestroy() {
+    this.socket.unsyncUpdates('user');
   }
 
   createRoom() {

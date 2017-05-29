@@ -14,7 +14,8 @@ UserEvents.setMaxListeners(0);
 var events = {
   save: 'save',
   remove: 'remove',
-  rejectRequest: 'rejectRequest'
+  rejectRequest: 'syncRequest',
+  syncFriends: 'syncFriends'
 };
 
 // Register the event emitter to the model events

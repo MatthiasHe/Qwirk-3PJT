@@ -7,7 +7,7 @@
 import UserEvents from './user.events';
 
 // Model events to emit
-var events = ['save', 'remove', 'rejectRequest'];
+var events = ['save', 'remove', 'syncRequest', 'syncFriends'];
 
 export function register(socket) {
   // Bind model events to socket events

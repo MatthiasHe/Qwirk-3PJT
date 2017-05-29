@@ -18,11 +18,6 @@ const storage = multer.diskStorage({
 });
 export const upload = multer({ storage: storage });
 
-
-function emitSocker(socket) {
-  socket.emit('rejectRequest');
-}
-
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
   return function(err) {
@@ -207,12 +202,17 @@ export function addFriend(req, res) {
   User.findByIdAndUpdate(userId, {$pull: {request: newFriendId}}).then(newresponse => {
   });
   User.findByIdAndUpdate(userId, {$push: {friends: {user: newFriendId, room: roomId}}}).then(newresponse => {
+    User.findById(userId).populate('friends.user friends.room request').exec()
+      .then(user => {
+        userEvent.emit('syncFriends', user.friends);
+        userEvent.emit('syncRequest', user.request);
+      });
+    User.findById(newFriendId).populate('friends.user friends.room request').exec()
+      .then(user => {
+        userEvent.emit('syncFriends', user.friends);
+        userEvent.emit('syncRequest', user.request);
+      });
   });
-
-  User.findById(userId).populate('request').exec()
-    .then(user => {
-      userEvent.emit('rejectRequest', user.request);
-    });
 }
 
 export function rejectFriend(req, res) {

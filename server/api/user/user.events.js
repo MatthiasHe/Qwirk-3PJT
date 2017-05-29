@@ -13,7 +13,8 @@ UserEvents.setMaxListeners(0);
 // Model events
 var events = {
   save: 'save',
-  remove: 'remove'
+  remove: 'remove',
+  rejectRequest: 'rejectRequest'
 };
 
 // Register the event emitter to the model events

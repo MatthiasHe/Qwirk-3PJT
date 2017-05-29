@@ -17,6 +17,36 @@ function Socket(socketFactory) {
     return {
       socket,
 
+      // addContact(userId) {
+      //   socket.on('acceptFriend'), function (item) {
+      //
+      //   }
+      // }
+
+      syncContact(modelName, array, cb) {
+        cb = cb || angular.noop;
+
+        /**
+         * Syncs item creation/updates on 'model:save'
+         */
+        socket.on(modelName + ':rejectRequest', function (item) {
+
+          // replace oldItem if it exists
+          // otherwise just add item to the collection
+
+          cb(event, item, array);
+        });
+
+        /**
+         * Syncs removed items on 'model:remove'
+         */
+        socket.on(modelName + ':remove', function (item) {
+          var event = 'deleted';
+          _.remove(array, {_id: item._id});
+          cb(event, item, array);
+        });
+      },
+
       /**
        * Register listeners to sync an array with updates on a model
        *
@@ -34,7 +64,6 @@ function Socket(socketFactory) {
          * Syncs item creation/updates on 'model:save'
          */
         socket.on(modelName + ':save', function (item) {
-          console.log(item);
           var oldItem = _.find(array, {_id: item._id});
           var index = array.indexOf(oldItem);
           var event = 'created';

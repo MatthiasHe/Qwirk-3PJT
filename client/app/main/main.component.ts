@@ -26,9 +26,6 @@ export class MainController {
   $onInit() {
     this.$http.get('api/users/me').then(response => {
       this.currentUser = response.data;
-      this.socket.syncUpdates('user', this.currentUser.friends, function(event, item, array){
-        console.log(item);
-      });
       // this.socket.syncUpdates('user', this.currentUser.request, function(event, item, array){
       //   array.forEach(function (request, index) {
       //     item.friends.forEach(friend){
@@ -47,6 +44,11 @@ export class MainController {
       this.$http.post('/api/rooms/userrooms', { userId : this.currentUser._id }).then(rooms => {
         this.rooms = rooms.data;
         this.socket.syncUpdates('room', this.rooms);
+      });
+      var self = this;
+      this.socket.syncContact('user', this.currentUser.friends, function(event, item, array){
+        console.log(item);
+        self.friendsRequest = item;
       });
     });
   }

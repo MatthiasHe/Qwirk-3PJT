@@ -41,7 +41,9 @@
         <div ngf-drop ngf-select ng-model="roomCtrl.file" class="drop-box" id="file"
              ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="true"
              accept="image/*,application/pdf" ngf-change="roomCtrl.sendFile()"
-             ngf-pattern="'image/*,application/pdf'">
+             ngf-pattern="'image/*,application/pdf'" ngf-select-disabled="true"
+             ngf-resize="{width: 100, height: 100, quality: 1, type: 'image/jpeg',
+               ratio: '1:2', pattern='.jpg', restoreExif: false}" ngf-max-size="10MB">
           <form ng-submit="roomCtrl.sendMessage()">
             <div class="panel-footer">
               <div class="input-group">

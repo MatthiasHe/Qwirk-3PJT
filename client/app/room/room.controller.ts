@@ -13,13 +13,15 @@ export default class RoomCtrl {
   friends;
   options;
   file;
+  upload;
 
   /*@ngInject*/
-  constructor(socket, $http, $stateParams) {
+  constructor(socket, $http, $stateParams, Upload) {
     this.message = '';
     this.socket = socket;
     this.$http = $http;
     this.roomId = $stateParams.roomId;
+    this.upload = Upload;
   }
 
 
@@ -66,18 +68,16 @@ export default class RoomCtrl {
   }
 
   sendFile() {
-    const fileInput = <HTMLInputElement>document.getElementById('file');
-    const file = fileInput.files[0];
-    console.log(file);
-    const fd = new FormData();
-    fd.append('file', file);
-    this.$http({
-      method: 'POST',
+    let filename;
+    const path = 'http://localhost:3000/assets/files/';
+    this.upload.upload({
       url: `api/rooms/sendfile`,
-      data: fd,
-      headers: {
-        'Content-Type': undefined
-      }
+      data: {file: this.file},
+      method: 'POST'
+    }).then(response => {
+      filename = response.data;
+      this.$http.post('/api/rooms/createmessage', { text: path + filename, author: this.currentUser._id, roomId: this.roomId });
+      this.message = '';
     });
   }
 

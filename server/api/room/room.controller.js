@@ -21,7 +21,7 @@ const multer = require('multer');
 var path = require('path');
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, '/Users/matt/Desktop/projectTest/client/app/assets/files');
+    cb(null, '/Users/matt/Desktop/projectTest/client/assets/files');
   },
   filename: function(req, file, cb) {
     cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
@@ -197,5 +197,5 @@ export function getUserRooms(req, res) {
 }
 
 export function sendFile(req, res) {
-  return res.json(req.file.path);
+  return res.json(req.file.filename);
 }

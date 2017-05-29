@@ -19,6 +19,8 @@ function onConnect(socket) {
   require('../api/room/message.socket').register(socket);
   require('../api/room/room.socket').register(socket);
   require('../api/thing/thing.socket').register(socket);
+  require('../api/user/user.socket').register(socket);
+
 }
 
 export default function(socketio) {

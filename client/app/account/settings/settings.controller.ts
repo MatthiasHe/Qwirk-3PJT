@@ -19,17 +19,24 @@ export default class SettingsController {
   file;
   $http;
   currentUser;
+  upload;
 
   /*@ngInject*/
-  constructor(Auth, $http) {
+  constructor(Auth, $http, Upload) {
     this.Auth = Auth;
     this.$http = $http;
+    this.upload = Upload;
   }
 
   $onInit() {
     this.$http.get('api/users/me').then(response => {
       this.currentUser = response.data;
     });
+  }
+
+  $onChanges() {
+    const photo = <HTMLInputElement>document.getElementById('photo');
+    this.file = photo.files[0];
   }
 
   changePassword(form) {
@@ -49,17 +56,27 @@ export default class SettingsController {
   }
 
   sendAvatar() {
-    const photo = <HTMLInputElement>document.getElementById('photo');
-    const file = photo.files[0];
-    const fd = new FormData();
-    fd.append('file', file);
-    this.$http({
-      method: 'POST',
+    this.upload.upload({
       url: `api/users/${this.currentUser._id}/sendavatar`,
-      data: fd,
-      headers: {
-        'Content-Type': undefined
-      }
+      data: {file: this.file},
+      method: 'POST'
     });
+    // const photo = <HTMLInputElement>document.getElementById('photo');
+    // const file = photo.files[0];
+    // const fd = new FormData();
+    // fd.append('file', file);
+    // this.$http({
+    //   method: 'POST',
+    //   url: `api/users/${this.currentUser._id}/sendavatar`,
+    //   data: fd,
+    //   headers: {
+    //     'Content-Type': undefined
+    //   }
+    // });
+  }
+
+  prepareThumbmail() {
+    const photo = <HTMLInputElement>document.getElementById('photo');
+    this.file = photo.files[0];
   }
 }

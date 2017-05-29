@@ -12,7 +12,8 @@ var MessageSchema = new mongoose.Schema({
   text: String,
   roomId: {type: mongoose.Schema.Types.ObjectId, ref: 'Room'},
   author: String,
-  authorAvatar: String
+  authorAvatar: String,
+  image: {type: Boolean, default: false}
 });
 
 var RoomSchema = new mongoose.Schema({

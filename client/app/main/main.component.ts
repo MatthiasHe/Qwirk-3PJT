@@ -7,7 +7,7 @@ export class MainController {
   socket;
   awesomeThings = [];
   Auth;
-  friends = [];
+  friends;
   friendsRequest;
   awaitingRequest;
   roomName = '';
@@ -26,6 +26,21 @@ export class MainController {
   $onInit() {
     this.$http.get('api/users/me').then(response => {
       this.currentUser = response.data;
+      this.socket.syncUpdates('user', this.currentUser.friends, function(event, item, array){
+        console.log(item);
+      });
+      // this.socket.syncUpdates('user', this.currentUser.request, function(event, item, array){
+      //   array.forEach(function (request, index) {
+      //     item.friends.forEach(friend){
+      //       if (friend === request) {
+      //         array.splice(index, 1);
+      //       }
+      //     };
+      //   }
+      //   this.$http.post(`api/users/${this.currentUser._id}/removerequest`, { friendId : friendId});
+      //   console.log(event);
+      //   console.log(item);
+      //   console.log(array);
       this.friends = this.currentUser.friends;
       this.friendsRequest = this.currentUser.request;
       this.awaitingRequest = this.currentUser.awaitingRequest;
@@ -47,9 +62,6 @@ export class MainController {
       roomId = room.data._id;
       this.$http.post(`api/users/${this.currentUser._id}/addfriend`, { friendId : friendId, roomId: roomId});
     });
-  }
-  rejectRequest(friendId) {
-    this.$http.post(`api/users/${this.currentUser._id}/rejectrequest`, { friendId : friendId});
   }
 }
 

@@ -17,6 +17,17 @@ import {Message} from './room.model';
 import User from '../user/user.model';
 import mongoose from 'mongoose';
 
+const multer = require('multer');
+var path = require('path');
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, '/Users/matt/Desktop/projectTest/client/assets/files');
+  },
+  filename: function(req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
+export const upload = multer({ storage: storage });
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -183,4 +194,8 @@ export function getUserRooms(req, res) {
   Room.find({ members: mongoose.Types.ObjectId(userId) }).then(response => {
     return res.json(response);
   });
+}
+
+export function sendFile(req, res) {
+  return res.json(req.file.filename);
 }

@@ -18,4 +18,5 @@ router.get('/:id/getmessages', auth.isAuthenticated(), controller.getMessages);
 router.get('/:id/getparticipants', auth.isAuthenticated(), controller.getParticipants);
 router.post('/:id/addmember', auth.isAuthenticated(), controller.addMember);
 router.post('/userrooms', auth.isAuthenticated(), controller.getUserRooms);
+router.post('/sendfile', controller.upload.single('file'), controller.sendFile);
 module.exports = router;

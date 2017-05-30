@@ -17,6 +17,51 @@ function Socket(socketFactory) {
     return {
       socket,
 
+      syncAwaitingRequest(modelName, array, cb) {
+        cb = cb || angular.noop;
+
+        /**
+         * Syncs item creation/updates on 'model:save'
+         */
+        socket.on(modelName + ':syncAwaitingRequest', function (item) {
+
+          // replace oldItem if it exists
+          // otherwise just add item to the collection
+
+          cb(event, item, array);
+        });
+      },
+
+      syncFriends(modelName, array, cb) {
+        cb = cb || angular.noop;
+
+        /**
+         * Syncs item creation/updates on 'model:save'
+         */
+        socket.on(modelName + ':syncFriends', function (item) {
+
+          // replace oldItem if it exists
+          // otherwise just add item to the collection
+
+          cb(event, item, array);
+        });
+      },
+
+      syncRequest(modelName, array, cb) {
+        cb = cb || angular.noop;
+
+        /**
+         * Syncs item creation/updates on 'model:save'
+         */
+        socket.on(modelName + ':syncRequest', function (item) {
+
+          // replace oldItem if it exists
+          // otherwise just add item to the collection
+
+          cb(event, item, array);
+        });
+      },
+
       /**
        * Register listeners to sync an array with updates on a model
        *
@@ -34,7 +79,6 @@ function Socket(socketFactory) {
          * Syncs item creation/updates on 'model:save'
          */
         socket.on(modelName + ':save', function (item) {
-          console.log(item);
           var oldItem = _.find(array, {_id: item._id});
           var index = array.indexOf(oldItem);
           var event = 'created';
@@ -69,6 +113,8 @@ function Socket(socketFactory) {
       unsyncUpdates(modelName) {
         socket.removeAllListeners(modelName + ':save');
         socket.removeAllListeners(modelName + ':remove');
+        socket.removeAllListeners(modelName + ':rejectRequest');
+        socket.removeAllListeners(modelName + ':syncFriends');
       }
     };
   }

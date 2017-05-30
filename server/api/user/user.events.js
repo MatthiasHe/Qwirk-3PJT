@@ -13,7 +13,10 @@ UserEvents.setMaxListeners(0);
 // Model events
 var events = {
   save: 'save',
-  remove: 'remove'
+  remove: 'remove',
+  rejectRequest: 'syncRequest',
+  syncFriends: 'syncFriends',
+  syncAwaitingRequest: 'syncAwaitingRequest'
 };
 
 // Register the event emitter to the model events

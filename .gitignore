@@ -10,3 +10,4 @@ dist
 npm-debug.log
 coverage
 server/api/user/avatar
+client/assets/files

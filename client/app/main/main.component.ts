@@ -47,13 +47,12 @@ export class MainController {
       });
       var self = this;
       this.socket.syncRequest('user', this.currentUser, function(event, item, array){
-        console.log('request');
-        console.log(item);
         self.friendsRequest = item;
       });
       this.socket.syncFriends('user', this.currentUser, function(event, item, array){
-        console.log('friends');
-        console.log(item);
+        self.friends = item;
+      });
+      this.socket.syncAwaitingRequest('user', this.currentUser, function(event, item, array){
         self.friends = item;
       });
     });

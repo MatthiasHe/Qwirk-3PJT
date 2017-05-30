@@ -17,6 +17,21 @@ function Socket(socketFactory) {
     return {
       socket,
 
+      syncAwaitingRequest(modelName, array, cb) {
+        cb = cb || angular.noop;
+
+        /**
+         * Syncs item creation/updates on 'model:save'
+         */
+        socket.on(modelName + ':syncAwaitingRequest', function (item) {
+
+          // replace oldItem if it exists
+          // otherwise just add item to the collection
+
+          cb(event, item, array);
+        });
+      },
+
       syncFriends(modelName, array, cb) {
         cb = cb || angular.noop;
 

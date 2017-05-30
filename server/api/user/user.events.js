@@ -15,7 +15,8 @@ var events = {
   save: 'save',
   remove: 'remove',
   rejectRequest: 'syncRequest',
-  syncFriends: 'syncFriends'
+  syncFriends: 'syncFriends',
+  syncAwaitingRequest: 'syncAwaitingRequest'
 };
 
 // Register the event emitter to the model events

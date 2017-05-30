@@ -198,6 +198,13 @@ export function joinRoom(req, res) {
   });
 }
 
+export function leaveRoom(req, res) {
+  var userId = req.body.userId;
+  var roomId = req.params.id;
+  Room.findByIdAndUpdate(roomId, {$pull: {members: userId}}).then(response => {
+  });
+}
+
 export function sendFile(req, res) {
   return res.json(req.file.filename);
 }

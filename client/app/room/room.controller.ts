@@ -95,6 +95,11 @@ export default class RoomCtrl {
     this.isParticipant = true;
   }
 
+  leaveRoom() {
+    this.$http.post(`api/rooms/${this.room._id}/leaveroom`, { userId: this.currentUser._id});
+    this.isParticipant = false;
+  }
+
   initEmbedOptions() {
     this.options = {
       watchEmbedData   : false,     // watch embed data and render on change

@@ -20,7 +20,8 @@ var RoomSchema = new mongoose.Schema({
   messages: [{type: mongoose.Schema.Types.ObjectId, ref: 'Message'}],
   private: {type: Boolean, default: true},
   name: String,
-  admin: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+  admin: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  moderators: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
   members: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
 });
 

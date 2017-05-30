@@ -14,8 +14,10 @@ export default class RoomCtrl {
   options;
   file;
   upload;
+  messageEdit;
   isPrivate;
   isParticipant;
+  isAdmin;
 
   /*@ngInject*/
   constructor(socket, $http, $stateParams, Upload) {
@@ -33,8 +35,11 @@ export default class RoomCtrl {
       this.friends = this.currentUser.friends;
       this.$http.get(`api/rooms/${this.roomId}`).then( newresponse => {
         this.room = newresponse.data;
-        if(this.room.private) {
+        if (this.room.private) {
           this.isPrivate = true;
+        }
+        if (this.room.admin = this.currentUser._id) {
+          this.isAdmin = true;
         }
         this.$http.get(`api/rooms/${this.roomId}/getmessages`, { roomId: this.room._id }).then(room => {
           this.messages = room.data.messages;
@@ -98,6 +103,21 @@ export default class RoomCtrl {
   leaveRoom() {
     this.$http.post(`api/rooms/${this.room._id}/leaveroom`, { userId: this.currentUser._id});
     this.isParticipant = false;
+  }
+
+  giveModeratorRights(userId) {
+    this.$http.post(`api/rooms/${this.room._id}/giveModeratorRights`, { newModeratorId: userId});
+  }
+
+  editMessage(message) {
+    message.editOn = true;
+    this.messageEdit = message.text;
+  }
+
+  sendTextForEdit(message) {
+    this.$http.post(`api/rooms/${this.room._id}/editmessage`, {messageId: message._id, text: this.messageEdit});
+    message.editOn = false;
+    this.messageEdit = '';
   }
 
   initEmbedOptions() {

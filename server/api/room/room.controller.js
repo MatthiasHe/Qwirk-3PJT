@@ -205,6 +205,20 @@ export function leaveRoom(req, res) {
   });
 }
 
+export function giveModeratorRights(req, res) {
+  var newModeratorId = req.body.newModeratorId;
+  var roomId = req.params.id;
+  Room.findByIdAndUpdate(roomId, {$push: {moderators: newModeratorId}}).then(response => {
+  });
+}
+
+export function editMessage(req, res) {
+  var messageId = req.body.messageId;
+  var text = req.body.text;
+  Message.findByIdAndUpdate(messageId, {text: text}).then(response => {
+  });
+}
+
 export function sendFile(req, res) {
   return res.json(req.file.filename);
 }

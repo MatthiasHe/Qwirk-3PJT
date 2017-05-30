@@ -13,7 +13,7 @@
 <div class="container">
   <div class="row " style="padding-top:40px;">
     <h3 class="text-center">Qwirk 😴</h3>
-    <btn ng-if="roomCtrl.isParticipant" class="btn-danger btn" ng-click="roomCtrl.leaveRoom()">Quitter la room</btn>
+    <btn ng-if="roomCtrl.isParticipant && !roomCtrl.isPrivate" class="btn-danger btn" ng-click="roomCtrl.leaveRoom()">Quitter la room</btn>
     <i class="emoticon emoticon-smile" title=":smile:"></i>
     <br><br>
     <div class="col-md-8">
@@ -28,7 +28,20 @@
                 <div class="media">
                   <a class="pull-left" href="#"> <img class="media-object img-circle " src="assets/img/user.png"/> </a>
                   <div class="media-body">
-                    <ng-embed embed-data="message.text" embed-options="roomCtrl.options"></ng-embed>
+                    <div ng-if="!message.editOn">
+                      <ng-embed embed-data="message.text" embed-options="roomCtrl.options"></ng-embed>
+                      <button class="btn btn-default" ng-click="roomCtrl.editMessage(message)"></button>
+                    </div>
+                    <form ng-if="message.editOn" ng-submit="roomCtrl.sendTextForEdit(message)">
+                      <div class="panel-footer">
+                        <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Enter Message or drag a file" ng-model="roomCtrl.messageEdit" autocomplete="off" required/>
+                          <span class="input-group-btn">
+                            <button class="btn btn-info" type="button">Validate</button>
+                          </span>
+                        </div>
+                      </div>
+                    </form>
                     <small class="text-muted">{{message.author}} | {{message.date | date:'dd-MM-yyyy HH:mm:ss'}}</small>
                     <hr/>
                   </div>
@@ -80,6 +93,7 @@
                   <div class="media-body">
                     <h5>{{participant.name}}</h5>
                     <small class="text-muted">Active From 3 hours</small>
+                    <button ng-if="roomCtrl.isAdmin" ng-click="roomCtrl.giveModeratorRights(participant._id)"class="btn btn-default">Right</button>
                   </div>
                 </div>
               </div>

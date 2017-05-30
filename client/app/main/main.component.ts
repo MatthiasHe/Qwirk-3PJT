@@ -12,7 +12,8 @@ export class MainController {
   awaitingRequest;
   roomName = '';
   currentUser;
-  rooms = [];
+  userRooms = [];
+  publicRooms = [];
   $state;
 
   /*@ngInject*/
@@ -42,8 +43,14 @@ export class MainController {
       this.friendsRequest = this.currentUser.request;
       this.awaitingRequest = this.currentUser.awaitingRequest;
       this.$http.post('/api/rooms/userrooms', { userId : this.currentUser._id }).then(rooms => {
-        this.rooms = rooms.data;
-        this.socket.syncUpdates('room', this.rooms);
+        rooms.data.forEach( room => {
+          if (room.members.includes(this.currentUser._id)) {
+            this.userRooms.push(room);
+          } else {
+            this.publicRooms.push(room);
+          }
+        });
+        // this.socket.syncUpdates('room', this.rooms);
       });
       var self = this;
       this.socket.syncRequest('user', this.currentUser, function(event, item, array){
@@ -63,7 +70,7 @@ export class MainController {
   }
 
   createRoom() {
-    this.$http.post('/api/rooms', { name: this.roomName, adminId: this.currentUser._id, memberId: this.currentUser._id });
+    this.$http.post('/api/rooms', { name: this.roomName, adminId: this.currentUser._id, memberId: this.currentUser._id, private: false  });
     this.roomName = '';
   }
 

@@ -180,18 +180,21 @@ export function getParticipants(req, res) {
 export function addMember(req, res) {
   var roomId = req.params.id;
   var newMember = req.body.newMemberId;
-  console.log(roomId);
-  Room.findById(roomId).then(response => {
-    console.log(response);
-  });
   Room.findByIdAndUpdate(roomId, {$push: {members: newMember}}).then(response => {
   });
 }
 
-export function getUserRooms(req, res) {
+export function getPublicUserRooms(req, res) {
   var userId = req.body.userId;
-  Room.find({ members: mongoose.Types.ObjectId(userId) }).then(response => {
+  Room.find({ private: false }).then(response => {
     return res.json(response);
+  });
+}
+
+export function joinRoom(req, res) {
+  var userId = req.body.userId;
+  var roomId = req.params.id;
+  Room.findByIdAndUpdate(roomId, {$push: {members: userId}}).then(response => {
   });
 }
 

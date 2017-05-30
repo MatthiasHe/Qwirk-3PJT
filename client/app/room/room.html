@@ -38,7 +38,7 @@
         </div>
 
 
-        <div ngf-drop ngf-select ng-model="roomCtrl.file" class="drop-box" id="file"
+        <div ng-if="roomCtrl.isParticipant"ngf-drop ngf-select ng-model="roomCtrl.file" class="drop-box" id="file"
              ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="true"
              accept="image/*,application/pdf" ngf-change="roomCtrl.sendFile()"
              ngf-pattern="'image/*,application/pdf'" ngf-select-disabled="true"
@@ -55,6 +55,13 @@
             </div>
           </form>
         </div>
+
+        <div ng-if="!roomCtrl.isParticipant">
+          <span class="input-group-btn">
+            <button ng-click="roomCtrl.joinRoom()" class="btn btn-info" type="button">REJOINDRE LA ROOM</button>
+          </span>
+        </div>
+
       </div>
     </div>
     <div class="col-md-4">
@@ -68,7 +75,7 @@
               <div class="media-body">
                 <div class="media">
                   <a class="pull-left" href="#">
-                    <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.png"/> </a>
+                    <img class="media-object img-circle" style="max-height:40px;" src="{{participant.avatar}}"/> </a>
                   <div class="media-body">
                     <h5>{{participant.name}}</h5>
                     <small class="text-muted">Active From 3 hours</small>
@@ -79,7 +86,7 @@
           </ul>
         </div>
 
-        <div ng-if="!roomCtrl.room.private">
+        <div ng-if="!roomCtrl.isPrivate && roomCtrl.isParticipant">
           <button class="btn btn-info center-block" type="button">Add a member</button>
 
           <div>

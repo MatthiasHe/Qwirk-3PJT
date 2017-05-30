@@ -14,6 +14,8 @@ export default class RoomCtrl {
   options;
   file;
   upload;
+  isPrivate;
+  isParticipant;
 
   /*@ngInject*/
   constructor(socket, $http, $stateParams, Upload) {
@@ -31,13 +33,20 @@ export default class RoomCtrl {
       this.friends = this.currentUser.friends;
       this.$http.get(`api/rooms/${this.roomId}`).then( newresponse => {
         this.room = newresponse.data;
-        // this.users = this.room.members;
+        if(this.room.private) {
+          this.isPrivate = true;
+        }
         this.$http.get(`api/rooms/${this.roomId}/getmessages`, { roomId: this.room._id }).then(room => {
           this.messages = room.data.messages;
           this.socket.syncUpdates('message', this.messages);
         });
         this.$http.get(`api/rooms/${this.roomId}/getparticipants`, { roomId: this.room._id} ).then(room => {
           this.users = room.data.members;
+          this.users.forEach( user => {
+            if (user._id === this.currentUser._id) {
+              this.isParticipant = true;
+            }
+          });
           // TO DO
 /*          this.friends.forEach(function (friend, index) {
             room.data.members.forEach(user => {
@@ -79,6 +88,11 @@ export default class RoomCtrl {
       this.$http.post('/api/rooms/createmessage', { text: path + filename, author: this.currentUser._id, roomId: this.roomId });
       this.message = '';
     });
+  }
+
+  joinRoom() {
+    this.$http.post(`api/rooms/${this.room._id}/joinroom`, { userId: this.currentUser._id});
+    this.isParticipant = true;
   }
 
   initEmbedOptions() {

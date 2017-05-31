@@ -18,6 +18,8 @@ export default class RoomCtrl {
   isPrivate;
   isParticipant;
   isAdmin;
+  canManage;
+  moderators;
 
   /*@ngInject*/
   constructor(socket, $http, $stateParams, Upload) {
@@ -35,11 +37,15 @@ export default class RoomCtrl {
       this.friends = this.currentUser.friends;
       this.$http.get(`api/rooms/${this.roomId}`).then( newresponse => {
         this.room = newresponse.data;
+        this.moderators = this.room.moderators;
         if (this.room.private) {
           this.isPrivate = true;
         }
-        if (this.room.admin = this.currentUser._id) {
+        if (this.room.admin === this.currentUser._id) {
           this.isAdmin = true;
+        }
+        if (this.room.moderators.includes(this.currentUser._id)) {
+          this.canManage = true;
         }
         this.$http.get(`api/rooms/${this.roomId}/getmessages`, { roomId: this.room._id }).then(room => {
           this.messages = room.data.messages;

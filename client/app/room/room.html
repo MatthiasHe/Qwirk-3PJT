@@ -30,7 +30,7 @@
                   <div class="media-body">
                     <div ng-if="!message.editOn">
                       <ng-embed embed-data="message.text" embed-options="roomCtrl.options"></ng-embed>
-                      <button class="btn btn-default" ng-click="roomCtrl.editMessage(message)"></button>
+                      <button ng-if="roomCtrl.canManage || roomCtrl.isAdmin" class="btn btn-default" ng-click="roomCtrl.editMessage(message)"></button>
                     </div>
                     <form ng-if="message.editOn" ng-submit="roomCtrl.sendTextForEdit(message)">
                       <div class="panel-footer">
@@ -93,7 +93,7 @@
                   <div class="media-body">
                     <h5>{{participant.name}}</h5>
                     <small class="text-muted">Active From 3 hours</small>
-                    <button ng-if="roomCtrl.isAdmin" ng-click="roomCtrl.giveModeratorRights(participant._id)"class="btn btn-default">Right</button>
+                    <button ng-if="roomCtrl.isAdmin && !roomCtrl.moderators.includes(participant._id)" ng-click="roomCtrl.giveModeratorRights(participant._id)"class="btn btn-default">Right</button>
                   </div>
                 </div>
               </div>

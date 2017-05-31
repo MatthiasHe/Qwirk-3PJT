@@ -23,4 +23,6 @@ router.post('/:id/leaveroom', auth.isAuthenticated(), controller.leaveRoom);
 router.post('/userrooms', auth.isAuthenticated(), controller.getPublicUserRooms);
 router.post('/sendfile', controller.upload.single('file'), controller.sendFile);
 router.post('/:id/givemoderatorrights', auth.isAuthenticated(), controller.giveModeratorRights);
+router.post('/:id/removemoderatorrights', auth.isAuthenticated(), controller.removeModeratorRights);
+
 module.exports = router;

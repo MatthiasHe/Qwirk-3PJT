@@ -94,6 +94,7 @@
                     <h5>{{participant.name}}</h5>
                     <small class="text-muted">Active From 3 hours</small>
                     <button ng-if="roomCtrl.isAdmin && !roomCtrl.moderators.includes(participant._id)" ng-click="roomCtrl.giveModeratorRights(participant._id)"class="btn btn-default">Right</button>
+                    <button ng-if="roomCtrl.isAdmin && roomCtrl.moderators.includes(participant._id)" ng-click="roomCtrl.removeModeratorRights(participant._id)"class="btn btn-default">Remove</button>
                   </div>
                 </div>
               </div>

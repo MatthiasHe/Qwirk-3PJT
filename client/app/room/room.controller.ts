@@ -112,7 +112,11 @@ export default class RoomCtrl {
   }
 
   giveModeratorRights(userId) {
-    this.$http.post(`api/rooms/${this.room._id}/giveModeratorRights`, { newModeratorId: userId});
+    this.$http.post(`api/rooms/${this.room._id}/givemoderatorrights`, { newModeratorId: userId});
+  }
+
+  removeModeratorRights(userId) {
+    this.$http.post(`api/rooms/${this.room._id}/removemoderatorrights`, { oldModeratorId: userId});
   }
 
   editMessage(message) {

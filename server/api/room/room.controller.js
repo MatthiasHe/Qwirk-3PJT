@@ -212,6 +212,13 @@ export function giveModeratorRights(req, res) {
   });
 }
 
+export function removeModeratorRights(req, res) {
+  var oldModeratorId = req.body.oldModeratorId;
+  var roomId = req.params.id;
+  Room.findByIdAndUpdate(roomId, {$pull: {moderators: oldModeratorId}}).then(response => {
+  });
+}
+
 export function editMessage(req, res) {
   var messageId = req.body.messageId;
   var text = req.body.text;

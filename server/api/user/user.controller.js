@@ -9,14 +9,14 @@ import userEvent from './user.events';
 const multer = require('multer');
 var path = require('path');
 const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
+  destination(req, file, cb) {
     cb(null, '/Users/matt/Desktop/projectTest/server/api/user/avatar');
   },
-  filename: function(req, file, cb) {
+  filename(req, file, cb) {
     cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
   }
 });
-export const upload = multer({ storage: storage });
+export const upload = multer({ storage });
 
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
@@ -290,6 +290,25 @@ export function sendAvatar(req, res) {
   User.findByIdAndUpdate(userId, {avatar: req.file.path}).then(response => {
   });
   console.log(req.file);
+}
+
+export function editSurname(req, res) {
+  const friendId = req.body.friendId;
+  const userId = req.params.id;
+  const newSurname = req.body.newSurname;
+  console.log(newSurname);
+  console.log(friendId + ' +++ ' + userId);
+  User.update({_id: userId, 'friends._id': friendId},
+    {$set: {
+      'friends.0.nickname': newSurname,
+    }},
+    function(err, model) {
+      if(err) {
+        console.log(err);
+        return res.send(err);
+      }
+      return res.json(model);
+    });
 }
 
 /**

@@ -9,14 +9,14 @@ import userEvent from './user.events';
 const multer = require('multer');
 var path = require('path');
 const storage = multer.diskStorage({
-  destination(req, file, cb) {
+  destination: function(req, file, cb) {
     cb(null, '/Users/matt/Desktop/projectTest/server/api/user/avatar');
   },
-  filename(req, file, cb) {
+  filename: function(req, file, cb) {
     cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
   }
 });
-export const upload = multer({ storage });
+export const upload = multer({ storage: storage });
 
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;

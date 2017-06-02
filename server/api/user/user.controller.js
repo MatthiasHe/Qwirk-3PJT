@@ -292,6 +292,25 @@ export function sendAvatar(req, res) {
   console.log(req.file);
 }
 
+export function editSurname(req, res) {
+  const friendId = req.body.friendId;
+  const userId = req.params.id;
+  const newSurname = req.body.newSurname;
+  console.log(newSurname);
+  console.log(friendId + ' +++ ' + userId);
+  User.update({_id: userId, 'friends._id': friendId},
+    {$set: {
+      'friends.0.nickname': newSurname,
+    }},
+    function(err, model) {
+      if(err) {
+        console.log(err);
+        return res.send(err);
+      }
+      return res.json(model);
+    });
+}
+
 /**
  * Authentication callback
  */

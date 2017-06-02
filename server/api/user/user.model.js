@@ -21,7 +21,7 @@ var UserSchema = new Schema({
     required: true
   },
   provider: String,
-  friends: [{user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}, room: {type: mongoose.Schema.Types.ObjectId, ref: 'Room'}}],
+  friends: [{user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}, room: {type: mongoose.Schema.Types.ObjectId, ref: 'Room'}, nickname: String}],
   request: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
   awaitingRequest: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
   avatar: {type: String, default: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRbezqZpEuwGSvitKy3wrwnth5kysKdRqBW54cAszm_wiutku3R'},

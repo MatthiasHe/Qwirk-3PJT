@@ -10,6 +10,8 @@
   <div class="window-area">
     <div class="conversation-list">
       <ul>
+        <li><a ng-click="$ctrl.setRoomId(room._id)"><i class="fa fa-comment"></i></i><span>room = {{$ctrl.roomId}}</span></a></li>
+
         <li class="item"><a href="#"><i class="fa fa-list-alt"></i><span>Dashboard</span></a></li>
         <li class="item"><a href="#"><span class="mx-auto"></span></a></li>
         <li class="item"><a href="#"><span class="mx-auto">My friends</span></a></li>
@@ -17,7 +19,7 @@
 
       <!--Friends list, go to room on click-->
       <ul class="" ng-repeat="friend in $ctrl.friends">
-        <li><a ui-sref='room({roomId: friend.room._id})'><i class="fa fa-circle-o online"></i></i><span>{{friend.user.name}}</span><i class="fa fa-times"></i></a></li>
+        <li><a ng-click="$ctrl.setRoomId(friend.room._id)"><i class="fa fa-circle-o online"></i></i><span>{{friend.user.name}}</span><i class="fa fa-times"></i></a></li>
         <!--<li class="item active"><a href="#"><i class="fa fa-user"></i><span>Team chat</span><i class="fa fa-times"></i></a></li>-->
       </ul>
 
@@ -27,7 +29,7 @@
         <li class="item"><a href="#"><span class="mx-auto">My publics room</span></a></li>
       </ul>
       <ul class="" ng-repeat="room in $ctrl.userRooms">
-        <li><a ui-sref='room({roomId: friend.room._id})'><i class="fa fa-comment"></i></i><span>{{room.name}}</span><i class="fa fa-times"></i></a></li>
+        <li><a ng-click="$ctrl.setRoomId(room._id)"><i class="fa fa-comment"></i></i><span>{{room.name}}</span><i class="fa fa-times"></i></a></li>
         <!--<li class="item active"><a href="#"><i class="fa fa-user"></i><span>Team chat</span><i class="fa fa-times"></i></a></li>-->
       </ul>
 
@@ -37,7 +39,7 @@
         <li class="item"><a href="#"><span class="mx-auto">Other publics room</span></a></li>
       </ul>
       <ul class="" ng-repeat="room in $ctrl.publicRooms">
-        <li><a ui-sref='room({roomId: friend.room._id})'><i class="fa fa-comment"></i></i><span>{{room.name}}</span></a></li>
+        <li><a ng-click="$ctrl.setRoomId(room._id)"><i class="fa fa-comment"></i></i><span>{{room.name}}</span></a></li>
         <!--<li class="item active"><a href="#"><i class="fa fa-user"></i><span>Team chat</span><i class="fa fa-times"></i></a></li>-->
       </ul>
 
@@ -54,7 +56,8 @@
 
       </div>
     </div>
-    <!--<div class="chat-area">-->
+      <!--<room roomid="$ctrl.roomId"></room>-->
+    <room-directive roomid="{{$ctrl.roomId}}"></room-directive>
       <!--<div class="title"><b>Conversation title</b><i class="fa fa-search"></i></div>-->
       <!--<div class="chat-list">-->
         <!--<ul>-->
@@ -176,31 +179,7 @@
         <!--</div>-->
         <!--<input type="button" value="Submit" class="send-btn">-->
       <!--</div>-->
-    <!--</div>-->
-    <div class="right-tabs">
-      <ul class="tabs">
-        <li class="active">
-          <a href="#"><i class="fa fa-users"></i></a>
-        </li>
-        <li><a href="#"><i class="fa fa-paperclip"></i></a></li>
-        <li><a href="#"><i class="fa fa-link"></i></a></li>
-      </ul>
-      <ul class="tabs-container">
-        <li class="active">
-          <ul class="member-list">
-            <li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Cucu Ionel</span></li>
-            <li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Christian Smith</span></li>
-            <li><span class="status idle"><i class="fa fa-circle-o"></i></span><span>John Bradley</span><span class="time">10:45 pm</span></li>
-            <li><span class="status offline"><i class="fa fa-circle-o"></i></span><span>Daniel Freitz</span></li>
-          </ul>
-        </li>
-        <li></li>
-        <li></li>
-      </ul>
-      <i class="fa fa-cog"></i>
-    </div>
-  </div>
-</div>
+
 
 /////////////////
 
@@ -256,3 +235,29 @@
 <!--</div>-->
 
 <!--<h1>TEST</h1>-->
+
+
+    <!--<div class="right-tabs">-->
+      <!--<ul class="tabs">-->
+        <!--<li class="active">-->
+          <!--<a href="#"><i class="fa fa-users"></i></a>-->
+        <!--</li>-->
+        <!--<li><a href="#"><i class="fa fa-paperclip"></i></a></li>-->
+        <!--<li><a href="#"><i class="fa fa-link"></i></a></li>-->
+      <!--</ul>-->
+      <!--<ul class="tabs-container">-->
+        <!--<li class="active">-->
+          <!--<ul class="member-list">-->
+            <!--<li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Cucu Ionel</span></li>-->
+            <!--<li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Christian Smith</span></li>-->
+            <!--<li><span class="status idle"><i class="fa fa-circle-o"></i></span><span>John Bradley</span><span class="time">10:45 pm</span></li>-->
+            <!--<li><span class="status offline"><i class="fa fa-circle-o"></i></span><span>Daniel Freitz</span></li>-->
+          <!--</ul>-->
+        <!--</li>-->
+        <!--<li></li>-->
+        <!--<li></li>-->
+      <!--</ul>-->
+      <!--<i class="fa fa-cog"></i>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->

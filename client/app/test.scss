@@ -317,7 +317,7 @@ b{
 }
 .right-tabs > ul.tabs > li{
   float: left;
-  width: 33.3%;
+  width: 50%;
   text-align: center;
   border-bottom: 1px solid #cfdae1;
 }
@@ -429,4 +429,55 @@ ul.tabs-container{
 }
 .jspVerticalBar{
   width: 7px;
+}
+
+.ne-image {
+  .ne-image-wrapper {
+    img {
+      max-width: 10em;
+    }
+  }
+}
+
+.ne-image {
+  .ne-image-wrapper {
+    img {
+      max-width: 10em;
+    }
+  }
+}
+
+.ne-image-long {
+  .ne-image-wrapper {
+    img {
+      max-width: 20em;
+    }
+  }
+}
+
+.room-input {
+  .input-wrapper {
+    width: 90%;
+  }
+}
+
+.user-li {
+  margin-bottom: 1em;
+  .user-name {
+    color: white;
+  }
+}
+
+.participants-container {
+  padding: 10px;
+}
+
+.back-to-room {
+  text-align: center;
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+
+.friend-list-avatar {
+  margin-right: 1em;
 }

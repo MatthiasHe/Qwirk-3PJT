@@ -15,6 +15,7 @@ export class MainController {
   userRooms = [];
   publicRooms = [];
   $state;
+  roomId = '5931e815ac69ee3520fff353';
 
   /*@ngInject*/
   constructor($http, socket, Auth, $state) {
@@ -80,6 +81,12 @@ export class MainController {
       roomId = room.data._id;
       this.$http.post(`api/users/${this.currentUser._id}/addfriend`, { friendId : friendId, roomId: roomId});
     });
+  }
+
+  setRoomId(roomId) {
+    this.roomId = roomId;
+    // this.roomId.apply();
+    // this.$state.reload();
   }
 }
 

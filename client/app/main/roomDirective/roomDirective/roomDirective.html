@@ -1,0 +1,196 @@
+<div class="chat-area" ng-if="!roomCtrl.displayProfile">
+  <div class="title"><b>Conversation id = {{roomCtrl.roomId}}</b><i class="fa fa-search"></i></div>
+  <div class="chat-list">
+    <ul ng-repeat="message in roomCtrl.messages">
+      <li class="me">
+        <div class="name">
+          <span class="">{{message.author}}</span>
+        </div>
+        <div class="message">
+          <p><ng-embed embed-data="message.text" embed-options="roomCtrl.options"></ng-embed></p>
+          <span class="msg-time">{{message.date | date:'dd-MM-yyyy HH:mm:ss'}}</span>
+        </div>
+      </li>
+      <br>
+    </ul>
+  </div>
+  <div ng-if="roomCtrl.isParticipant"ngf-drop ngf-select ng-model="roomCtrl.file" class="drop-box" id="file"
+       ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="true"
+       accept="image/*,application/pdf" ngf-change="roomCtrl.sendFile()"
+       ngf-pattern="'image/*,application/pdf'" ngf-select-disabled="true"
+       ngf-resize="{width: 100, height: 100, quality: 1, type: 'image/jpeg',
+               ratio: '1:2', pattern='.jpg', restoreExif: false}" ngf-max-size="10MB">
+    <form ng-submit="roomCtrl.sendMessage()">
+      <div class="input-area room-input">
+        <div class="input-wrapper">
+          <input type="text" class="form-control" placeholder="Enter Message or drag a file" ng-model="roomCtrl.message" autocomplete="off" required/>
+          <i class="fa fa-smile-o"></i>
+          <i class="fa fa-paperclip"></i>
+        </div>
+        <input type="button" value="Submit" class="send-btn">
+      </div>
+    </form>
+  </div>
+</div>
+
+<profile-directive userid="{{roomCtrl.profileDisplayId}}" ng-if="roomCtrl.displayProfile"></profile-directive>
+
+
+<!--<div class="container">-->
+  <!--<div class="row " style="padding-top:40px;">-->
+    <!--<h3 class="text-center">Qwirk 😴</h3>-->
+    <!--<btn ng-if="roomCtrl.isParticipant && !roomCtrl.isPrivate" class="btn-danger btn" ng-click="roomCtrl.leaveRoom()">Quitter la room</btn>-->
+    <!--<i class="emoticon emoticon-smile" title=":smile:"></i>-->
+    <!--<br><br>-->
+    <!--<div class="col-md-8">-->
+      <!--<div class="panel panel-info">-->
+        <!--<div class="panel-heading">-->
+        <!--</div>-->
+        <!--<div class="media text-center" ng-if="!roomCtrl.messages.length">Envoyez un premier message dans cette conversation !</div>-->
+        <!--<div class="panel-body" ng-repeat="message in roomCtrl.messages">-->
+          <!--<ul class="media-list">-->
+            <!--<li class="media">-->
+              <!--<div class="media-body">-->
+                <!--<div class="media">-->
+                  <!--<a class="pull-left" href="#"> <img class="media-object img-circle " src="assets/img/user.png"/> </a>-->
+                  <!--<div class="media-body">-->
+                    <!--<div ng-if="!message.editOn">-->
+                      <!--<ng-embed embed-data="message.text" embed-options="roomCtrl.options"></ng-embed>-->
+                      <!--<button ng-if="roomCtrl.canManage || roomCtrl.isAdmin" class="btn btn-default" ng-click="roomCtrl.editMessage(message)"></button>-->
+                    <!--</div>-->
+                    <!--<form ng-if="message.editOn" ng-submit="roomCtrl.sendTextForEdit(message)">-->
+                      <!--<div class="panel-footer">-->
+                        <!--<div class="input-group">-->
+                          <!--<input type="text" class="form-control" placeholder="Enter Message or drag a file" ng-model="roomCtrl.messageEdit" autocomplete="off" required/>-->
+                          <!--<span class="input-group-btn">-->
+                            <!--<button class="btn btn-info" type="button">Validate</button>-->
+                          <!--</span>-->
+                        <!--</div>-->
+                      <!--</div>-->
+                    <!--</form>-->
+                    <!--<small class="text-muted">{{message.author}} | {{message.date | date:'dd-MM-yyyy HH:mm:ss'}}</small>-->
+                    <!--<hr/>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</li>-->
+          <!--</ul>-->
+        <!--</div>-->
+
+
+        <!--<div ng-if="roomCtrl.isParticipant"ngf-drop ngf-select ng-model="roomCtrl.file" class="drop-box" id="file"-->
+             <!--ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="true"-->
+             <!--accept="image/*,application/pdf" ngf-change="roomCtrl.sendFile()"-->
+             <!--ngf-pattern="'image/*,application/pdf'" ngf-select-disabled="true"-->
+             <!--ngf-resize="{width: 100, height: 100, quality: 1, type: 'image/jpeg',-->
+               <!--ratio: '1:2', pattern='.jpg', restoreExif: false}" ngf-max-size="10MB">-->
+          <!--<form ng-submit="roomCtrl.sendMessage()">-->
+            <!--<div class="panel-footer">-->
+              <!--<div class="input-group">-->
+                <!--<input type="text" class="form-control" placeholder="Enter Message or drag a file" ng-model="roomCtrl.message" autocomplete="off" required/>-->
+                <!--<span class="input-group-btn">-->
+                    <!--<button class="btn btn-info" type="button">SEND</button>-->
+                  <!--</span>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</form>-->
+        <!--</div>-->
+
+        <!--<div ng-if="!roomCtrl.isParticipant">-->
+          <!--<span class="input-group-btn">-->
+            <!--<button ng-click="roomCtrl.joinRoom()" class="btn btn-info" type="button">REJOINDRE LA ROOM</button>-->
+          <!--</span>-->
+        <!--</div>-->
+
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="col-md-4">-->
+      <!--<div class="panel panel-primary">-->
+        <!--<div class="panel-heading">-->
+          <!--PARTICIPANTS-->
+        <!--</div>-->
+        <!--<div class="panel-body" ng-repeat="participant in roomCtrl.users">-->
+          <!--<ul class="media-list">-->
+            <!--<li class="media">-->
+              <!--<div class="media-body">-->
+                <!--<div class="media">-->
+                  <!--<a class="pull-left" href="#">-->
+                    <!--<img class="media-object img-circle" style="max-height:40px;" src="{{participant.avatar}}"/> </a>-->
+                  <!--<div class="media-body">-->
+                    <!--<h5>{{participant.name}}</h5>-->
+                    <!--<small class="text-muted">Active From 3 hours</small>-->
+                    <!--<button ng-if="roomCtrl.isAdmin && !roomCtrl.moderators.includes(participant._id)" ng-click="roomCtrl.giveModeratorRights(participant._id)"class="btn btn-default">Right</button>-->
+                    <!--<button ng-if="roomCtrl.isAdmin && roomCtrl.moderators.includes(participant._id)" ng-click="roomCtrl.removeModeratorRights(participant._id)"class="btn btn-default">Remove</button>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</li>-->
+          <!--</ul>-->
+        <!--</div>-->
+
+        <!--<div ng-if="!roomCtrl.isPrivate && roomCtrl.isParticipant">-->
+          <!--<button class="btn btn-info center-block" type="button">Add a member</button>-->
+
+          <!--<div>-->
+            <!--<h2 class="text-center">Amis</h2>-->
+            <!--<div class="panel-body" ng-repeat="friend in roomCtrl.friends">-->
+              <!--<ul class="media-list">-->
+                <!--<li class="media">-->
+                  <!--<div class="media-body">-->
+                    <!--<div class="media">-->
+                      <!--<a class="pull-left" href="#">-->
+                        <!--<img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.png"/> </a>-->
+                      <!--<button class="btn btn-info center-block" type="button" ng-click="roomCtrl.addMember(friend._id, $index)">Ajouter {{friend.name}}</button>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</li>-->
+              <!--</ul>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+<div class="right-tabs">
+  <ul class="tabs">
+    <li id="participants-nav" class="active">
+      <a ng-click="roomCtrl.displayTheParticipants()"><i class="fa fa-users"></i></a>
+    </li>
+    <!--<li><a href="#"><i class="fa fa-paperclip"></i></a></li>-->
+    <li id="friends-nav">
+      <a ng-click="roomCtrl.displayMyFriends()"><i class="fa fa-address-book"></i></a>
+    </li>
+  </ul>
+  <!--Particpants list-->
+  <div class="participants-container" ng-if="roomCtrl.displayParticpants">
+    <div class="back-to-room" ng-click="roomCtrl.displayChat()" ng-if="roomCtrl.displayProfile"><span>< Back to the room</span></div>
+    <ul class="member-list" ng-repeat="participant in roomCtrl.users">
+      <!--<li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Cucu Ionel</span></li>-->
+      <!--<li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Christian Smith</span></li>-->
+      <!--<li><span class="status idle"><i class="fa fa-circle-o"></i></span><span>John Bradley</span><span class="time">10:45 pm</span></li>-->
+      <li ng-click="roomCtrl.displayAProfile(participant._id)" class="user-li">
+        <span class="status offline"><i class="fa fa-circle-o"></i></span>
+        <span class="user-name">{{participant.name}}</span>
+        <span ng-if="roomCtrl.isAdmin"> | A</span>
+        <span ng-if="roomCtrl.isModerator"> | M</span>
+        <img class="media-object img-circle pull-right" style="max-height:20px;" src="{{participant.avatar}}"/>
+      </li>
+    </ul>
+  </div>
+  <!--Friends list-->
+  <div class="participants-container" ng-if="roomCtrl.displayFriends">
+    <div class="back-to-room" ng-click="roomCtrl.displayChat()" ng-if="roomCtrl.displayProfile"><span>< Back to the room</span></div>
+    <ul class="member-list" ng-repeat="friend in roomCtrl.friends">
+      <!--<li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Cucu Ionel</span></li>-->
+      <!--<li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Christian Smith</span></li>-->
+      <!--<li><span class="status idle"><i class="fa fa-circle-o"></i></span><span>John Bradley</span><span class="time">10:45 pm</span></li>-->
+      <li class="user-li">
+        <img class="media-object img-circle pull-left friend-list-avatar" style="max-height:20px;" src="{{friend.user.avatar}}"/>
+        <span class="user-name">{{friend.nickname}}</span>
+        <i class="fa fa-plus pull-right" aria-hidden="true"></i>
+      </li>
+    </ul>
+  </div>
+  <i class="fa fa-cog"></i>
+</div>

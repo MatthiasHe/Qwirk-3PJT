@@ -2,10 +2,11 @@
 // @flow
 const angular = require('angular');
 
-export default class DashboardCtrl {
+class DashboardCtrl {
 
   private $http;
   private currentUser;
+  private friendsRequest;
 
   /*@ngInject*/
   constructor($http) {
@@ -15,6 +16,7 @@ export default class DashboardCtrl {
   $onInit() {
     this.$http.get('api/users/me').then(response => {
       this.currentUser = response.data;
+      this.friendsRequest = this.currentUser.request;
     });
   }
 }

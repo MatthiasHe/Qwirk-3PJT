@@ -25,6 +25,7 @@ import account from './account';
 import admin from './admin';
 import navbar from '../components/navbar/navbar.component';
 import roomDirective from './main/roomDirective/roomDirective/roomComponent.component';
+import dashboardDirect from './main/dashboardDirective/dashboardDirective/dashboardComponent.component';
 import profileDirective from './main/profileDirective/profileDirective/profileComponent.component';
 import footer from '../components/footer/footer.component';
 import main from './main/main.component';
@@ -61,7 +62,8 @@ angular.module('projectTestApp', [
   socket,
   util,
   roomDirective,
-  profileDirective
+  profileDirective,
+  dashboardDirect
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

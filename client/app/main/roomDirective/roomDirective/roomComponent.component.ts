@@ -5,7 +5,7 @@ require('ng-embed');
 require('angular-file-upload');
 const Upload = require('ng-file-upload');
 
-export class RoomComponent {
+class RoomComponent {
   message: string;
   socket;
   $http;

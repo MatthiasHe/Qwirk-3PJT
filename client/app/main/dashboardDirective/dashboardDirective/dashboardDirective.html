@@ -1,0 +1,61 @@
+<div class="dashboard-area">
+
+  <div class="container-fluid col-container">
+    <div class="row col-row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 one-col">
+        <div class="request-area rounded col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <h1 class="area-title text-center">Friends request</h1>
+          <div ng-repeat="request in dashboardCtrl.friendsRequest">
+              <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4">
+                  <li class="text-center request-action">
+                    <a ng-click="dashboardCtrl.acceptRequest(request._id)" uib-tooltip="{{request.name}}">Accept {{request.name}}'s request</a>
+                  </li>
+                  <li class="text-center request-action">
+                    <a ng-click="dashboardCtrl.rejectRequest(request._id)" uib-tooltip="{{request.name}}">Decline {{request.name}}'s request</a>
+                  </li>
+              </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 one-col">
+        <div class="friend-add-area rounded col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <h2 class="area-title text-center">Add a friend</h2>
+          <div>
+            <form class="form" name="form" ng-submit="friendCtrl.addFriend()" novalidate>
+
+              <div class="form-group">
+                <input type="text" id="friend-input" placeholder="Find with a nickname" name="nickname" class="form-control" ng-model="friendCtrl.nickname"
+                       autocomplete="off" required/>
+              </div>
+              <div class="text-center">
+                <button class="btn btn-inverse btn-lg btn-register" type="submit">
+                  Search
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row col-row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 one-col">
+        <div class="private-area rounded col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <h2 class="area-title text-center">Create a private room</h2>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 one-col">
+        <div class="public-area rounded col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <h2 class="area-title text-center">Create a public room</h2>
+          <form class="form-group">
+            <input type="text" id="" class="form-control public-room-input" placeholder="Create a new room" ng-model="$ctrl.roomName">
+            <div class="text-center">
+              <button type="submit" class="btn btn-inverse btn-lg btn-register" ng-click="$ctrl.createRoom()">Create room</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

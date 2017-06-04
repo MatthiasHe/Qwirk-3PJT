@@ -1,0 +1,33 @@
+.dashboard-area {
+  border-top: 1px solid #cfdae1;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 122em;
+  margin-left: 1em;
+  margin-right: 1em;
+  box-shadow: inset 0 1px 3px rgba(207, 218, 225, 0.42);
+  .col-container {
+    height: 100%;
+    .col-row {
+      height: 50%;
+      .one-col {
+        height: 100%;
+        .request-area, .private-area, .public-area, .friend-add-area {
+          height: 100%;
+        }
+        .area-title {
+          font-size: 2em;
+          margin-top: 1em;
+          margin-bottom: 1em;
+        }
+        .request-ul {
+          width: 49%;
+        }
+        .public-room-input {
+          margin-bottom: 15px;
+        }
+      }
+    }
+  }
+}

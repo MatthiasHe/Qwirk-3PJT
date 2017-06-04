@@ -2,7 +2,7 @@
 // @flow
 const angular = require('angular');
 
-export default class ProfileCtrl {
+class ProfileCtrl {
   user;
   currentUser;
   userId;

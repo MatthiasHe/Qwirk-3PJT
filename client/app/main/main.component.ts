@@ -13,6 +13,7 @@ export class MainController {
   roomName = '';
   currentUser;
   userRooms = [];
+  userPrivateRooms = [];
   publicRooms = [];
   $state;
   roomId = '5931e815ac69ee3520fff353';
@@ -43,12 +44,20 @@ export class MainController {
       this.friends = this.currentUser.friends;
       this.friendsRequest = this.currentUser.request;
       this.awaitingRequest = this.currentUser.awaitingRequest;
-      this.$http.post('/api/rooms/userrooms', { userId : this.currentUser._id }).then(rooms => {
+      this.$http.post('/api/rooms/userrooms').then(rooms => {
         rooms.data.forEach( room => {
           if (room.members.includes(this.currentUser._id)) {
             this.userRooms.push(room);
           } else {
             this.publicRooms.push(room);
+          }
+        });
+        // this.socket.syncUpdates('room', this.rooms);userprivaterooms
+      });
+      this.$http.post('/api/rooms/userprivaterooms').then(rooms => {
+        rooms.data.forEach( room => {
+          if (room.members.includes(this.currentUser._id)) {
+            this.userPrivateRooms.push(room);
           }
         });
         // this.socket.syncUpdates('room', this.rooms);
@@ -70,23 +79,8 @@ export class MainController {
     this.socket.unsyncUpdates('user');
   }
 
-  createRoom() {
-    this.$http.post('/api/rooms', { name: this.roomName, adminId: this.currentUser._id, memberId: this.currentUser._id, private: false  });
-    this.roomName = '';
-  }
-
-  acceptRequest(friendId) {
-    var roomId;
-    this.$http.post('/api/rooms', { name: this.roomName, adminId: this.currentUser._id, memberId: this.currentUser._id, friendId: friendId, private: true }).then(room => {
-      roomId = room.data._id;
-      this.$http.post(`api/users/${this.currentUser._id}/addfriend`, { friendId : friendId, roomId: roomId});
-    });
-  }
-
   setRoomId(roomId) {
     this.roomId = roomId;
-    // this.roomId.apply();
-    // this.$state.reload();
   }
 }
 

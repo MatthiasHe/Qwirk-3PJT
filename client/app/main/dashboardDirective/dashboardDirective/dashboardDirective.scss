@@ -21,11 +21,51 @@
           margin-top: 1em;
           margin-bottom: 1em;
         }
-        .request-ul {
-          width: 49%;
+        .area-subtitle {
+          font-size: 1.5em;
+          margin-top: 1em;
+          margin-bottom: 1em;
+        }
+        .my-request {
+          text-align: center;
+          margin-bottom: 0.5em;
         }
         .public-room-input {
-          margin-bottom: 15px;
+          width: 40%;
+          margin: 2em auto 2em auto;
+        }
+        .text-room-info {
+          margin-bottom: 1em;
+          margin-top: 1em;
+        }
+        .request-name {
+          margin-right: 1em;
+        }
+        .btn-accept {
+          margin-right: 0.5em;
+        }
+        .result-avatar {
+          display: inline;
+          margin-right: 1em;
+          max-height:60px;
+        }
+        .result-add, .result-add-name {
+          font-size: 1.5em;
+        }
+        .result-add-name {
+          margin-right: 0.5em;
+        }
+        .add-btn {
+          vertical-align: 100%;
+        }
+        .search-friend-btn {
+          margin-bottom: 1em;
+        }
+        .result-list-search {
+          margin-bottom: 1em;
+        }
+        .text-awaiting-request {
+          margin-right: 1em;
         }
       }
     }

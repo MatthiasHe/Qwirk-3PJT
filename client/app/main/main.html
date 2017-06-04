@@ -23,6 +23,16 @@
         <!--<li class="item active"><a href="#"><i class="fa fa-user"></i><span>Team chat</span><i class="fa fa-times"></i></a></li>-->
       </ul>
 
+      <!--My private rooms where I am, go to room on click-->
+      <ul>
+        <li class="item"><a href="#"><span class="mx-auto"></span></a></li>
+        <li class="item"><a href="#"><span class="mx-auto">My private room</span></a></li>
+      </ul>
+      <ul class="" ng-repeat="room in $ctrl.userPrivateRooms">
+        <li><a ng-click="$ctrl.setRoomId(room._id)"><i class="fa fa-comment"></i></i><span>{{room.name}}</span><i class="fa fa-times"></i></a></li>
+        <!--<li class="item active"><a href="#"><i class="fa fa-user"></i><span>Team chat</span><i class="fa fa-times"></i></a></li>-->
+      </ul>
+
       <!--My rooms where I am, go to room on click-->
       <ul>
         <li class="item"><a href="#"><span class="mx-auto"></span></a></li>

@@ -226,13 +226,12 @@ export function rejectFriend(req, res) {
 }
 
 export function searchFriend(req, res) {
-  var friendId;
+  var userList;
   var name = req.body.nickname;
-  console.log(name);
-  User.findOne({name: new RegExp('^' + name)}).exec()
+  User.find({name: new RegExp('^' + name)}).exec()
     .then(response => {
-      friendId = response._id;
-      return res.json(friendId);
+      userList = response;
+      return res.json(userList);
     });
 }
 

@@ -96,16 +96,19 @@ export function show(req, res) {
 
 // Creates a new Room in the DB
 export function create(req, res) {
-  if(req.body.private) {
-    var privateRoom = true;
-  } else {
-    var privateRoom = false;
-  }
+  var privateRoom = req.body.private ? true : false;
+  var privateRoomMulti = req.body.privateMulti ? true : false;
+  // if(req.body.private) {
+  //   var privateRoom = true;
+  // } else {
+  //   var privateRoom = false;
+  // }
   var params = {
     admin: mongoose.Types.ObjectId(req.body.adminId),
     members: [mongoose.Types.ObjectId(req.body.memberId), mongoose.Types.ObjectId(req.body.friendId)],
     name: req.body.name,
-    private: privateRoom
+    private: privateRoom,
+    privateMulti: privateRoomMulti
   };
   Room.create(params).then(response => {
     return res.json(response);
@@ -185,8 +188,14 @@ export function addMember(req, res) {
 }
 
 export function getPublicUserRooms(req, res) {
-  var userId = req.body.userId;
+  // var userId = req.body.userId;
   Room.find({ private: false }).then(response => {
+    return res.json(response);
+  });
+}
+
+export function getPrivateUserRooms(req, res) {
+  Room.find({ privateMulti: true}).then(response => {
     return res.json(response);
   });
 }

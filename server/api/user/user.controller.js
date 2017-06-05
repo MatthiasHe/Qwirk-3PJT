@@ -314,6 +314,25 @@ export function sendAvatarFile(req, res) {
   return res.json(req.file.filename);
 }
 
+export function deleteFriend(req, res) {
+  var userId = req.params.id;
+  var friendId = req.body.friendId;
+  var friendObjectId;
+
+  User.findByIdAndUpdate({_id: friendId, 'friends.user': userId}, { $pull: {friends: { user: userId}}})
+    .exec(function(err,data) {
+    });
+  console.log(friendId);
+  console.log(userId);
+  User.findOne({'friends.user': friendId}).then(response => {
+    console.log(response.friends[0]);
+    User.findByIdAndUpdate({_id: userId, 'friends.user': response.friends[0].user}, { $pull: {friends: { user: response.friends[0].user}}})
+      .exec(function(err,data) {
+      });
+  });
+}
+
+
 /**
  * Authentication callback
  */

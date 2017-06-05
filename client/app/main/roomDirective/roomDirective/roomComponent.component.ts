@@ -69,7 +69,7 @@ class RoomComponent {
       this.$http.get(`api/rooms/${this.roomId}`).then( newresponse => {
         this.room = newresponse.data;
         this.moderators = this.room.moderators;
-        if (this.room.private) {
+        if (this.room.private || this.room.privateMulti) {
           this.isPrivate = true;
         }
         if (this.room.admin === this.currentUser._id) {

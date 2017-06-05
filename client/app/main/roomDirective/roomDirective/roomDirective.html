@@ -7,15 +7,11 @@
           <img class="media-object img-circle pull-left" style="max-height:25px;" src="{{message.authorAvatar}}"/>
           <span class="">{{message.author}}</span>
         </div>
-        <!--<div class="message">-->
-          <!--<p><ng-embed embed-data="message.text" embed-options="roomCtrl.options"></ng-embed></p>-->
-          <!--<span class="msg-time">{{message.date | date:'dd-MM-yyyy HH:mm:ss'}}</span>-->
-        <!--</div>-->
 
         <div class="message" ng-if="!message.editOn">
           <ng-embed embed-data="message.text" embed-options="roomCtrl.options"></ng-embed>
           <span class="msg-time">{{message.date | date:'dd-MM-yyyy HH:mm:ss'}}</span>
-          <span class="edit-action" ng-if="roomCtrl.canManage || roomCtrl.isAdmin" ng-click="roomCtrl.editMessage(message)">
+          <span class="edit-action" ng-if="(roomCtrl.canManage || roomCtrl.isAdmin) && !roomCtrl.isPrivate" ng-click="roomCtrl.editMessage(message)">
           <i class="fa fa-pencil" aria-hidden="true"></i>
           </span>
         </div>
@@ -207,14 +203,14 @@
           <span ng-if="roomCtrl.isAdmin && roomCtrl.moderators.includes(participant._id)" ng-click="roomCtrl.removeModeratorRights(participant._id)" class="pull-left"><i class="fa fa-minus" aria-hidden="true"></i></span>
         </div>
         <span class="user-name" ng-click="roomCtrl.displayAProfile(participant._id)">{{participant.name}}</span>
-        <span ng-if="roomCtrl.isAdmin"> | A</span>
-        <span ng-if="roomCtrl.isModerator"> | M</span>
+        <span ng-if="roomCtrl.room.admin == participant._id && !roomCtrl.isPrivate"> | A</span>
+        <span ng-if="roomCtrl.moderators.includes(participant._id) && !roomCtrl.isPrivate"> | M</span>
 
         <img class="media-object img-circle pull-right" style="max-height:20px;" src="{{participant.avatar}}"/>
       </li>
     </ul>
     <button ng-if="!roomCtrl.isParticipant" ng-click="roomCtrl.joinRoom()" class="btn btn-success btn-join">Join the room</button>
-    <button ng-if="roomCtrl.isParticipant" ng-click="roomCtrl.leaveRoom()" class="btn btn-danger btn-join">Leave</button>
+    <button ng-if="roomCtrl.isParticipant && !roomCtrl.isPrivate" ng-click="roomCtrl.leaveRoom()" class="btn btn-danger btn-join">Leave</button>
   </div>
   <!--Friends list-->
   <div class="participants-container" ng-if="roomCtrl.displayFriends">

@@ -18,7 +18,7 @@
 
       <!--Friends list, go to room on click-->
       <ul class="" ng-repeat="friend in $ctrl.friends">
-        <li><a ng-click="$ctrl.setRoomId(friend.room._id)"><i class="fa fa-circle-o online"></i></i><span>{{friend.user.name}}</span><i class="fa fa-times"></i></a></li>
+        <li><a><i class="fa fa-circle-o online"></i></i><span ng-click="$ctrl.setRoomId(friend.room._id)">{{friend.user.name}}</span><i ng-click="$ctrl.deleteFriend(friend.user._id)" class="fa fa-times"></i></a></li>
         <!--<li class="item active"><a href="#"><i class="fa fa-user"></i><span>Team chat</span><i class="fa fa-times"></i></a></li>-->
       </ul>
 
@@ -28,7 +28,7 @@
         <li class="item"><a disabled="true"><span class="mx-auto">My private room</span></a></li>
       </ul>
       <ul class="" ng-repeat="room in $ctrl.userPrivateRooms">
-        <li><a ng-click="$ctrl.setRoomId(room._id)"><i class="fa fa-comment"></i></i><span>{{room.name}}</span><i class="fa fa-times"></i></a></li>
+        <li><a ng-click="$ctrl.setRoomId(room._id)"><i class="fa fa-comment"></i></i><span>{{room.name}}</span></a></li>
         <!--<li class="item active"><a href="#"><i class="fa fa-user"></i><span>Team chat</span><i class="fa fa-times"></i></a></li>-->
       </ul>
 
@@ -38,7 +38,7 @@
         <li class="item"><a disabled="true"><span class="mx-auto">My publics room</span></a></li>
       </ul>
       <ul class="" ng-repeat="room in $ctrl.userRooms">
-        <li><a ng-click="$ctrl.setRoomId(room._id)"><i class="fa fa-comment"></i></i><span>{{room.name}}</span><i class="fa fa-times"></i></a></li>
+        <li><a ng-click="$ctrl.setRoomId(room._id)"><i class="fa fa-comment"></i></i><span>{{room.name}}</span></a></li>
         <!--<li class="item active"><a href="#"><i class="fa fa-user"></i><span>Team chat</span><i class="fa fa-times"></i></a></li>-->
       </ul>
 

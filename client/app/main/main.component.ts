@@ -93,8 +93,11 @@ export class MainController {
     this.displayDashboard = true;
     this.displayRoom = false;
   }
-}
 
+  deleteFriend(friendid) {
+    this.$http.post(`api/users/${this.currentUser._id}/deletefriend`, { friendId: friendid });
+  }
+}
 export default angular.module('projectTestApp.main', [
   uiRouter])
     .config(routing)

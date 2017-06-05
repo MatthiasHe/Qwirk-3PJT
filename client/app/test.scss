@@ -229,7 +229,7 @@ b{
 .chat-area ul .name{
   padding: 14px;
   text-align: right;
-  width: 100px;
+  width: 125px;
   float: left;
   color: #5d7185;
   font-weight: bold;
@@ -254,7 +254,7 @@ b{
 .chat-area ul .message .msg-time{
   position: absolute;
   top:16px;
-  right: 15px;
+  right: 40px;
   color: #738ba3;
   font-size: 9px;
 }
@@ -572,6 +572,18 @@ ul.tabs-container{
 
 .friend-list-avatar {
   margin-right: 1em;
+}
+
+.edit-action {
+  position: absolute;
+  top:16px;
+  right: 15px;
+  color: #738ba3;
+  font-size: 9px;
+}
+
+.message-area {
+  height: 4em;
 }
 
 // Upload avatar

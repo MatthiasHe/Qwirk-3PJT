@@ -99,7 +99,7 @@
                 </div>
                 <div id='photo' class="btn btn-lg btn-file btn-default" ngf-select ng-model="vm.file" ngf-multiple="false" ngf-change="vm.prepareThumbmail()">Select avatar</div>
                 <div class="form-group">
-                  <input type="text" name="name" id="username" tabindex="1" class="form-control" placeholder="Username" value="" required>
+                  <input type="text" name="name" id="username" tabindex="1" class="form-control" placeholder="Username" value="" ng-model="vm.user.name" required>
                   <p class="help-block" ng-show="form.name.$error.required && vm.submitted">
                     A name is required
                   </p>

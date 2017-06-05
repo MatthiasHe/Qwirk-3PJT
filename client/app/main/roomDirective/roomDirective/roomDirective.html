@@ -4,12 +4,41 @@
     <ul ng-repeat="message in roomCtrl.messages">
       <li class="me">
         <div class="name">
+          <img class="media-object img-circle pull-left" style="max-height:25px;" src="{{message.authorAvatar}}"/>
           <span class="">{{message.author}}</span>
         </div>
-        <div class="message">
-          <p><ng-embed embed-data="message.text" embed-options="roomCtrl.options"></ng-embed></p>
+        <!--<div class="message">-->
+          <!--<p><ng-embed embed-data="message.text" embed-options="roomCtrl.options"></ng-embed></p>-->
+          <!--<span class="msg-time">{{message.date | date:'dd-MM-yyyy HH:mm:ss'}}</span>-->
+        <!--</div>-->
+
+        <div class="message" ng-if="!message.editOn">
+          <ng-embed embed-data="message.text" embed-options="roomCtrl.options"></ng-embed>
           <span class="msg-time">{{message.date | date:'dd-MM-yyyy HH:mm:ss'}}</span>
+          <span class="edit-action" ng-if="roomCtrl.canManage || roomCtrl.isAdmin" ng-click="roomCtrl.editMessage(message)">
+          <i class="fa fa-pencil" aria-hidden="true"></i>
+          </span>
         </div>
+        <form ng-if="message.editOn" ng-submit="roomCtrl.sendTextForEdit(message)">
+          <div class="input-area room-input">
+            <div class="input-wrapper">
+              <input type="text" class="form-control" ng-model="roomCtrl.messageEdit" autocomplete="off" required/>
+            </div>
+            <input type="button" value="Submit" class="send-btn">
+          </div>
+        </form>
+        <!--<form ng-if="message.editOn" ng-submit="roomCtrl.sendTextForEdit(message)">-->
+          <!--<div class="panel-footer">-->
+            <!--<div class="input-group">-->
+              <!--<input type="text" class="form-control" placeholder="Enter Message or drag a file" ng-model="roomCtrl.messageEdit" autocomplete="off" required/>-->
+              <!--<span class="input-group-btn">-->
+                            <!--<button class="btn btn-info" type="button">Validate</button>-->
+                          <!--</span>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</form>-->
+
+
       </li>
       <br>
     </ul>

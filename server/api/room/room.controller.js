@@ -151,7 +151,8 @@ export function createMessage(req, res) {
     var params = {
       text: req.body.text,
       author: response.name,
-      roomId: mongoose.Types.ObjectId(req.body.roomId)
+      roomId: mongoose.Types.ObjectId(req.body.roomId),
+      authorAvatar: response.avatar
     };
     Message.create(params)
       .then(response => {

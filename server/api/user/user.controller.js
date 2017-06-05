@@ -10,7 +10,7 @@ const multer = require('multer');
 var path = require('path');
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, '/Users/matt/Desktop/projectTest/server/api/user/avatar');
+    cb(null, '/Users/matt/Desktop/projectTest/client/assets/avatar');
   },
   filename: function(req, file, cb) {
     cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
@@ -56,7 +56,7 @@ export function create(req, res) {
       var token = jwt.sign({ _id: user._id }, config.secrets.session, {
         expiresIn: 60 * 60 * 5
       });
-      res.json({ token });
+      res.json({token, user});
     })
     .catch(validationError(res));
 }
@@ -285,10 +285,10 @@ export function getAwaitingRequest(req, res) {
 
 export function sendAvatar(req, res) {
   const userId = req.params.id;
-  console.log(userId);
-  User.findByIdAndUpdate(userId, {avatar: req.file.path}).then(response => {
+  const avatarPath = req.body.avatarPath;
+  console.log(avatarPath);
+  User.findByIdAndUpdate(userId, {avatar: avatarPath}).then(response => {
   });
-  console.log(req.file);
 }
 
 export function editSurname(req, res) {
@@ -308,6 +308,10 @@ export function editSurname(req, res) {
       }
       return res.json(model);
     });
+}
+
+export function sendAvatarFile(req, res) {
+  return res.json(req.file.filename);
 }
 
 /**

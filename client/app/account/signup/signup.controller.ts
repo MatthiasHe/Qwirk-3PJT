@@ -18,11 +18,20 @@ export default class SignupController {
   submitted = false;
   Auth;
   $state;
+  upload;
+  file;
+  $http;
 
   /*@ngInject*/
-  constructor(Auth, $state) {
+  constructor(Auth, $state, Upload, $http) {
     this.Auth = Auth;
     this.$state = $state;
+    this.upload = Upload;
+    this.$http = $http;
+  }
+
+  $onInit() {
+    this.file = 'https://www.mautic.org/media/images/default_avatar.png';
   }
 
   register(form) {
@@ -34,7 +43,8 @@ export default class SignupController {
         email: this.user.email,
         password: this.user.password
       })
-      .then(() => {
+      .then((response) => {
+        this.sendAvatar(response.user._id);
         // Account created, redirect to home
                 this.$state.go('main');      })
       .catch(err => {
@@ -48,5 +58,23 @@ export default class SignupController {
 
       });
     }
+  }
+
+  sendAvatar(userId) {
+    let filename;
+    const path = 'http://localhost:3000/assets/avatar/';
+    this.upload.upload({
+      url: `api/users/sendavatarfile`,
+      data: {file: this.file},
+      method: 'POST'
+    }).then(response => {
+      filename = response.data;
+      this.$http.post(`api/users/${userId}/sendavatar`, { avatarPath: path + filename });
+    });
+  }
+
+  prepareThumbmail() {
+    const photo = <HTMLInputElement>document.getElementById('photo');
+    // this.file = photo.files[0];
   }
 }

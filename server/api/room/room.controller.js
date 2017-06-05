@@ -148,7 +148,6 @@ export function destroy(req, res) {
 
 export function createMessage(req, res) {
   User.findById(req.body.author).then(response => {
-    console.log('gdervr = ' + response.name);
     var params = {
       text: req.body.text,
       author: response.name,
@@ -173,7 +172,7 @@ export function getMessages(req, res) {
 
 export function getParticipants(req, res) {
   var roomId = req.params.id;
-  Room.findOne({_id: roomId}).populate('members').exec()
+  Room.findOne({_id: roomId}).populate({path: 'members'}).exec()
     .then(room => {
       console.log(room);
       return res.json(room);
@@ -183,6 +182,7 @@ export function getParticipants(req, res) {
 export function addMember(req, res) {
   var roomId = req.params.id;
   var newMember = req.body.newMemberId;
+  console.log(roomId + '+++' + newMember);
   Room.findByIdAndUpdate(roomId, {$push: {members: newMember}}).then(response => {
   });
 }
@@ -204,6 +204,7 @@ export function joinRoom(req, res) {
   var userId = req.body.userId;
   var roomId = req.params.id;
   Room.findByIdAndUpdate(roomId, {$push: {members: userId}}).then(response => {
+    console.log(response);
   });
 }
 

@@ -10,11 +10,10 @@
   <div class="window-area">
     <div class="conversation-list">
       <ul>
-        <li><a ng-click="$ctrl.setRoomId(room._id)"><i class="fa fa-comment"></i></i><span>room = {{$ctrl.roomId}}</span></a></li>
-
-        <li class="item"><a href="#"><i class="fa fa-list-alt"></i><span>Dashboard</span></a></li>
-        <li class="item"><a href="#"><span class="mx-auto"></span></a></li>
-        <li class="item"><a href="#"><span class="mx-auto">My friends</span></a></li>
+        <!--<li><a ng-click="$ctrl.setRoomId(room._id)"><i class="fa fa-comment"></i></i><span>room = {{$ctrl.roomId}}</span></a></li>-->
+        <li class="item"><a ng-click="$ctrl.displayTheDashboard()"><i class="fa fa-list-alt"></i><span>Dashboard</span></a></li>
+        <li class="item"><a disabled="true" href="#"><span class="mx-auto"></span></a></li>
+        <li class="item"><a disabled="true"><span class="mx-auto">My friends</span></a></li>
       </ul>
 
       <!--Friends list, go to room on click-->
@@ -25,8 +24,8 @@
 
       <!--My private rooms where I am, go to room on click-->
       <ul>
-        <li class="item"><a href="#"><span class="mx-auto"></span></a></li>
-        <li class="item"><a href="#"><span class="mx-auto">My private room</span></a></li>
+        <li class="item"><a disabled="true"><span class="mx-auto"></span></a></li>
+        <li class="item"><a disabled="true"><span class="mx-auto">My private room</span></a></li>
       </ul>
       <ul class="" ng-repeat="room in $ctrl.userPrivateRooms">
         <li><a ng-click="$ctrl.setRoomId(room._id)"><i class="fa fa-comment"></i></i><span>{{room.name}}</span><i class="fa fa-times"></i></a></li>
@@ -35,8 +34,8 @@
 
       <!--My rooms where I am, go to room on click-->
       <ul>
-        <li class="item"><a href="#"><span class="mx-auto"></span></a></li>
-        <li class="item"><a href="#"><span class="mx-auto">My publics room</span></a></li>
+        <li class="item"><a disabled="true"><span class="mx-auto"></span></a></li>
+        <li class="item"><a disabled="true"><span class="mx-auto">My publics room</span></a></li>
       </ul>
       <ul class="" ng-repeat="room in $ctrl.userRooms">
         <li><a ng-click="$ctrl.setRoomId(room._id)"><i class="fa fa-comment"></i></i><span>{{room.name}}</span><i class="fa fa-times"></i></a></li>
@@ -45,8 +44,8 @@
 
       <!--My rooms where I am not, go to room on click-->
       <ul>
-        <li class="item"><a href="#"><span class="mx-auto"></span></a></li>
-        <li class="item"><a href="#"><span class="mx-auto">Other publics room</span></a></li>
+        <li class="item"><a disabled="true"><span class="mx-auto"></span></a></li>
+        <li class="item"><a disabled="true"><span class="mx-auto">Other publics room</span></a></li>
       </ul>
       <ul class="" ng-repeat="room in $ctrl.publicRooms">
         <li><a ng-click="$ctrl.setRoomId(room._id)"><i class="fa fa-comment"></i></i><span>{{room.name}}</span></a></li>
@@ -55,24 +54,22 @@
 
       <div class="my-account">
         <div class="image">
-          <img src="https://secure.gravatar.com/avatar/de76e03aa6b5b0bf675c1e8a990da52f?s=64">
+          <img src="{{$ctrl.currentUser.avatar}}">
           <i class="fa fa-circle online"></i>
         </div>
         <div class="name">
-          <span>Cucu Ionel</span>
+          <span>{{$ctrl.currentUser.name}}</span>
           <i class="fa fa-angle-down"></i>
           <span class="availability">Available</span>
         </div>
 
       </div>
     </div>
-      <!--<room roomid="$ctrl.roomId"></room>-->
 
 
 
-
-    <dashboard-directive></dashboard-directive>
-    <!--<room-directive roomid="{{$ctrl.roomId}}"></room-directive>-->
+    <dashboard-directive ng-if="$ctrl.displayDashboard"></dashboard-directive>
+    <room-directive ng-if="$ctrl.displayRoom" roomid="{{$ctrl.roomId}}"></room-directive>
 
 
 

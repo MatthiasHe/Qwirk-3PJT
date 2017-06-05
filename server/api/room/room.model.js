@@ -23,7 +23,7 @@ var RoomSchema = new mongoose.Schema({
   name: String,
   admin: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   moderators: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-  members: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+  members: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 });
 
 registerEvents(RoomSchema);

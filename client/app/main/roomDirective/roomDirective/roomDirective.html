@@ -163,20 +163,29 @@
     </li>
   </ul>
   <!--Particpants list-->
-  <div class="participants-container" ng-if="roomCtrl.displayParticpants">
+  <div class="participants-container text-center" ng-if="roomCtrl.displayParticpants">
     <div class="back-to-room" ng-click="roomCtrl.displayChat()" ng-if="roomCtrl.displayProfile"><span>< Back to the room</span></div>
     <ul class="member-list" ng-repeat="participant in roomCtrl.users">
       <!--<li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Cucu Ionel</span></li>-->
       <!--<li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Christian Smith</span></li>-->
       <!--<li><span class="status idle"><i class="fa fa-circle-o"></i></span><span>John Bradley</span><span class="time">10:45 pm</span></li>-->
-      <li ng-click="roomCtrl.displayAProfile(participant._id)" class="user-li">
-        <span class="status offline"><i class="fa fa-circle-o"></i></span>
-        <span class="user-name">{{participant.name}}</span>
+      <li class="user-li">
+        <span class="status offline pull-left"><i class="fa fa-circle-o"></i></span>
+        <div ng-if="!roomCtrl.moderators.includes(participant._id)">
+          <span ng-if="roomCtrl.isAdmin && !roomCtrl.moderators.includes(participant._id)" ng-click="roomCtrl.giveModeratorRights(participant._id)" class="pull-left"><i class="fa fa-plus" aria-hidden="true"></i></span>
+        </div>
+        <div ng-if="roomCtrl.moderators.includes(participant._id)">
+          <span ng-if="roomCtrl.isAdmin && roomCtrl.moderators.includes(participant._id)" ng-click="roomCtrl.removeModeratorRights(participant._id)" class="pull-left"><i class="fa fa-minus" aria-hidden="true"></i></span>
+        </div>
+        <span class="user-name" ng-click="roomCtrl.displayAProfile(participant._id)">{{participant.name}}</span>
         <span ng-if="roomCtrl.isAdmin"> | A</span>
         <span ng-if="roomCtrl.isModerator"> | M</span>
+
         <img class="media-object img-circle pull-right" style="max-height:20px;" src="{{participant.avatar}}"/>
       </li>
     </ul>
+    <button ng-if="!roomCtrl.isParticipant" ng-click="roomCtrl.joinRoom()" class="btn btn-success btn-join">Join the room</button>
+    <button ng-if="roomCtrl.isParticipant" ng-click="roomCtrl.leaveRoom()" class="btn btn-danger btn-join">Leave</button>
   </div>
   <!--Friends list-->
   <div class="participants-container" ng-if="roomCtrl.displayFriends">
@@ -188,7 +197,7 @@
       <li class="user-li">
         <img class="media-object img-circle pull-left friend-list-avatar" style="max-height:20px;" src="{{friend.user.avatar}}"/>
         <span class="user-name">{{friend.nickname}}</span>
-        <i class="fa fa-plus pull-right" aria-hidden="true"></i>
+        <i  ng-click="roomCtrl.addMember(friend.user._id, $index)" class="fa fa-plus pull-right" aria-hidden="true"></i>
       </li>
     </ul>
   </div>

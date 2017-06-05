@@ -52,6 +52,7 @@ class RoomComponent {
   };
 
   $onInit() {
+    var temporalyFriendList = [];
     this.displayParticpants = true;
     this.displayFriends = false;
     // this.$watch('roomid', function (newValue, oldValue) {
@@ -60,6 +61,11 @@ class RoomComponent {
     this.$http.get('api/users/me').then(response => {
       this.currentUser = response.data;
       this.friends = this.currentUser.friends;
+      this.friends.forEach(friend => {
+        if (friend.nickname === undefined) {
+          friend.nickname = friend.user.name;
+        }
+      });
       this.$http.get(`api/rooms/${this.roomId}`).then( newresponse => {
         this.room = newresponse.data;
         this.moderators = this.room.moderators;
@@ -78,6 +84,12 @@ class RoomComponent {
         });
         this.$http.get(`api/rooms/${this.roomId}/getparticipants`, { roomId: this.room._id} ).then(room => {
           this.users = room.data.members;
+          this.friends.forEach(function(friend, index) {
+            if (!this.users.includes(friend._id)) {
+              temporalyFriendList.push(friend);
+            }
+          });
+          this.friends = temporalyFriendList;
           this.users.forEach( user => {
             if (user._id === this.currentUser._id) {
               this.isParticipant = true;
@@ -108,7 +120,7 @@ class RoomComponent {
 
   addMember(friendId, index) {
     this.$http.post(`api/rooms/${this.room._id}/addmember`, { newMemberId: friendId});
-    this.users.push(this.friends[index]);
+    // this.users.push(this.friends[index]);
     this.friends.splice(index, 1);
   }
 
@@ -179,6 +191,8 @@ class RoomComponent {
   }
 
   onInitCalls(roomid) {
+    var temporalyFriendList = [];
+    this.isParticipant = false;
     this.displayProfile = false;
     this.roomId = roomid;
     this.$http.get('api/users/me').then(response => {
@@ -202,6 +216,16 @@ class RoomComponent {
         });
         this.$http.get(`api/rooms/${this.roomId}/getparticipants`, { roomId: this.room._id} ).then(room => {
           this.users = room.data.members;
+          var temporalyUsersList = [];
+          this.users.forEach(user => {
+            temporalyUsersList.push(user._id);
+          });
+          this.friends.forEach(function(friend, index) {
+            if (!temporalyUsersList.includes(friend.user._id)) {
+              temporalyFriendList.push(friend);
+            }
+          });
+          this.friends = temporalyFriendList;
           this.users.forEach( user => {
             if (user._id === this.currentUser._id) {
               this.isParticipant = true;

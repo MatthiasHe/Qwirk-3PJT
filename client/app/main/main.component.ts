@@ -17,6 +17,8 @@ export class MainController {
   publicRooms = [];
   $state;
   roomId = '5931e815ac69ee3520fff353';
+  displayDashboard;
+  displayRoom;
 
   /*@ngInject*/
   constructor($http, socket, Auth, $state) {
@@ -27,6 +29,8 @@ export class MainController {
   }
 
   $onInit() {
+    this.displayDashboard = true;
+    this.displayRoom = false;
     this.$http.get('api/users/me').then(response => {
       this.currentUser = response.data;
       // this.socket.syncUpdates('user', this.currentUser.request, function(event, item, array){
@@ -81,6 +85,13 @@ export class MainController {
 
   setRoomId(roomId) {
     this.roomId = roomId;
+    this.displayDashboard = false;
+    this.displayRoom = true;
+  }
+
+  displayTheDashboard() {
+    this.displayDashboard = true;
+    this.displayRoom = false;
   }
 }
 

@@ -10,7 +10,6 @@ export class MainController {
   friends;
   friendsRequest;
   awaitingRequest;
-  roomName = '';
   currentUser;
   userRooms = [];
   userPrivateRooms = [];
@@ -19,6 +18,7 @@ export class MainController {
   roomId = '5931e815ac69ee3520fff353';
   displayDashboard;
   displayRoom;
+  userState;
 
   /*@ngInject*/
   constructor($http, socket, Auth, $state) {
@@ -45,6 +45,7 @@ export class MainController {
       //   console.log(event);
       //   console.log(item);
       //   console.log(array);
+      this.userState = this.currentUser.state;
       this.friends = this.currentUser.friends;
       this.friendsRequest = this.currentUser.request;
       this.awaitingRequest = this.currentUser.awaitingRequest;
@@ -96,6 +97,10 @@ export class MainController {
 
   deleteFriend(friendid) {
     this.$http.post(`api/users/${this.currentUser._id}/deletefriend`, { friendId: friendid });
+  }
+
+  setUserState(state) {
+    this.$http.post(`api/users/${this.currentUser._id}/setstate`, { state: state });
   }
 }
 export default angular.module('projectTestApp.main', [

@@ -25,3 +25,17 @@
 .navbar-text {
   margin-left: 15px;
 }
+
+.state-dropdown {
+  margin-top: -12em;
+  background: transparent;
+  min-width: 5.0em;
+  dropdown-li {
+  }
+}
+.conversation-list ul li .anchor-dropdown {
+  padding-left: 0.5em;
+  padding-top: 1em;
+}
+
+

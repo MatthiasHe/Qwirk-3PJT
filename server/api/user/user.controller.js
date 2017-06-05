@@ -276,8 +276,6 @@ export function getAwaitingRequest(req, res) {
       if(!user) {
         return res.status(401).end();
       }
-      console.log('fergergergegregregergergergre');
-      console.log(user);
       return res.json(user.awaitingRequest);
     })
     .catch(err => next(err));
@@ -286,7 +284,6 @@ export function getAwaitingRequest(req, res) {
 export function sendAvatar(req, res) {
   const userId = req.params.id;
   const avatarPath = req.body.avatarPath;
-  console.log(avatarPath);
   User.findByIdAndUpdate(userId, {avatar: avatarPath}).then(response => {
   });
 }
@@ -295,8 +292,6 @@ export function editSurname(req, res) {
   const friendId = req.body.friendId;
   const userId = req.params.id;
   const newSurname = req.body.newSurname;
-  console.log(newSurname);
-  console.log(friendId + ' +++ ' + userId);
   User.update({_id: userId, 'friends._id': friendId},
     {$set: {
       'friends.0.nickname': newSurname,
@@ -322,13 +317,17 @@ export function deleteFriend(req, res) {
   User.findByIdAndUpdate({_id: friendId, 'friends.user': userId}, { $pull: {friends: { user: userId}}})
     .exec(function(err,data) {
     });
-  console.log(friendId);
-  console.log(userId);
   User.findOne({'friends.user': friendId}).then(response => {
-    console.log(response.friends[0]);
     User.findByIdAndUpdate({_id: userId, 'friends.user': response.friends[0].user}, { $pull: {friends: { user: response.friends[0].user}}})
       .exec(function(err,data) {
       });
+  });
+}
+
+export function setState(req, res) {
+  var userId = req.params.id;
+  var state = req.body.state;
+  User.findByIdAndUpdate(userId, {state: state}).then(response => {
   });
 }
 

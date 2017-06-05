@@ -23,5 +23,6 @@ router.get('/:id/getawaitingrequest', auth.isAuthenticated(), controller.getAwai
 router.post('/:id/editsurname', auth.isAuthenticated(), controller.editSurname);
 router.post('/:id/sendavatar', auth.isAuthenticated(), controller.sendAvatar);
 router.post('/sendavatarfile', controller.upload.single('file'), controller.sendAvatarFile);
+router.post('/:id/setstate', auth.isAuthenticated(), controller.setState);
 
 module.exports = router;

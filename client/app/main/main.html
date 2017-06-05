@@ -55,12 +55,23 @@
       <div class="my-account">
         <div class="image">
           <img src="{{$ctrl.currentUser.avatar}}">
-          <i class="fa fa-circle online"></i>
+          <i ng-if="$ctrl.userState == 'Online'" class="fa fa-circle online"></i>
+          <i ng-if="$ctrl.userState == 'Busy'" class="fa fa-circle idle"></i>
         </div>
         <div class="name">
-          <span>{{$ctrl.currentUser.name}}</span>
-          <i class="fa fa-angle-down"></i>
+          <div uib-dropdown>
+            <span uib-dropdown-toggle>{{$ctrl.currentUser.name}}</span>
+            <i uib-dropdown-toggle class="fa fa-angle-down"></i>
+            <ul uib-dropdown-menu class="state-dropdown">
+              <li ng-click="$ctrl.setUserState('Online')" class="dropdown-li"><i class="fa fa-circle online"></i><a class="anchor-dropdown">Available</a></li>
+              <li ng-click="$ctrl.setUserState('Busy')" class="dropdown-li"><i class="fa fa-circle idle"></i><a class="anchor-dropdown">Busy</a></li>
+            </ul>
+          </div>
+
           <span class="availability">Available</span>
+          <!--<button class="btn dropdown-toggle availability" type="button" data-toggle="dropdown">Available-->
+            <!--<span class="caret"></span></button>-->
+
         </div>
 
       </div>

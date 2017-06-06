@@ -202,17 +202,15 @@ export function addFriend(req, res) {
   User.findByIdAndUpdate(userId, {$pull: {request: newFriendId}}).then(newresponse => {
   });
   User.findByIdAndUpdate(userId, {$push: {friends: {user: newFriendId, room: roomId}}}).then(newresponse => {
-    User.findById(userId).populate('friends.user friends.room request awaiting').exec()
+    User.findById(userId).populate('friends.user friends.room request awaitingRequest request').exec()
       .then(user => {
-        userEvent.emit('syncFriends', user.friends);
-        userEvent.emit('syncRequest', user.request);
-        userEvent.emit('syncAwaiting', user.awaitingRequest);
+        userEvent.emit('syncFriends', user);
+        // userEvent.emit('syncRequest', user);
       });
-    User.findById(newFriendId).populate('friends.user friends.room request').exec()
+    User.findById(newFriendId).populate('friends.user friends.room awaitingRequest request').exec()
       .then(user => {
-        userEvent.emit('syncFriends', user.friends);
-        userEvent.emit('syncRequest', user.request);
-        userEvent.emit('syncAwaiting', user.awaitingRequest);
+        userEvent.emit('syncFriends', user);
+        // userEvent.emit('syncAwaiting', user);
       });
   });
 }
@@ -222,8 +220,20 @@ export function rejectFriend(req, res) {
   var newFriendId = req.body.friendId;
 
   User.findByIdAndUpdate(newFriendId, {$pull: {awaitingRequest: userId}}).then(newresponse => {
-  });
-  User.findByIdAndUpdate(userId, {$pull: {request: newFriendId}}).then(newresponse => {
+    User.findByIdAndUpdate(userId, {$pull: {request: newFriendId}}).then(newresponse => {
+      User.findById(userId).populate('friends.user friends.room awaitingRequest request').exec()
+        .then(user => {
+          console.log('LOLOLOL');
+          console.log(userId);
+          userEvent.emit('syncFriends', user);
+        });
+      User.findById(newFriendId).populate('friends.user friends.room awaitingRequest request').exec()
+        .then(user => {
+          console.log('LOLOLOL');
+          console.log(newFriendId);
+          userEvent.emit('syncFriends', user);
+        });
+    });
   });
 }
 
@@ -254,18 +264,13 @@ export function sendFriendRequest(req, res) {
   User.findByIdAndUpdate(friendId, {$push: {request: userId}}).then(response => {
   });
   return User.findByIdAndUpdate(userId, {$push: {awaitingRequest: friendId}}).then(response => {
-    User.findById(userId).populate('friends.user friends.room request awaitingRequest').exec()
+    User.findById(userId).populate('friends.user friends.room awaitingRequest request').exec()
       .then(user => {
-        userEvent.emit('syncFriends', user.friends);
-        userEvent.emit('syncRequest', user.request);
-        userEvent.emit('syncAwaitingRequest', user.awaitingRequest);
+        userEvent.emit('syncFriends', user);
       });
-    User.findById(friendId).populate('friends.user friends.room request').exec()
+    User.findById(friendId).populate('friends.user friends.room awaitingRequest request').exec()
       .then(user => {
-        userEvent.emit('syncFriends', user.friends);
-        userEvent.emit('syncRequest', user.request);
-        userEvent.emit('syncAwaitingRequest', user.awaitingRequest);
-        console.log(user.request);
+        userEvent.emit('syncFriends', user);
       });
   });
 }
@@ -329,10 +334,22 @@ export function deleteFriend(req, res) {
 
   User.findByIdAndUpdate({_id: friendId, 'friends.user': userId}, { $pull: {friends: { user: userId}}})
     .exec(function(err,data) {
+      User.findById(friendId).populate('friends.user friends.room awaitingRequest request').exec()
+        .then(user => {
+          userEvent.emit('syncFriends', user);
+          console.log('HELLO');
+          console.log(user);
+        });
     });
   User.findOne({'friends.user': friendId}).then(response => {
     User.findByIdAndUpdate({_id: userId, 'friends.user': response.friends[0].user}, { $pull: {friends: { user: response.friends[0].user}}})
       .exec(function(err,data) {
+        User.findById(userId).populate('friends.user friends.room awaitingRequest request').exec()
+          .then(user => {
+            userEvent.emit('syncFriends', user);
+            console.log('HELLO');
+            console.log(user);
+          });
       });
   });
 }

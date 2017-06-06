@@ -31,28 +31,47 @@ class DashboardCtrl {
       this.awaitingRequest = this.currentUser.awaitingRequest;
     });
     var self = this;
-    this.socket.syncRequest('user', this.friendsRequest, function(event, item, array){
-      var isBad = false;
-      item.forEach(request => {
-        if (request._id === self.currentUser._id) {
-          isBad = true;
-        }
-      });
-      if (!isBad) {
-        self.friendsRequest = item;
+    this.socket.syncFriends('user', this.friends, function(event, item, array){
+      if (item._id === self.currentUser._id) {
+        self.awaitingRequest = item.awaitingRequest;
+        self.friendsRequest = item.request;
       }
+/*    this.socket.syncRequest('user', this.friendsRequest, function(event, item, array){
+      if (item._id === self.currentUser._id) {
+        self.friendsRequest = item.friendsRequest;
+      }*/
+      // if (item.length) {
+      //   var isBad = false;
+      //   item.forEach(request => {
+      //     if (request._id === self.currentUser._id) {
+      //       isBad = true;
+      //     }
+      //   });
+      //   if (!isBad) {
+      //     self.friendsRequest = item;
+      //   }
+      // } else {
+      //   self.friendsRequest = [];
+      // }
     });
-    this.socket.syncAwaitingRequest('user', this.awaitingRequest, function(event, item, array){
-      var isBad = false;
-      item.forEach(awaiting => {
-        if (awaiting._id === self.currentUser._id) {
-          isBad = true;
-        }
-      });
-      if (!isBad) {
-        self.awaitingRequest = item;
-      }
-    });
+/*    this.socket.syncAwaitingRequest('user', this.awaitingRequest, function(event, item, array){
+      if (item._id === self.currentUser._id) {
+        self.awaitingRequest = item.awaitingRequest;
+      }*/
+      // if (item.length) {
+      //   var isBad = false;
+      //   item.forEach(awaiting => {
+      //     if (awaiting._id === self.currentUser._id) {
+      //       isBad = true;
+      //     }
+      //   });
+      //   if (!isBad) {
+      //     self.awaitingRequest = item;
+      //   }
+      // } else {
+      //   self.awaitingRequest = [];
+      // }
+    // });
   }
 
   createPublicRoom() {
@@ -90,6 +109,7 @@ class DashboardCtrl {
   }
 
   rejectRequest(friendId) {
+    console.log('friendId' + friendId);
     this.$http.post(`api/users/${this.currentUser._id}/rejectrequest`, {friendId: friendId});
   }
 

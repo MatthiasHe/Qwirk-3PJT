@@ -57,7 +57,6 @@ export class MainController {
             this.publicRooms.push(room);
           }
         });
-        // this.socket.syncUpdates('room', this.rooms);userprivaterooms
       });
       this.$http.post('/api/rooms/userprivaterooms').then(rooms => {
         rooms.data.forEach( room => {
@@ -65,32 +64,26 @@ export class MainController {
             this.userPrivateRooms.push(room);
           }
         });
-        // this.socket.syncUpdates('room', this.rooms);
       });
       var self = this;
       this.socket.syncFriends('user', this.friends, function(event, item, array){
-        var isBad = false;
-        item.forEach(friend => {
-          if (friend.user._id === self.currentUser._id) {
-            isBad = true;
-          }
-        });
-        if (!isBad) {
-          self.friends = item;
+        if (item._id === self.currentUser._id) {
+          self.friends = item.friends;
         }
+        // if (item.length) {
+        //   var isBad = false;
+        //   item.forEach(friend => {
+        //     if (friend.user._id === self.currentUser._id) {
+        //       isBad = true;
+        //     }
+        //   });
+        //   if (!isBad) {
+        //     self.friends = item;
+        //   }
+        // } else {
+        //   self.friends = [];
+        // }
       });
-      // var self = this;
-      // this.socket.syncRequest('user', this.friends, function(event, item, array){
-      //   self.friendsRequest = item;
-      // });
-      // this.socket.syncFriends('user', this.friends, function(event, item, array){
-      //   self.friends = item;
-      //   console.log('Hello');
-      //   console.log(item);
-      // });
-      // this.socket.syncAwaitingRequest('user', this.friends, function(event, item, array){
-      //   self.friends = item;
-      // });
     });
   }
 

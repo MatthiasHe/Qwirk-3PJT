@@ -18,8 +18,15 @@
 
       <!--Friends list, go to room on click-->
       <ul class="" ng-repeat="friend in $ctrl.friends">
-        <li><a><i class="fa fa-circle-o online"></i></i><span ng-click="$ctrl.setRoomId(friend.room._id)">{{friend.user.name}}</span><i ng-click="$ctrl.deleteFriend(friend.user._id)" class="fa fa-times"></i></a></li>
-        <!--<li class="item active"><a href="#"><i class="fa fa-user"></i><span>Team chat</span><i class="fa fa-times"></i></a></li>-->
+        <li>
+          <a>
+            <i ng-if="friend.user.state == 'Online'" class="fa fa-circle-o online"></i>
+            <i ng-if="friend.user.state == 'Busy'" class="fa fa-circle-o idle"></i>
+            <i ng-if="friend.user.state == 'Offline'" class="fa fa-circle-o offline"></i>
+            <span ng-click="$ctrl.setRoomId(friend.room._id)">{{friend.user.name}}</span>
+            <i ng-click="$ctrl.deleteFriend(friend.user._id)" class="fa fa-times"></i>
+          </a>
+        </li>
       </ul>
 
       <!--My private rooms where I am, go to room on click-->

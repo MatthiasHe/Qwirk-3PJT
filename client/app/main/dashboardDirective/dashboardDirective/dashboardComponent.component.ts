@@ -12,11 +12,13 @@ class DashboardCtrl {
   private awaitingRequest;
   private nickname;
   private friends;
+  private socket;
   private searchResult = [];
 
   /*@ngInject*/
-  constructor($http) {
+  constructor($http, socket) {
     this.$http = $http;
+    this.socket = socket;
   }
 
   $onInit() {
@@ -27,6 +29,29 @@ class DashboardCtrl {
       this.friends = this.currentUser.friends;
       this.friendsRequest = this.currentUser.request;
       this.awaitingRequest = this.currentUser.awaitingRequest;
+    });
+    var self = this;
+    this.socket.syncRequest('user', this.friendsRequest, function(event, item, array){
+      var isBad = false;
+      item.forEach(request => {
+        if (request._id === self.currentUser._id) {
+          isBad = true;
+        }
+      });
+      if (!isBad) {
+        self.friendsRequest = item;
+      }
+    });
+    this.socket.syncAwaitingRequest('user', this.awaitingRequest, function(event, item, array){
+      var isBad = false;
+      item.forEach(awaiting => {
+        if (awaiting._id === self.currentUser._id) {
+          isBad = true;
+        }
+      });
+      if (!isBad) {
+        self.awaitingRequest = item;
+      }
     });
   }
 

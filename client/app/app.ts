@@ -5,10 +5,7 @@ const ngCookies = require('angular-cookies');
 const ngResource = require('angular-resource');
 const ngSanitize = require('angular-sanitize');
 require('ng-embed');
-require('angular-file-upload');
 require('ng-file-upload');
-require('peerjs');
-require('angular-media-preview');
 
 import 'angular-socket-io';
 

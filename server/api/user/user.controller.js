@@ -202,15 +202,17 @@ export function addFriend(req, res) {
   User.findByIdAndUpdate(userId, {$pull: {request: newFriendId}}).then(newresponse => {
   });
   User.findByIdAndUpdate(userId, {$push: {friends: {user: newFriendId, room: roomId}}}).then(newresponse => {
-    User.findById(userId).populate('friends.user friends.room request').exec()
+    User.findById(userId).populate('friends.user friends.room request awaiting').exec()
       .then(user => {
         userEvent.emit('syncFriends', user.friends);
         userEvent.emit('syncRequest', user.request);
+        userEvent.emit('syncAwaiting', user.awaitingRequest);
       });
     User.findById(newFriendId).populate('friends.user friends.room request').exec()
       .then(user => {
         userEvent.emit('syncFriends', user.friends);
         userEvent.emit('syncRequest', user.request);
+        userEvent.emit('syncAwaiting', user.awaitingRequest);
       });
   });
 }
@@ -252,6 +254,19 @@ export function sendFriendRequest(req, res) {
   User.findByIdAndUpdate(friendId, {$push: {request: userId}}).then(response => {
   });
   return User.findByIdAndUpdate(userId, {$push: {awaitingRequest: friendId}}).then(response => {
+    User.findById(userId).populate('friends.user friends.room request awaitingRequest').exec()
+      .then(user => {
+        userEvent.emit('syncFriends', user.friends);
+        userEvent.emit('syncRequest', user.request);
+        userEvent.emit('syncAwaitingRequest', user.awaitingRequest);
+      });
+    User.findById(friendId).populate('friends.user friends.room request').exec()
+      .then(user => {
+        userEvent.emit('syncFriends', user.friends);
+        userEvent.emit('syncRequest', user.request);
+        userEvent.emit('syncAwaitingRequest', user.awaitingRequest);
+        console.log(user.request);
+      });
   });
 }
 
@@ -262,8 +277,6 @@ export function getFriendRequest(req, res) {
       if(!user) {
         return res.status(401).end();
       }
-      console.log('fergergergegregregergergergre');
-      console.log(user);
       return res.json(user.request);
     })
     .catch(err => next(err));

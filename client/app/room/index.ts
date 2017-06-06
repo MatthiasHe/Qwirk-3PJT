@@ -1,7 +1,6 @@
 'use strict';
 const angular = require('angular');
 require('ng-embed');
-require('angular-file-upload');
 const Upload = require('ng-file-upload');
 
 

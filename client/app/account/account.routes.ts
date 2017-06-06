@@ -13,11 +13,14 @@ export default function routes($stateProvider) {
         url: '/logout?referrer',
         referrer: 'main',
         template: '',
-        controller: function($state, Auth) {
+        controller: function($state, Auth, $http) {
           'ngInject';
           var referrer = $state.params.referrer
                         || $state.current.referrer
                         || 'main';
+          $http.get('api/users/me').then(response => {
+            this.$http.post(`api/users/${response.data._id}/setstate`, { state: 'Offline' });
+          });
           Auth.logout();
           $state.go(referrer);
         }

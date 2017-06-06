@@ -68,15 +68,29 @@ export class MainController {
         // this.socket.syncUpdates('room', this.rooms);
       });
       var self = this;
-      this.socket.syncRequest('user', this.currentUser, function(event, item, array){
-        self.friendsRequest = item;
+      this.socket.syncFriends('user', this.friends, function(event, item, array){
+        var isBad = false;
+        item.forEach(friend => {
+          if (friend.user._id === self.currentUser._id) {
+            isBad = true;
+          }
+        });
+        if (!isBad) {
+          self.friends = item;
+        }
       });
-      this.socket.syncFriends('user', this.currentUser, function(event, item, array){
-        self.friends = item;
-      });
-      this.socket.syncAwaitingRequest('user', this.currentUser, function(event, item, array){
-        self.friends = item;
-      });
+      // var self = this;
+      // this.socket.syncRequest('user', this.friends, function(event, item, array){
+      //   self.friendsRequest = item;
+      // });
+      // this.socket.syncFriends('user', this.friends, function(event, item, array){
+      //   self.friends = item;
+      //   console.log('Hello');
+      //   console.log(item);
+      // });
+      // this.socket.syncAwaitingRequest('user', this.friends, function(event, item, array){
+      //   self.friends = item;
+      // });
     });
   }
 

@@ -337,7 +337,7 @@ class RoomComponent {
 
 }
 
-export default angular.module('projectTestApp.roomDirective', ['ui.router', 'ngEmbed', 'angularFileUpload', Upload])
+export default angular.module('projectTestApp.roomDirective', ['ui.router', 'ngEmbed', Upload])
   .component('roomDirective', {
       template: require('./roomDirective.html'),
       restrict: 'E',

@@ -41,7 +41,6 @@ angular.module('projectTestApp', [
   ngResource,
   ngSanitize,
   'ngEmbed',
-  'angularFileUpload',
   'ngFileUpload',
 
   'btford.socket-io',

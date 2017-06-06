@@ -9,7 +9,7 @@ import routes from './room.routes';
 import RoomCtrl from './room.controller';
 
 export default angular.module('projectTestApp.room', [
-  'ui.router', 'ngEmbed', 'angularFileUpload', Upload])
+  'ui.router', 'ngEmbed', Upload])
   .config(routes)
   .controller('RoomCtrl', RoomCtrl)
   .name;

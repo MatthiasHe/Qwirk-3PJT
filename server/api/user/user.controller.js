@@ -10,7 +10,7 @@ const multer = require('multer');
 var path = require('path');
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, '/Users/matt/Desktop/projectTest/server/api/user/avatar');
+    cb(null, '/Users/matt/Desktop/projectTest/client/assets/avatar');
   },
   filename: function(req, file, cb) {
     cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
@@ -56,7 +56,7 @@ export function create(req, res) {
       var token = jwt.sign({ _id: user._id }, config.secrets.session, {
         expiresIn: 60 * 60 * 5
       });
-      res.json({ token });
+      res.json({token, user});
     })
     .catch(validationError(res));
 }
@@ -202,15 +202,17 @@ export function addFriend(req, res) {
   User.findByIdAndUpdate(userId, {$pull: {request: newFriendId}}).then(newresponse => {
   });
   User.findByIdAndUpdate(userId, {$push: {friends: {user: newFriendId, room: roomId}}}).then(newresponse => {
-    User.findById(userId).populate('friends.user friends.room request').exec()
+    User.findById(userId).populate('friends.user friends.room request awaiting').exec()
       .then(user => {
         userEvent.emit('syncFriends', user.friends);
         userEvent.emit('syncRequest', user.request);
+        userEvent.emit('syncAwaiting', user.awaitingRequest);
       });
     User.findById(newFriendId).populate('friends.user friends.room request').exec()
       .then(user => {
         userEvent.emit('syncFriends', user.friends);
         userEvent.emit('syncRequest', user.request);
+        userEvent.emit('syncAwaiting', user.awaitingRequest);
       });
   });
 }
@@ -226,13 +228,12 @@ export function rejectFriend(req, res) {
 }
 
 export function searchFriend(req, res) {
-  var friendId;
+  var userList;
   var name = req.body.nickname;
-  console.log(name);
-  User.findOne({name: new RegExp('^' + name)}).exec()
+  User.find({name: new RegExp('^' + name)}).exec()
     .then(response => {
-      friendId = response._id;
-      return res.json(friendId);
+      userList = response;
+      return res.json(userList);
     });
 }
 
@@ -253,6 +254,19 @@ export function sendFriendRequest(req, res) {
   User.findByIdAndUpdate(friendId, {$push: {request: userId}}).then(response => {
   });
   return User.findByIdAndUpdate(userId, {$push: {awaitingRequest: friendId}}).then(response => {
+    User.findById(userId).populate('friends.user friends.room request awaitingRequest').exec()
+      .then(user => {
+        userEvent.emit('syncFriends', user.friends);
+        userEvent.emit('syncRequest', user.request);
+        userEvent.emit('syncAwaitingRequest', user.awaitingRequest);
+      });
+    User.findById(friendId).populate('friends.user friends.room request').exec()
+      .then(user => {
+        userEvent.emit('syncFriends', user.friends);
+        userEvent.emit('syncRequest', user.request);
+        userEvent.emit('syncAwaitingRequest', user.awaitingRequest);
+        console.log(user.request);
+      });
   });
 }
 
@@ -263,8 +277,6 @@ export function getFriendRequest(req, res) {
       if(!user) {
         return res.status(401).end();
       }
-      console.log('fergergergegregregergergergre');
-      console.log(user);
       return res.json(user.request);
     })
     .catch(err => next(err));
@@ -277,8 +289,6 @@ export function getAwaitingRequest(req, res) {
       if(!user) {
         return res.status(401).end();
       }
-      console.log('fergergergegregregergergergre');
-      console.log(user);
       return res.json(user.awaitingRequest);
     })
     .catch(err => next(err));
@@ -286,18 +296,15 @@ export function getAwaitingRequest(req, res) {
 
 export function sendAvatar(req, res) {
   const userId = req.params.id;
-  console.log(userId);
-  User.findByIdAndUpdate(userId, {avatar: req.file.path}).then(response => {
+  const avatarPath = req.body.avatarPath;
+  User.findByIdAndUpdate(userId, {avatar: avatarPath}).then(response => {
   });
-  console.log(req.file);
 }
 
 export function editSurname(req, res) {
   const friendId = req.body.friendId;
   const userId = req.params.id;
   const newSurname = req.body.newSurname;
-  console.log(newSurname);
-  console.log(friendId + ' +++ ' + userId);
   User.update({_id: userId, 'friends._id': friendId},
     {$set: {
       'friends.0.nickname': newSurname,
@@ -310,6 +317,33 @@ export function editSurname(req, res) {
       return res.json(model);
     });
 }
+
+export function sendAvatarFile(req, res) {
+  return res.json(req.file.filename);
+}
+
+export function deleteFriend(req, res) {
+  var userId = req.params.id;
+  var friendId = req.body.friendId;
+  var friendObjectId;
+
+  User.findByIdAndUpdate({_id: friendId, 'friends.user': userId}, { $pull: {friends: { user: userId}}})
+    .exec(function(err,data) {
+    });
+  User.findOne({'friends.user': friendId}).then(response => {
+    User.findByIdAndUpdate({_id: userId, 'friends.user': response.friends[0].user}, { $pull: {friends: { user: response.friends[0].user}}})
+      .exec(function(err,data) {
+      });
+  });
+}
+
+export function setState(req, res) {
+  var userId = req.params.id;
+  var state = req.body.state;
+  User.findByIdAndUpdate(userId, {state: state}).then(response => {
+  });
+}
+
 
 /**
  * Authentication callback

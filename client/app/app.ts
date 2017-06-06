@@ -5,10 +5,7 @@ const ngCookies = require('angular-cookies');
 const ngResource = require('angular-resource');
 const ngSanitize = require('angular-sanitize');
 require('ng-embed');
-require('angular-file-upload');
 require('ng-file-upload');
-require('peerjs');
-require('angular-media-preview');
 
 import 'angular-socket-io';
 
@@ -24,12 +21,15 @@ import _Auth from '../components/auth/auth.module';
 import account from './account';
 import admin from './admin';
 import navbar from '../components/navbar/navbar.component';
+import roomDirective from './main/roomDirective/roomDirective/roomComponent.component';
+import dashboardDirect from './main/dashboardDirective/dashboardDirective/dashboardComponent.component';
+import profileDirective from './main/profileDirective/profileDirective/profileComponent.component';
 import footer from '../components/footer/footer.component';
 import main from './main/main.component';
 import constants from './app.constants';
 import util from '../components/util/util.module';
 import socket from '../components/socket/socket.service';
-import room from './room';
+// import room from './room';
 
 
 
@@ -58,7 +58,9 @@ angular.module('projectTestApp', [
   constants,
   socket,
   util,
-  room
+  roomDirective,
+  profileDirective,
+  dashboardDirect
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

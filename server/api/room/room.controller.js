@@ -96,16 +96,19 @@ export function show(req, res) {
 
 // Creates a new Room in the DB
 export function create(req, res) {
-  if(req.body.private) {
-    var privateRoom = true;
-  } else {
-    var privateRoom = false;
-  }
+  var privateRoom = req.body.private ? true : false;
+  var privateRoomMulti = req.body.privateMulti ? true : false;
+  // if(req.body.private) {
+  //   var privateRoom = true;
+  // } else {
+  //   var privateRoom = false;
+  // }
   var params = {
     admin: mongoose.Types.ObjectId(req.body.adminId),
     members: [mongoose.Types.ObjectId(req.body.memberId), mongoose.Types.ObjectId(req.body.friendId)],
     name: req.body.name,
-    private: privateRoom
+    private: privateRoom,
+    privateMulti: privateRoomMulti
   };
   Room.create(params).then(response => {
     return res.json(response);
@@ -145,11 +148,11 @@ export function destroy(req, res) {
 
 export function createMessage(req, res) {
   User.findById(req.body.author).then(response => {
-    console.log('gdervr = ' + response.name);
     var params = {
       text: req.body.text,
       author: response.name,
-      roomId: mongoose.Types.ObjectId(req.body.roomId)
+      roomId: mongoose.Types.ObjectId(req.body.roomId),
+      authorAvatar: response.avatar
     };
     Message.create(params)
       .then(response => {
@@ -170,7 +173,7 @@ export function getMessages(req, res) {
 
 export function getParticipants(req, res) {
   var roomId = req.params.id;
-  Room.findOne({_id: roomId}).populate('members').exec()
+  Room.findOne({_id: roomId}).populate({path: 'members'}).exec()
     .then(room => {
       console.log(room);
       return res.json(room);
@@ -180,13 +183,20 @@ export function getParticipants(req, res) {
 export function addMember(req, res) {
   var roomId = req.params.id;
   var newMember = req.body.newMemberId;
+  console.log(roomId + '+++' + newMember);
   Room.findByIdAndUpdate(roomId, {$push: {members: newMember}}).then(response => {
   });
 }
 
 export function getPublicUserRooms(req, res) {
-  var userId = req.body.userId;
+  // var userId = req.body.userId;
   Room.find({ private: false }).then(response => {
+    return res.json(response);
+  });
+}
+
+export function getPrivateUserRooms(req, res) {
+  Room.find({ privateMulti: true}).then(response => {
     return res.json(response);
   });
 }
@@ -195,6 +205,7 @@ export function joinRoom(req, res) {
   var userId = req.body.userId;
   var roomId = req.params.id;
   Room.findByIdAndUpdate(roomId, {$push: {members: userId}}).then(response => {
+    console.log(response);
   });
 }
 

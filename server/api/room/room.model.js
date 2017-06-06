@@ -19,10 +19,11 @@ var MessageSchema = new mongoose.Schema({
 var RoomSchema = new mongoose.Schema({
   messages: [{type: mongoose.Schema.Types.ObjectId, ref: 'Message'}],
   private: {type: Boolean, default: true},
+  privateMulti: {type: Boolean, default: false},
   name: String,
   admin: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   moderators: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-  members: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+  members: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 });
 
 registerEvents(RoomSchema);

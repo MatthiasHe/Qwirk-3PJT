@@ -1,0 +1,92 @@
+<div class="dashboard-area">
+
+  <div class="container-fluid col-container">
+    <div class="row col-row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 one-col">
+        <div class="request-area rounded col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <h1 class="area-title text-center">Friends request</h1>
+
+          <h2 class="area-subtitle text-center">Requests from friends</h2>
+          <div ng-if="dashboardCtrl.friendsRequest.length">
+            <div class="my-request" ng-repeat="request in dashboardCtrl.friendsRequest">
+              <span class="request-name">Friend request from {{request.name}}</span>
+              <button type="button" ng-click="dashboardCtrl.acceptRequest(request._id)" class="btn btn-success btn-accept">Accept</button>
+              <button type="button" ng-click="dashboardCtrl.rejectRequest(request._id)" class="btn btn-danger">Decline</button>
+            </div>
+          </div>
+          <div ng-if="!dashboardCtrl.friendsRequest.length">
+            <p class="text-info text-center text-uppercase text-room-info">
+              There are no pending friend's requests.
+            </p>
+          </div>
+
+          <h2 class="area-subtitle text-center">Requests sent</h2>
+          <div class="my-request" ng-repeat="request in dashboardCtrl.awaitingRequest">
+            <span class="text-awaiting-request">Friend request sent to {{request.name}}</span>
+            <button type="button" disabled="true" class="btn btn-success">Waiting</button>
+          </div>
+          <div ng-if="!dashboardCtrl.awaitingRequest.length">
+            <p class="text-info text-center text-uppercase text-room-info">
+              All your request are already accepted.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 one-col">
+        <div class="friend-add-area rounded col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <h2 class="area-title text-center">Add a friend</h2>
+          <div>
+            <form class="form" name="form" ng-submit="dashboardCtrl.searchFriend()" novalidate>
+
+              <div class="form-group">
+                <input ng-minlength="3" type="text" id="friend-input" placeholder="Type at least 3 characters" name="nickname" class="form-control friend-search-input" ng-model="dashboardCtrl.nickname"
+                       autocomplete="off" required/>
+              </div>
+              <div class="text-center">
+                <button class="btn btn-inverse btn-lg btn-register search-friend-btn" type="submit" ng-disabled="!form.nickname.$valid">
+                  Search
+                </button>
+              </div>
+
+            </form>
+            <div class="text-center result-list-search" ng-if="dashboardCtrl.searchResult.length" ng-repeat="result in dashboardCtrl.searchResult">
+              <img class="media-object result-avatar img-circle" src="{{result.avatar}}"/>
+              <button class="btn btn-success add-btn" ng-click="dashboardCtrl.addFriend(result._id)"><span class="result-add-name">Ajouter {{result.name}}</span><i class="fa fa-plus result-add" aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row col-row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 one-col">
+        <div class="private-area rounded col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <h2 class="area-title text-center">Create a private room</h2>
+          <p class="text-info text-center text-uppercase text-room-info">
+            Here you create a private room. Choose a name and immediately join it using the side panel. Then, add your friends.
+          </p>
+          <form class="form-group">
+            <input type="text" id="" class="form-control public-room-input" placeholder="Create a new room" ng-model="dashboardCtrl.roomPrivateName">
+            <div class="text-center">
+              <button type="submit" class="btn btn-inverse btn-lg btn-register" ng-click="dashboardCtrl.createPrivateRoom()">Create room</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 one-col">
+        <div class="public-area rounded col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <h2 class="area-title text-center">Create a public room</h2>
+          <p class="text-info text-center text-uppercase text-room-info">
+            Here you create a public room. Choose a name and immediately join it using the side panel. Then, add your friends.
+          </p>
+          <form class="form-group">
+            <input type="text" class="form-control public-room-input" placeholder="Create a new room" ng-model="dashboardCtrl.roomPublicName">
+            <div class="text-center">
+              <button type="submit" class="btn btn-inverse btn-lg btn-register" ng-click="dashboardCtrl.createPublicRoom()">Create room</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

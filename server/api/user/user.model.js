@@ -25,7 +25,8 @@ var UserSchema = new Schema({
   request: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
   awaitingRequest: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
   avatar: {type: String, default: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRbezqZpEuwGSvitKy3wrwnth5kysKdRqBW54cAszm_wiutku3R'},
-  salt: String
+  salt: String,
+  state: {type: String, default: 'Online'}
 });
 
 /**

@@ -17,21 +17,6 @@ function Socket(socketFactory) {
     return {
       socket,
 
-      syncAwaitingRequest(modelName, array, cb) {
-        cb = cb || angular.noop;
-
-        /**
-         * Syncs item creation/updates on 'model:save'
-         */
-        socket.on(modelName + ':syncAwaitingRequest', function (item) {
-
-          // replace oldItem if it exists
-          // otherwise just add item to the collection
-
-          cb(event, item, array);
-        });
-      },
-
       syncFriends(modelName, array, cb) {
         cb = cb || angular.noop;
 
@@ -54,21 +39,6 @@ function Socket(socketFactory) {
          * Syncs item creation/updates on 'model:save'
          */
         socket.on(modelName + ':syncRooms', function (item) {
-
-          // replace oldItem if it exists
-          // otherwise just add item to the collection
-
-          cb(event, item, array);
-        });
-      },
-
-      syncRequest(modelName, array, cb) {
-        cb = cb || angular.noop;
-
-        /**
-         * Syncs item creation/updates on 'model:save'
-         */
-        socket.on(modelName + ':syncRequest', function (item) {
 
           // replace oldItem if it exists
           // otherwise just add item to the collection
@@ -128,7 +98,6 @@ function Socket(socketFactory) {
       unsyncUpdates(modelName) {
         socket.removeAllListeners(modelName + ':save');
         socket.removeAllListeners(modelName + ':remove');
-        socket.removeAllListeners(modelName + ':rejectRequest');
         socket.removeAllListeners(modelName + ':syncFriends');
         socket.removeAllListeners(modelName + ':syncRooms');
       }

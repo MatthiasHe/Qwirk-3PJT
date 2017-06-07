@@ -146,7 +146,6 @@ export function addFriend(req, res) {
     User.findById(userId).populate('friends.user friends.room request awaitingRequest request').exec()
       .then(user => {
         userEvent.emit('syncFriends', user);
-        // userEvent.emit('syncRequest', user);
       });
     User.findById(newFriendId).populate('friends.user friends.room awaitingRequest request').exec()
       .then(user => {

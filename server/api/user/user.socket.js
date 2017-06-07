@@ -7,7 +7,7 @@
 import UserEvents from './user.events';
 
 // Model events to emit
-var events = ['save', 'remove', 'syncRequest', 'syncFriends', 'syncAwaitingRequest'];
+var events = ['save', 'remove', 'syncFriends'];
 
 export function register(socket) {
   // Bind model events to socket events
@@ -23,7 +23,6 @@ export function register(socket) {
 
 function createListener(event, socket) {
   return function(doc) {
-    console.log('EVEEENT = ' + event);
     socket.emit(event, doc);
   };
 }

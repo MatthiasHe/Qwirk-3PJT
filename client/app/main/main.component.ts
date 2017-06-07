@@ -1,5 +1,6 @@
 const angular = require('angular');
 const uiRouter = require('angular-ui-router');
+require('ng-notify');
 import routing from './main.routes';
 
 export class MainController {
@@ -19,13 +20,15 @@ export class MainController {
   displayDashboard;
   displayRoom;
   userState;
+  ngNotify;
 
   /*@ngInject*/
-  constructor($http, socket, Auth, $state) {
+  constructor($http, socket, Auth, $state, ngNotify) {
     this.$http = $http;
     this.socket = socket;
     this.Auth = Auth;
     this.$state = $state;
+    this.ngNotify = ngNotify;
   }
 
   $onInit() {
@@ -112,7 +115,7 @@ export class MainController {
   }
 }
 export default angular.module('projectTestApp.main', [
-  uiRouter])
+  uiRouter, 'ngNotify'])
     .config(routing)
     .component('main', {
       template: require('./main.html'),

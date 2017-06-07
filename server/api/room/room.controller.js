@@ -233,6 +233,7 @@ export function editMessage(req, res) {
   var messageId = req.body.messageId;
   var text = req.body.text;
   Message.findByIdAndUpdate(messageId, {text}).then(response => {
+    roomEvent.emit('syncRooms', response.roomId);
   });
 }
 

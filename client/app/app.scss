@@ -2,6 +2,10 @@ $icon-font-path: '/assets/fonts/bootstrap/';
 @import '~bootstrap-sass/assets/stylesheets/bootstrap';
 $fa-font-path: '/assets/fonts/font-awesome/';
 @import '~font-awesome/scss/font-awesome';
+@import '~ng-notify/src/styles/ng-notify';
+
+//@import '~ng-embed/src/ng-embed';
+
 
 // @import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,900|Roboto:300,500,700,900);
 

@@ -33,18 +33,6 @@ export class MainController {
     this.displayRoom = false;
     this.$http.get('api/users/me').then(response => {
       this.currentUser = response.data;
-      // this.socket.syncUpdates('user', this.currentUser.request, function(event, item, array){
-      //   array.forEach(function (request, index) {
-      //     item.friends.forEach(friend){
-      //       if (friend === request) {
-      //         array.splice(index, 1);
-      //       }
-      //     };
-      //   }
-      //   this.$http.post(`api/users/${this.currentUser._id}/removerequest`, { friendId : friendId});
-      //   console.log(event);
-      //   console.log(item);
-      //   console.log(array);
       this.userState = this.currentUser.state;
       this.friends = this.currentUser.friends;
       this.friendsRequest = this.currentUser.request;
@@ -69,20 +57,29 @@ export class MainController {
       this.socket.syncFriends('user', this.friends, function(event, item, array){
         if (item._id === self.currentUser._id) {
           self.friends = item.friends;
+          self.userState = item.state;
         }
-        // if (item.length) {
-        //   var isBad = false;
-        //   item.forEach(friend => {
-        //     if (friend.user._id === self.currentUser._id) {
-        //       isBad = true;
-        //     }
-        //   });
-        //   if (!isBad) {
-        //     self.friends = item;
-        //   }
-        // } else {
-        //   self.friends = [];
-        // }
+      });
+      this.socket.syncRooms('room', this.userRooms, function(event, item, array){
+        self.userRooms = [];
+        self.userPrivateRooms = [];
+        self.publicRooms = [];
+        self.$http.post('/api/rooms/userrooms').then(rooms => {
+          rooms.data.forEach( room => {
+            if (room.members.includes(self.currentUser._id)) {
+              self.userRooms.push(room);
+            } else {
+              self.publicRooms.push(room);
+            }
+          });
+        });
+        self.$http.post('/api/rooms/userprivaterooms').then(rooms => {
+          rooms.data.forEach( room => {
+            if (room.members.includes(self.currentUser._id)) {
+              self.userPrivateRooms.push(room);
+            }
+          });
+        });
       });
     });
   }

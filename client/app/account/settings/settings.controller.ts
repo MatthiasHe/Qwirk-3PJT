@@ -16,7 +16,6 @@ export default class SettingsController {
   message = '';
   submitted = false;
   Auth;
-  file;
   $http;
   currentUser;
   upload;
@@ -76,7 +75,7 @@ export default class SettingsController {
 
   editProfile() {
     this.birthDate = this.birthDate.getDate() + '/' + (this.birthDate.getMonth() + 1) + '/'  + this.birthDate.getFullYear();
-    this.$http.post(`/api/users/${this.currentUser._id}/editprofile`, { bio: this.bio, birthDate: this.birthDate);
+    this.$http.post(`/api/users/${this.currentUser._id}/editprofile`, { bio: this.bio, birthDate: this.birthDate });
     this.sendAvatar();
   }
 

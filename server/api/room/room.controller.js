@@ -16,18 +16,20 @@ import Room from './room.model';
 import {Message} from './room.model';
 import User from '../user/user.model';
 import mongoose from 'mongoose';
+import roomEvent from './room.events';
+
 
 const multer = require('multer');
 var path = require('path');
 const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
+  destination(req, file, cb) {
     cb(null, '/Users/matt/Desktop/projectTest/client/assets/files');
   },
-  filename: function(req, file, cb) {
+  filename(req, file, cb) {
     cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
   }
 });
-export const upload = multer({ storage: storage });
+export const upload = multer({ storage });
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -98,11 +100,6 @@ export function show(req, res) {
 export function create(req, res) {
   var privateRoom = req.body.private ? true : false;
   var privateRoomMulti = req.body.privateMulti ? true : false;
-  // if(req.body.private) {
-  //   var privateRoom = true;
-  // } else {
-  //   var privateRoom = false;
-  // }
   var params = {
     admin: mongoose.Types.ObjectId(req.body.adminId),
     members: [mongoose.Types.ObjectId(req.body.memberId), mongoose.Types.ObjectId(req.body.friendId)],
@@ -111,6 +108,7 @@ export function create(req, res) {
     privateMulti: privateRoomMulti
   };
   Room.create(params).then(response => {
+    roomEvent.emit('syncRooms', response);
     return res.json(response);
   });
 }
@@ -233,7 +231,7 @@ export function removeModeratorRights(req, res) {
 export function editMessage(req, res) {
   var messageId = req.body.messageId;
   var text = req.body.text;
-  Message.findByIdAndUpdate(messageId, {text: text}).then(response => {
+  Message.findByIdAndUpdate(messageId, {text}).then(response => {
   });
 }
 

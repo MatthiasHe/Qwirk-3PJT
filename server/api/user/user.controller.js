@@ -128,22 +128,6 @@ export function me(req, res, next) {
     .catch(err => next(err));
 }
 
-/*export function removeRequest(req, res) {
-  var userId = req.params.id;
-  var newFriendId = req.body.friendId;
-  User.findById(userId).populate('request').exec()
-    .then(user => {
-      user.request.forEach(function(request, index) {
-        if(request._id == newFriendId) {
-          user.request.splice(index, 1);
-        }
-      });
-      // user.update({$push: {friends: {user: userId, room: roomId}}});
-      // user.update({$pull: {awaitingRequest: userId}});
-      user.save();
-    });
-}*/
-
 /**
  * Add a friend
  */
@@ -151,49 +135,6 @@ export function addFriend(req, res) {
   var userId = req.params.id;
   var roomId = req.body.roomId;
   var newFriendId = req.body.friendId;
-  // console.log(userId);
-  // console.log(roomId);
-  // console.log(newFriendId);
-  //
-  // User.findById(userId).populate('friends request').exec()
-  //   .then(user => {
-  //     if(user.friends == undefined) {
-  //       user.friends = [];
-  //     }
-  //     user.friends.push(mongoose.Types.ObjectId(newFriendId));
-  //     user.request.forEach(function(request, index) {
-  //       if(request._id == newFriendId) {
-  //         user.request.splice(index, 1);
-  //       }
-  //     });
-  //     user.update({$push: {friends: {user: userId, room: roomId}}});
-  //     user.update({$pull: {awaitingRequest: userId}});
-  //     console.log(user);
-  //     user.save();
-  // });
-  //
-  // User.findById(newFriendId).populate('friends request').exec()
-  //   .then(user => {
-  //     if(user.friends == undefined) {
-  //       user.friends = [];
-  //     }
-  //     user.friends.push(mongoose.Types.ObjectId(userId));
-  //     user.request.forEach(function(request, index) {
-  //       if(request._id == userId) {
-  //         user.request.splice(index, 1);
-  //       }
-  //     });
-  //     user.update({$push: {friends: {user: userId, room: roomId}}});
-  //     user.update({$pull: {awaitingRequest: userId}});
-  //     console.log(user);
-  //     user.save();
-  //   });
-  //
-  // User.find(userId).exec().then(user => {
-  //   user.update({$pull: {request: newFriendId}});
-  //   user.update({$push: {friends: {user: newFriendId, room: roomId}}});
-  //   user.save();
-  // });
 
   User.findByIdAndUpdate(newFriendId, {$push: {friends: {user: userId, room: roomId}}}).then(newresponse => {
   });
@@ -210,7 +151,6 @@ export function addFriend(req, res) {
     User.findById(newFriendId).populate('friends.user friends.room awaitingRequest request').exec()
       .then(user => {
         userEvent.emit('syncFriends', user);
-        // userEvent.emit('syncAwaiting', user);
       });
   });
 }
@@ -358,6 +298,10 @@ export function setState(req, res) {
   var userId = req.params.id;
   var state = req.body.state;
   User.findByIdAndUpdate(userId, {state: state}).then(response => {
+    User.findById(userId).populate('friends.user friends.room request awaitingRequest request').exec()
+      .then(user => {
+        userEvent.emit('syncFriends', user);
+      });
   });
 }
 

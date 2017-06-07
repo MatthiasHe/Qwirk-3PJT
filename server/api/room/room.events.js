@@ -13,7 +13,8 @@ RoomEvents.setMaxListeners(0);
 // Model events
 var events = {
   save: 'save',
-  remove: 'remove'
+  remove: 'remove',
+  syncFriends: 'syncFriends'
 };
 
 // Register the event emitter to the model events

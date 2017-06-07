@@ -259,6 +259,10 @@ export function editSurname(req, res) {
         console.log(err);
         return res.send(err);
       }
+      User.findById(friendId).populate('friends.user friends.room awaitingRequest request').exec()
+        .then(user => {
+          userEvent.emit('syncFriends', user);
+        });
       return res.json(model);
     });
 }

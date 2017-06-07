@@ -23,7 +23,8 @@
             <i ng-if="friend.user.state == 'Online'" class="fa fa-circle-o online"></i>
             <i ng-if="friend.user.state == 'Busy'" class="fa fa-circle-o idle"></i>
             <i ng-if="friend.user.state == 'Offline'" class="fa fa-circle-o offline"></i>
-            <span ng-click="$ctrl.setRoomId(friend.room._id)">{{friend.user.name}}</span>
+            <span ng-if="!friend.nickname" ng-click="$ctrl.setRoomId(friend.room._id)">{{friend.user.name}}</span>
+            <span ng-if="friend.nickname" ng-click="$ctrl.setRoomId(friend.room._id)">{{friend.nickname}}</span>
             <i ng-click="$ctrl.deleteFriend(friend.user._id)" class="fa fa-times"></i>
           </a>
         </li>

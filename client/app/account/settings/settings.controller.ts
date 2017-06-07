@@ -69,13 +69,13 @@ export default class SettingsController {
       method: 'POST'
     }).then(response => {
       filename = response.data;
-      this.$http.post(`api/users/${this.currentUser._id}/sendavatar`, { avatarPath: path + filename });
+      this.$http.post(`api/users/${this.currentUser._id}/sendavatar`, {avatarPath: path + filename});
     });
   }
 
   editProfile() {
-    this.birthDate = this.birthDate.getDate() + '/' + (this.birthDate.getMonth() + 1) + '/'  + this.birthDate.getFullYear();
-    this.$http.post(`/api/users/${this.currentUser._id}/editprofile`, { bio: this.bio, birthDate: this.birthDate });
+    this.birthDate = this.birthDate.getDate() + '/' + (this.birthDate.getMonth() + 1) + '/' + this.birthDate.getFullYear();
+    this.$http.post(`/api/users/${this.currentUser._id}/editprofile`, {bio: this.bio, birthDate: this.birthDate});
     this.sendAvatar();
   }
 

@@ -181,13 +181,12 @@ export function getParticipants(req, res) {
 export function addMember(req, res) {
   var roomId = req.params.id;
   var newMember = req.body.newMemberId;
-  console.log(roomId + '+++' + newMember);
   Room.findByIdAndUpdate(roomId, {$push: {members: newMember}}).then(response => {
+    roomEvent.emit('syncRooms', response);
   });
 }
 
 export function getPublicUserRooms(req, res) {
-  // var userId = req.body.userId;
   Room.find({ private: false }).then(response => {
     return res.json(response);
   });
@@ -203,7 +202,7 @@ export function joinRoom(req, res) {
   var userId = req.body.userId;
   var roomId = req.params.id;
   Room.findByIdAndUpdate(roomId, {$push: {members: userId}}).then(response => {
-    console.log(response);
+    roomEvent.emit('syncRooms', response);
   });
 }
 
@@ -218,6 +217,7 @@ export function giveModeratorRights(req, res) {
   var newModeratorId = req.body.newModeratorId;
   var roomId = req.params.id;
   Room.findByIdAndUpdate(roomId, {$push: {moderators: newModeratorId}}).then(response => {
+    roomEvent.emit('syncRooms', response);
   });
 }
 
@@ -225,6 +225,7 @@ export function removeModeratorRights(req, res) {
   var oldModeratorId = req.body.oldModeratorId;
   var roomId = req.params.id;
   Room.findByIdAndUpdate(roomId, {$pull: {moderators: oldModeratorId}}).then(response => {
+    roomEvent.emit('syncRooms', response);
   });
 }
 

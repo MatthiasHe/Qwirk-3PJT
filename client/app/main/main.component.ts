@@ -58,6 +58,10 @@ export class MainController {
         if (item._id === self.currentUser._id) {
           self.friends = item.friends;
           self.userState = item.state;
+        } else {
+          self.$http.get('api/users/me').then(response => {
+            self.friends = response.data.friends;
+          });
         }
       });
       this.socket.syncRooms('room', this.userRooms, function(event, item, array){

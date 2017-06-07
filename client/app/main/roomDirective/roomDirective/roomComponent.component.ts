@@ -45,6 +45,7 @@ class RoomComponent {
 
   $onInit() {
     var temporalyFriendList = [];
+    var self = this;
     this.displayParticpants = true;
     this.displayFriends = false;
     this.roomId = this.roomid;
@@ -74,8 +75,12 @@ class RoomComponent {
         });
         this.$http.get(`api/rooms/${this.roomId}/getparticipants`, { roomId: this.room._id} ).then(room => {
           this.users = room.data.members;
+          var temporalyUsersList = [];
+          this.users.forEach(user => {
+            temporalyUsersList.push(user._id);
+          });
           this.friends.forEach(function(friend, index) {
-            if (!this.users.includes(friend._id)) {
+            if (!temporalyUsersList.includes(friend.user._id)) {
               temporalyFriendList.push(friend);
             }
           });
@@ -85,14 +90,25 @@ class RoomComponent {
               this.isParticipant = true;
             }
           });
-          // TO DO
-          /*          this.friends.forEach(function (friend, index) {
-           room.data.members.forEach(user => {
-           if (friend._id === user._id) {
-           this.friends.splice(index, 1);
-           }
-           });
-           });*/
+          this.socket.syncRooms('room', this.users, function(event, item, array) {
+            self.$http.get(`api/rooms/${self.roomId}/getparticipants`, { roomId: self.room._id} ).then(room => {
+              if (room.data._id === self.room._id) {
+                self.users = room.data.members;
+                self.moderators = room.data.moderators;
+                temporalyUsersList = [];
+                self.users.forEach(user => {
+                  temporalyUsersList.push(user._id);
+                });
+                self.friends.forEach(function(friend, index) {
+                  if (!temporalyUsersList.includes(friend._id)) {
+                    temporalyFriendList.push(friend);
+                  }
+                });
+                self.friends = temporalyFriendList;
+                temporalyFriendList = [];
+              }
+            });
+          });
         });
       });
     });
@@ -182,16 +198,22 @@ class RoomComponent {
 
   onInitCalls(roomid) {
     var temporalyFriendList = [];
-    this.isParticipant = false;
-    this.displayProfile = false;
-    this.roomId = roomid;
+    var self = this;
+    this.displayParticpants = true;
+    this.displayFriends = false;
+    this.roomId = this.roomid;
     this.$http.get('api/users/me').then(response => {
       this.currentUser = response.data;
       this.friends = this.currentUser.friends;
+      this.friends.forEach(friend => {
+        if (friend.nickname === undefined) {
+          friend.nickname = friend.user.name;
+        }
+      });
       this.$http.get(`api/rooms/${this.roomId}`).then( newresponse => {
         this.room = newresponse.data;
         this.moderators = this.room.moderators;
-        if (this.room.private) {
+        if (this.room.private || this.room.privateMulti) {
           this.isPrivate = true;
         }
         if (this.room.admin === this.currentUser._id) {

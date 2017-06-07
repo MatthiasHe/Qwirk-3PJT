@@ -71,7 +71,6 @@ class RoomComponent {
         }
         this.$http.get(`api/rooms/${this.roomId}/getmessages`, { roomId: this.room._id }).then(room => {
           this.messages = room.data.messages;
-          this.socket.syncUpdates('message', this.messages);
         });
         this.$http.get(`api/rooms/${this.roomId}/getparticipants`, { roomId: this.room._id} ).then(room => {
           this.users = room.data.members;
@@ -91,6 +90,11 @@ class RoomComponent {
             }
           });
           this.socket.syncRooms('room', this.users, function(event, item, array) {
+            if (item === self.room._id) {
+              self.$http.get(`api/rooms/${item}/getmessages`).then(room => {
+                self.messages = room.data.messages;
+              });
+            }
             self.$http.get(`api/rooms/${self.roomId}/getparticipants`, { roomId: self.room._id} ).then(room => {
               if (room.data._id === self.room._id) {
                 self.users = room.data.members;

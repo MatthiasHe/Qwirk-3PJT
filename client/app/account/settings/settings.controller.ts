@@ -35,6 +35,8 @@ export default class SettingsController {
     this.$http.get('api/users/me').then(response => {
       this.currentUser = response.data;
       this.file = this.currentUser.avatar;
+      this.birthDate = this.currentUser.birthdate;
+      this.bio = this.currentUser.bio;
     });
   }
 

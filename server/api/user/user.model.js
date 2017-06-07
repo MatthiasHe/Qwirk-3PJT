@@ -27,7 +27,7 @@ var UserSchema = new Schema({
   avatar: {type: String, default: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRbezqZpEuwGSvitKy3wrwnth5kysKdRqBW54cAszm_wiutku3R'},
   salt: String,
   state: {type: String, default: 'Online'},
-  birthdate: String,
+  birthdate: Date,
   bio: String
 });
 

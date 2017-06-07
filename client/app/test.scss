@@ -628,9 +628,47 @@ ul.tabs-container{
 //settings
 
 .uib-datepicker {
-  width: 28%;
-  margin: auto;
+  width: 58%;
+  //margin-top: 1em;
+  //margin-bottom: 1em;
+  margin: 1em auto 2em auto;
 }
 .uib-title {
   margin-bottom: 2em;
 }
+
+.settings-title {
+  font-size: 6em;
+  padding-bottom: 0.1em;
+  padding-top: 0.1em;
+  text-align: center;
+}
+
+.first-column-settings {
+  border-right: 1px solid;
+}
+
+.btn-avatar-settings {
+  margin-bottom: 2em;
+}
+
+.btn-save-profile {
+  margin-top: 3em;
+}
+
+.birthdate-settings-title {
+  font-size: 1.5em;
+}
+
+.settings-password-title {
+  font-size: 2em;
+  margin-bottom: 4em;
+  margin-top: 2em;
+}
+
+.second-column-settings {
+  input {
+    margin-bottom: 3em;
+  }
+}
+

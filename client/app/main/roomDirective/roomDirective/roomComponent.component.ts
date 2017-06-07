@@ -36,13 +36,6 @@ class RoomComponent {
     this.socket = socket;
     this.$http = $http;
     this.upload = Upload;
-    // this.roomId = $scope.roomid;
-    // this.scope = $scope;
-    // this.scope.$watch('roomid', function (newValue, oldValue) {
-    //   console.log($scope.);
-      // $scope.$parent.onInitCalls(newValue);
-      // this.onInitCalls(newValue);
-    // }, true);
   }
 
   $onChanges(changes) {
@@ -54,8 +47,6 @@ class RoomComponent {
     var temporalyFriendList = [];
     this.displayParticpants = true;
     this.displayFriends = false;
-    // this.$watch('roomid', function (newValue, oldValue) {
-    //   }, true);
     this.roomId = this.roomid;
     this.$http.get('api/users/me').then(response => {
       this.currentUser = response.data;

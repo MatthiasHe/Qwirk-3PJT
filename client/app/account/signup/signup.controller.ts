@@ -37,26 +37,27 @@ export default class SignupController {
   register(form) {
     this.submitted = true;
 
-    if(form.$valid) {
+    if (form.$valid) {
       return this.Auth.createUser({
         name: this.user.name,
         email: this.user.email,
         password: this.user.password
       })
-      .then((response) => {
-        this.sendAvatar(response.user._id);
-        // Account created, redirect to home
-                this.$state.go('main');      })
-      .catch(err => {
-        err = err.data;
-        this.errors = {};
-        // Update validity of form fields that match the mongoose errors
-        angular.forEach(err.errors, (error, field) => {
-          form[field].$setValidity('mongoose', false);
-          this.errors[field] = error.message;
-        });
+        .then((response) => {
+          this.sendAvatar(response.user._id);
+          // Account created, redirect to home
+          this.$state.go('main');
+        })
+        .catch(err => {
+          err = err.data;
+          this.errors = {};
+          // Update validity of form fields that match the mongoose errors
+          angular.forEach(err.errors, (error, field) => {
+            form[field].$setValidity('mongoose', false);
+            this.errors[field] = error.message;
+          });
 
-      });
+        });
     }
   }
 
@@ -69,7 +70,7 @@ export default class SignupController {
       method: 'POST'
     }).then(response => {
       filename = response.data;
-      this.$http.post(`api/users/${userId}/sendavatar`, { avatarPath: path + filename });
+      this.$http.post(`api/users/${userId}/sendavatar`, {avatarPath: path + filename});
     });
   }
 

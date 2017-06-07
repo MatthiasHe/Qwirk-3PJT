@@ -31,13 +31,13 @@ export default class LoginController {
         email: this.user.email,
         password: this.user.password
       })
-      .then(() => {
-        // Logged in, redirect to home
-        this.$state.go('main');
-      })
-      .catch(err => {
-        this.errors.login = err.message;
-      });
+        .then(() => {
+          // Logged in, redirect to home
+          this.$state.go('main');
+        })
+        .catch(err => {
+          this.errors.login = err.message;
+        });
     }
   }
 }

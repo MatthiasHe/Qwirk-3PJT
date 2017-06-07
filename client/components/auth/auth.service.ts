@@ -18,11 +18,11 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
    * @param {String} userRole - role of current user
    * @param {String} role - role to check against
    */
-  var hasRole = function(userRole, role) {
+  var hasRole = function (userRole, role) {
     return userRoles.indexOf(userRole) >= userRoles.indexOf(role);
   };
 
-  if($cookies.get('token') && $location.path() !== '/logout') {
+  if ($cookies.get('token') && $location.path() !== '/logout') {
     currentUser = User.get();
   }
 
@@ -34,8 +34,8 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
      * @param  {Function} callback - function(error, user)
      * @return {Promise}
      */
-    login({email, password}, callback?: Function) {
-      return $http.post('/auth/local', { email, password })
+      login({email, password}, callback?: Function) {
+      return $http.post('/auth/local', {email, password})
         .then(res => {
           $cookies.put('token', res.data.token);
           currentUser = User.get();
@@ -55,7 +55,7 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
     /**
      * Delete access token and user info
      */
-    logout() {
+      logout() {
       $cookies.remove('token');
       currentUser = new _User();
     },
@@ -67,14 +67,14 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
      * @param  {Function} callback - function(error, user)
      * @return {Promise}
      */
-    createUser(user, callback?: Function) {
+      createUser(user, callback?: Function) {
       return User.save(user,
-        function(data) {
+        function (data) {
           $cookies.put('token', data.token);
           currentUser = User.get();
           return safeCb(callback)(null, user);
         },
-        function(err) {
+        function (err) {
           Auth.logout();
           return safeCb(callback)(err);
         }).$promise;
@@ -88,10 +88,10 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
      * @param  {Function} callback    - function(error, user)
      * @return {Promise}
      */
-    changePassword(oldPassword, newPassword, callback?: Function) {
-      return User.changePassword({ id: currentUser._id }, { oldPassword, newPassword }, function() {
+      changePassword(oldPassword, newPassword, callback?: Function) {
+      return User.changePassword({id: currentUser._id}, {oldPassword, newPassword}, function () {
         return safeCb(callback)(null);
-      }, function(err) {
+      }, function (err) {
         return safeCb(callback)(err);
       }).$promise;
     },
@@ -102,7 +102,7 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
      * @param  {Function} [callback] - function(user)
      * @return {Promise}
      */
-    getCurrentUser(callback?: Function) {
+      getCurrentUser(callback?: Function) {
       var value = _.get(currentUser, '$promise')
         ? currentUser.$promise
         : currentUser;
@@ -122,7 +122,7 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
      *
      * @return {Object}
      */
-    getCurrentUserSync() {
+      getCurrentUserSync() {
       return currentUser;
     },
 
@@ -132,7 +132,7 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
      * @param  {Function} [callback] - function(is)
      * @return {Promise}
      */
-    isLoggedIn(callback?: Function) {
+      isLoggedIn(callback?: Function) {
       return Auth.getCurrentUser(undefined)
         .then(user => {
           let is = _.get(user, 'role');
@@ -147,18 +147,18 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
      *
      * @return {Bool}
      */
-    isLoggedInSync() {
+      isLoggedInSync() {
       return !!_.get(currentUser, 'role');
     },
 
-     /**
-      * Check if a user has a specified role or higher
-      *
-      * @param  {String}     role     - the role to check against
-      * @param  {Function} [callback] - function(has)
-      * @return {Promise}
-      */
-    hasRole(role, callback?: Function) {
+    /**
+     * Check if a user has a specified role or higher
+     *
+     * @param  {String}     role     - the role to check against
+     * @param  {Function} [callback] - function(has)
+     * @return {Promise}
+     */
+      hasRole(role, callback?: Function) {
       return Auth.getCurrentUser(undefined)
         .then(user => {
           let has = hasRole(_.get(user, 'role'), role);
@@ -169,33 +169,33 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
     },
 
     /**
-      * Check if a user has a specified role or higher
-      *
-      * @param  {String} role - the role to check against
-      * @return {Bool}
-      */
-    hasRoleSync(role) {
+     * Check if a user has a specified role or higher
+     *
+     * @param  {String} role - the role to check against
+     * @return {Bool}
+     */
+      hasRoleSync(role) {
       return hasRole(_.get(currentUser, 'role'), role);
     },
 
-     /**
-      * Check if a user is an admin
-      *   (synchronous|asynchronous)
-      *
-      * @param  {Function|*} callback - optional, function(is)
-      * @return {Bool|Promise}
-      */
-    isAdmin() {
+    /**
+     * Check if a user is an admin
+     *   (synchronous|asynchronous)
+     *
+     * @param  {Function|*} callback - optional, function(is)
+     * @return {Bool|Promise}
+     */
+      isAdmin() {
       return Auth.hasRole
         .apply(Auth, [].concat.apply(['admin'], arguments));
     },
 
-     /**
-      * Check if a user is an admin
-      *
-      * @return {Bool}
-      */
-    isAdminSync() {
+    /**
+     * Check if a user is an admin
+     *
+     * @return {Bool}
+     */
+      isAdminSync() {
       return Auth.hasRoleSync('admin');
     },
 
@@ -204,7 +204,7 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
      *
      * @return {String} - a token string used for authenticating
      */
-    getToken() {
+      getToken() {
       return $cookies.get('token');
     },
 
@@ -213,11 +213,11 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
     },
 
     addFriend(nickname) {
-      User.addFriend({ id: currentUser._id }, {nickname});
+      User.addFriend({id: currentUser._id}, {nickname});
     },
 
     getFriends() {
-      return User.getFriends({ id: currentUser._id });
+      return User.getFriends({id: currentUser._id});
     }
 
   };

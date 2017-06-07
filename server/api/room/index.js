@@ -13,7 +13,7 @@ router.post('/', controller.create);
 router.put('/:id', controller.upsert);
 router.patch('/:id', controller.patch);
 router.delete('/:id', controller.destroy);
-router.post('/createmessage', controller.createMessage);
+router.post('/createmessage', auth.isAuthenticated(), controller.createMessage);
 router.post('/:id/editmessage', auth.isAuthenticated(), controller.editMessage);
 router.get('/:id/getmessages', auth.isAuthenticated(), controller.getMessages);
 router.get('/:id/getparticipants', auth.isAuthenticated(), controller.getParticipants);

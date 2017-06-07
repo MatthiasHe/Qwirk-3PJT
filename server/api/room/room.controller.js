@@ -18,7 +18,6 @@ import User from '../user/user.model';
 import mongoose from 'mongoose';
 import roomEvent from './room.events';
 
-
 const multer = require('multer');
 var path = require('path');
 const storage = multer.diskStorage({

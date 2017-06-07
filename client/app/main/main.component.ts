@@ -41,7 +41,7 @@ export class MainController {
       this.friendsRequest = this.currentUser.request;
       this.awaitingRequest = this.currentUser.awaitingRequest;
       this.$http.post('/api/rooms/userrooms').then(rooms => {
-        rooms.data.forEach( room => {
+        rooms.data.forEach(room => {
           if (room.members.includes(this.currentUser._id)) {
             this.userRooms.push(room);
           } else {
@@ -50,14 +50,14 @@ export class MainController {
         });
       });
       this.$http.post('/api/rooms/userprivaterooms').then(rooms => {
-        rooms.data.forEach( room => {
+        rooms.data.forEach(room => {
           if (room.members.includes(this.currentUser._id)) {
             this.userPrivateRooms.push(room);
           }
         });
       });
       var self = this;
-      this.socket.syncFriends('user', this.friends, function(event, item, array){
+      this.socket.syncFriends('user', this.friends, function (event, item, array) {
         if (item._id === self.currentUser._id) {
           self.friends = item.friends;
           self.userState = item.state;
@@ -67,12 +67,12 @@ export class MainController {
           });
         }
       });
-      this.socket.syncRooms('room', this.userRooms, function(event, item, array){
+      this.socket.syncRooms('room', this.userRooms, function (event, item, array) {
         self.userRooms = [];
         self.userPrivateRooms = [];
         self.publicRooms = [];
         self.$http.post('/api/rooms/userrooms').then(rooms => {
-          rooms.data.forEach( room => {
+          rooms.data.forEach(room => {
             if (room.members.includes(self.currentUser._id)) {
               self.userRooms.push(room);
             } else {
@@ -81,7 +81,7 @@ export class MainController {
           });
         });
         self.$http.post('/api/rooms/userprivaterooms').then(rooms => {
-          rooms.data.forEach( room => {
+          rooms.data.forEach(room => {
             if (room.members.includes(self.currentUser._id)) {
               self.userPrivateRooms.push(room);
             }
@@ -107,18 +107,18 @@ export class MainController {
   }
 
   deleteFriend(friendid) {
-    this.$http.post(`api/users/${this.currentUser._id}/deletefriend`, { friendId: friendid });
+    this.$http.post(`api/users/${this.currentUser._id}/deletefriend`, {friendId: friendid});
   }
 
   setUserState(state) {
-    this.$http.post(`api/users/${this.currentUser._id}/setstate`, { state: state });
+    this.$http.post(`api/users/${this.currentUser._id}/setstate`, {state: state});
   }
 }
 export default angular.module('projectTestApp.main', [
   uiRouter, 'ngNotify'])
-    .config(routing)
-    .component('main', {
-      template: require('./main.html'),
-      controller: MainController
-    })
-    .name;
+  .config(routing)
+  .component('main', {
+    template: require('./main.html'),
+    controller: MainController
+  })
+  .name;

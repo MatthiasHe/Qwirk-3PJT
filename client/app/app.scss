@@ -6,7 +6,6 @@ $fa-font-path: '/assets/fonts/font-awesome/';
 
 //@import '~ng-embed/src/ng-embed';
 
-
 // @import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,900|Roboto:300,500,700,900);
 
 /**
@@ -20,17 +19,12 @@ $fa-font-path: '/assets/fonts/font-awesome/';
   padding: 0.2em 0;
 }
 
-
-
 // Component styles are injected through gulp
 /* inject:scss */
-@import 'admin/admin';
-@import 'main/dashboardDirective/dashboardDirective/dashboardDirective';
+@import '../components/dashboardDirective/dashboardDirective/dashboardDirective';
 @import 'main/main';
-@import 'main/profileDirective/profileDirective/profileDirective';
-@import 'main/roomDirective/roomDirective/roomDirective';
-@import 'room/room';
-@import 'test';
-@import '../components/footer/footer';
-@import '../components/modal/modal';
+@import '../components/profileDirective/profileDirective/profileDirective';
+@import '../components/roomDirective/roomDirective/roomDirective';
+@import 'account/settings/settings';
+@import 'account/signup/signup';
 /* endinject */

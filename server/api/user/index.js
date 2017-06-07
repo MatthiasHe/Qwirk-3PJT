@@ -24,5 +24,6 @@ router.post('/:id/editsurname', auth.isAuthenticated(), controller.editSurname);
 router.post('/:id/sendavatar', auth.isAuthenticated(), controller.sendAvatar);
 router.post('/sendavatarfile', controller.upload.single('file'), controller.sendAvatarFile);
 router.post('/:id/setstate', auth.isAuthenticated(), controller.setState);
+router.post('/:id/editprofile', auth.isAuthenticated(), controller.editProfile);
 
 module.exports = router;

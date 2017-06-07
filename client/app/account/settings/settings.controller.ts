@@ -20,6 +20,9 @@ export default class SettingsController {
   $http;
   currentUser;
   upload;
+  birthDate;
+  file;
+  bio;
 
   /*@ngInject*/
   constructor(Auth, $http, Upload) {
@@ -31,6 +34,7 @@ export default class SettingsController {
   $onInit() {
     this.$http.get('api/users/me').then(response => {
       this.currentUser = response.data;
+      this.file = this.currentUser.avatar;
     });
   }
 
@@ -56,23 +60,23 @@ export default class SettingsController {
   }
 
   sendAvatar() {
+    let filename;
+    const path = 'http://localhost:3000/assets/avatar/';
     this.upload.upload({
-      url: `api/users/${this.currentUser._id}/sendavatar`,
+      url: `api/users/sendavatarfile`,
       data: {file: this.file},
       method: 'POST'
+    }).then(response => {
+      filename = response.data;
+      this.$http.post(`api/users/${this.currentUser._id}/sendavatar`, { avatarPath: path + filename });
     });
-    // const photo = <HTMLInputElement>document.getElementById('photo');
-    // const file = photo.files[0];
-    // const fd = new FormData();
-    // fd.append('file', file);
-    // this.$http({
-    //   method: 'POST',
-    //   url: `api/users/${this.currentUser._id}/sendavatar`,
-    //   data: fd,
-    //   headers: {
-    //     'Content-Type': undefined
-    //   }
-    // });
+  }
+
+  editProfile() {
+    console.log(this.bio);
+    console.log(this.birthDate);
+    // this.$http.post(`/api/users/${this.currentUser._id}/editprofile`, { bio: this.bio, birthDate: this.birthDate);
+    // this.sendAvatar();
   }
 
   prepareThumbmail() {

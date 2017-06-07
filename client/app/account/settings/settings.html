@@ -1,22 +1,26 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
-      <form id="register-form" role="form" name="form" ng-submit="vm.register(form)" class="text-center" novalidate>
+      <form id="edit-profile-form" role="form" name="form" ng-submit="vm.editProfile()" class="text-center" novalidate>
         <div ngf-drop ngf-select ng-model="vm.file" class="drop-box" id="file"
              ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="true"
              accept="image/*,application/pdf" ngf-change="vm.sendFile()"
              ngf-pattern="'image/*,application/pdf'" ngf-select-disabled="true"
              ngf-resize="{width: 100, height: 100, quality: 1, type: 'image/jpeg',
                ratio: '1:2', pattern='.jpg', restoreExif: false}" ngf-max-size="10MB">
-          <img class="profile-img" ngf-src="vm.currentUser.avatar"
+          <img class="profile-img" ngf-src="vm.file"
                alt=""/>
         </div>
         <div id='photo' class="btn btn-lg btn-file btn-default" ngf-select ng-model="vm.file" ngf-multiple="false" ngf-change="vm.prepareThumbmail()">Select avatar</div>
+          <h2>Birthdate</h2>
+          <div uib-datepicker ng-model="vm.birthDate" class="well well-sm" datepicker-options="options"></div>
+          <h2>Bio</h2>
+          <textarea class="form-control" ng-model="vm.bio" placeholder="Write a bio..."></textarea>
+          <button ng-click="vm.editProfile()" class="text-center btn btn-lg btn-primary" type="button">Edit profile</button>
+      </form>
 
       <h1>Change Password</h1>
-    </div>
-    <div class="col-sm-12">
-      <form class="form" name="form" ng-submit="vm.changePassword(form)" novalidate>
+      <form class="text-center form" name="form" ng-submit="vm.changePassword(form)" novalidate>
 
         <div class="form-group">
           <label>Current Password</label>
@@ -24,7 +28,7 @@
           <input type="password" name="password" class="form-control" ng-model="vm.user.oldPassword"
                  mongoose-error/>
           <p class="help-block" ng-show="form.password.$error.mongoose">
-              {{ vm.errors.other }}
+            {{ vm.errors.other }}
           </p>
         </div>
 
@@ -56,8 +60,9 @@
 
         <p class="help-block"> {{ vm.message }} </p>
 
-        <button class="btn btn-lg btn-primary" type="submit">Save changes</button>
+        <button class="btn btn-lg btn-primary" type="submit">Save new password</button>
 
       </form>
+    </div>
   </div>
 </div>

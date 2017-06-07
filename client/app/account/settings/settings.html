@@ -1,6 +1,18 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
+      <form id="register-form" role="form" name="form" ng-submit="vm.register(form)" class="text-center" novalidate>
+        <div ngf-drop ngf-select ng-model="vm.file" class="drop-box" id="file"
+             ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="true"
+             accept="image/*,application/pdf" ngf-change="vm.sendFile()"
+             ngf-pattern="'image/*,application/pdf'" ngf-select-disabled="true"
+             ngf-resize="{width: 100, height: 100, quality: 1, type: 'image/jpeg',
+               ratio: '1:2', pattern='.jpg', restoreExif: false}" ngf-max-size="10MB">
+          <img class="profile-img" ngf-src="vm.currentUser.avatar"
+               alt=""/>
+        </div>
+        <div id='photo' class="btn btn-lg btn-file btn-default" ngf-select ng-model="vm.file" ngf-multiple="false" ngf-change="vm.prepareThumbmail()">Select avatar</div>
+
       <h1>Change Password</h1>
     </div>
     <div class="col-sm-12">
@@ -47,29 +59,5 @@
         <button class="btn btn-lg btn-primary" type="submit">Save changes</button>
 
       </form>
-
-      <br><br><br>
-      <br><br><br>
-      <br><br><br>
-
-      <div id='photo' class="btn btn-lg btn-danger" ngf-select ng-model="vm.file" ngf-multiple="false" ngf-change="vm.prepareThumbmail()">Select File</div>
-      <div ngf-drop ngf-select ng-model="vm.file" class="drop-box"
-           ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="true"
-           accept="image/*,application/pdf" ngf-change="vm.prepareThumbmail()"
-           ngf-pattern="'image/*,application/pdf'"
-           style="    background: #F8F8F8;
-    border: 5px dashed #DDD;
-    width: 200px;
-    height: 65px;
-    text-align: center;
-    padding-top: 25px;
-    margin: 10px;">Tu peux drop ton image ici également</div>
-      <img ng-src="{{vm.file}}">
-      Image thumbnail: <img ngf-thumbnail="{{vm.file}}">
-      Image thumbnail:  <img ngf-src="vm.file">
-    </div>
-    <button class="btn btn-lg btn-primary" ng-click="vm.sendAvatar()" type="submit">Upload avatar</button>
-
-
   </div>
 </div>

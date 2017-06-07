@@ -6,8 +6,8 @@
         <div class="request-area rounded col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <h1 class="area-title text-center">Friends request</h1>
 
-          <h2 class="area-subtitle text-center">Requests from friends</h2>
-          <div ng-if="dashboardCtrl.friendsRequest.length">
+          <h2 class="area-subtitle text-center ">Requests from friends</h2>
+          <div class="panel-body" ng-if="dashboardCtrl.friendsRequest.length">
             <div class="my-request" ng-repeat="request in dashboardCtrl.friendsRequest">
               <span class="request-name">Friend request from {{request.name}}</span>
               <button type="button" ng-click="dashboardCtrl.acceptRequest(request._id)" class="btn btn-success btn-accept">Accept</button>

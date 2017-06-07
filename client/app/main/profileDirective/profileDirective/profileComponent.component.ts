@@ -35,19 +35,18 @@ class ProfileCtrl {
             this.displayName = friend.nickname;
           }
         }
-        this.$http.get(`api/users/${this.userId}`).then(newResponse => {
-          this.user = newResponse.data;
-          if (this.displayName === undefined) {
-            this.displayName = this.user.name;
-          }
-        });
       });
+    });
+    this.$http.get(`api/users/${this.userId}`).then(newResponse => {
+      this.user = newResponse.data;
+      if (this.displayName === undefined) {
+        this.displayName = this.user.name;
+      }
     });
   }
 
   editSurname() {
     this.surnameEditOn = true;
-    console.log(this.displayName);
     // this.displayName = this.
   }
 
@@ -59,7 +58,7 @@ class ProfileCtrl {
   onInitCalls(userid) {
     this.userId = userid;
     this.userId = this.userid;
-    this.displayName = ''
+    this.displayName = '';
     this.$http.get('api/users/me').then(response => {
       this.currentUser = response.data;
       this.currentUser.friends.forEach(friend => {
@@ -69,13 +68,13 @@ class ProfileCtrl {
             this.displayName = friend.nickname;
           }
         }
-        this.$http.get(`api/users/${this.userId}`).then(newResponse => {
-          this.user = newResponse.data;
-          if (this.displayName === '') {
-            this.displayName = this.user.name;
-          }
-        });
       });
+    });
+    this.$http.get(`api/users/${this.userId}`).then(newResponse => {
+      this.user = newResponse.data;
+      if (this.displayName === '') {
+        this.displayName = this.user.name;
+      }
     });
   }
 }

@@ -165,7 +165,6 @@ export function getMessages(req, res) {
   var roomId = req.params.id;
   Room.findOne({_id: roomId}).populate({path: 'messages'}).exec()
     .then(room => {
-      console.log(room);
       return res.json(room);
     });
 }
@@ -174,7 +173,6 @@ export function getParticipants(req, res) {
   var roomId = req.params.id;
   Room.findOne({_id: roomId}).populate({path: 'members'}).exec()
     .then(room => {
-      console.log(room);
       return res.json(room);
     });
 }
@@ -211,6 +209,7 @@ export function leaveRoom(req, res) {
   var userId = req.body.userId;
   var roomId = req.params.id;
   Room.findByIdAndUpdate(roomId, {$pull: {members: userId}}).then(response => {
+    roomEvent.emit('syncRooms', response.roomId);
   });
 }
 

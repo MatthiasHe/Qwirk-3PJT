@@ -46,6 +46,7 @@ class RoomComponent {
   $onInit() {
     var temporalyFriendList = [];
     var self = this;
+    this.isParticipant = false;
     this.displayParticpants = true;
     this.displayFriends = false;
     this.roomId = this.roomid;
@@ -203,6 +204,7 @@ class RoomComponent {
   onInitCalls(roomid) {
     var temporalyFriendList = [];
     var self = this;
+    this.isParticipant = false;
     this.displayParticpants = true;
     this.displayFriends = false;
     this.roomId = this.roomid;

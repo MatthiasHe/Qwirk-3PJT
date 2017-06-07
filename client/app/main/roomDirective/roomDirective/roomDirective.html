@@ -89,9 +89,6 @@
   <div class="participants-container" ng-if="roomCtrl.displayFriends">
     <div class="back-to-room" ng-click="roomCtrl.displayChat()" ng-if="roomCtrl.displayProfile"><span>< Back to the room</span></div>
     <ul class="member-list" ng-repeat="friend in roomCtrl.friends">
-      <!--<li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Cucu Ionel</span></li>-->
-      <!--<li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Christian Smith</span></li>-->
-      <!--<li><span class="status idle"><i class="fa fa-circle-o"></i></span><span>John Bradley</span><span class="time">10:45 pm</span></li>-->
       <li class="user-li">
         <img class="media-object img-circle pull-left friend-list-avatar" style="max-height:20px;" src="{{friend.user.avatar}}"/>
         <span class="user-name">{{friend.nickname}}</span>

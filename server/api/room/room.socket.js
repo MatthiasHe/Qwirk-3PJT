@@ -7,7 +7,7 @@
 import RoomEvents from './room.events';
 
 // Model events to emit
-var events = ['save', 'remove', 'syncRooms'];
+var events = ['save', 'remove', 'syncRooms', 'syncMessages', 'syncTest'];
 
 export function register(socket) {
   // Bind model events to socket events

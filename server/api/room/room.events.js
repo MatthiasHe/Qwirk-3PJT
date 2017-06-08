@@ -14,7 +14,9 @@ RoomEvents.setMaxListeners(0);
 var events = {
   save: 'save',
   remove: 'remove',
-  syncRooms: 'syncRooms'
+  syncRooms: 'syncRooms',
+  syncMessages: 'syncMessages',
+  syncTest: 'syncTest'
 };
 
 // Register the event emitter to the model events

@@ -21,10 +21,10 @@ $fa-font-path: '/assets/fonts/font-awesome/';
 
 // Component styles are injected through gulp
 /* inject:scss */
-@import '../components/dashboardDirective/dashboardDirective/dashboardDirective';
-@import 'main/main';
-@import '../components/profileDirective/profileDirective/profileDirective';
-@import '../components/roomDirective/roomDirective/roomDirective';
 @import 'account/settings/settings';
 @import 'account/signup/signup';
+@import 'main/main';
+@import '../components/dashboardDirective/dashboardDirective/dashboardDirective';
+@import '../components/profileDirective/profileDirective/profileDirective';
+@import '../components/roomDirective/roomDirective/roomDirective';
 /* endinject */

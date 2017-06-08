@@ -6,7 +6,6 @@ import routing from './main.routes';
 export class MainController {
   $http;
   socket;
-  awesomeThings = [];
   Auth;
   friends;
   friendsRequest;
@@ -16,11 +15,12 @@ export class MainController {
   userPrivateRooms = [];
   publicRooms = [];
   $state;
-  roomId = '5931e815ac69ee3520fff353';
+  roomId;
   displayDashboard;
   displayRoom;
   userState;
   ngNotify;
+  display;
 
   /*@ngInject*/
   constructor($http, socket, Auth, $state, ngNotify) {
@@ -32,6 +32,9 @@ export class MainController {
   }
 
   $onInit() {
+    this.socket.unsyncUpdates('user');
+    this.socket.unsyncUpdates('room');
+    this.display = 'friends';
     this.displayDashboard = true;
     this.displayRoom = false;
     this.$http.get('api/users/me').then(response => {
@@ -92,7 +95,6 @@ export class MainController {
   }
 
   $onDestroy() {
-    this.socket.unsyncUpdates('user');
   }
 
   setRoomId(roomId) {
@@ -112,6 +114,37 @@ export class MainController {
 
   setUserState(state) {
     this.$http.post(`api/users/${this.currentUser._id}/setstate`, {state: state});
+  }
+
+  displayFriends() {
+    this.display = 'friends';
+    this.removeActiveClass();
+    angular.element( document.querySelector('#friends-tab')).addClass('active');
+  }
+
+  displayPrivateRooms() {
+    this.display = 'privateRooms';
+    this.removeActiveClass();
+    angular.element( document.querySelector('#private-tab')).addClass('active');
+  }
+
+  displayUserPublicRooms() {
+    this.display = 'publicUserRooms';
+    this.removeActiveClass();
+    angular.element( document.querySelector('#user-public-tab')).addClass('active');
+  }
+
+  displayPublicRooms() {
+    this.display = 'publicRooms';
+    this.removeActiveClass();
+    angular.element( document.querySelector('#public-tab')).addClass('active');
+  }
+
+  removeActiveClass() {
+    angular.element( document.querySelector('#friends-tab')).removeClass('active');
+    angular.element( document.querySelector('#private-tab')).removeClass('active');
+    angular.element( document.querySelector('#user-public-tab')).removeClass('active');
+    angular.element( document.querySelector('#public-tab')).removeClass('active');
   }
 }
 export default angular.module('projectTestApp.main', [

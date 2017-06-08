@@ -154,9 +154,10 @@ export function createMessage(req, res) {
     Message.create(params)
       .then(response => {
         Room.findByIdAndUpdate(response.roomId, {$push: {messages: response._id}}).then(newResponse => {
-          roomEvent.emit('syncRooms', response.roomId);
         });
+        roomEvent.emit('syncMessages', response);
       });
+    return res.json(response);
   });
 }
 

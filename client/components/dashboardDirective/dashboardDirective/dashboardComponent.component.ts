@@ -36,42 +36,7 @@ class DashboardCtrl {
         self.awaitingRequest = item.awaitingRequest;
         self.friendsRequest = item.request;
       }
-      /*    this.socket.syncRequest('user', this.friendsRequest, function(event, item, array){
-       if (item._id === self.currentUser._id) {
-       self.friendsRequest = item.friendsRequest;
-       }*/
-      // if (item.length) {
-      //   var isBad = false;
-      //   item.forEach(request => {
-      //     if (request._id === self.currentUser._id) {
-      //       isBad = true;
-      //     }
-      //   });
-      //   if (!isBad) {
-      //     self.friendsRequest = item;
-      //   }
-      // } else {
-      //   self.friendsRequest = [];
-      // }
     });
-    /*    this.socket.syncAwaitingRequest('user', this.awaitingRequest, function(event, item, array){
-     if (item._id === self.currentUser._id) {
-     self.awaitingRequest = item.awaitingRequest;
-     }*/
-    // if (item.length) {
-    //   var isBad = false;
-    //   item.forEach(awaiting => {
-    //     if (awaiting._id === self.currentUser._id) {
-    //       isBad = true;
-    //     }
-    //   });
-    //   if (!isBad) {
-    //     self.awaitingRequest = item;
-    //   }
-    // } else {
-    //   self.awaitingRequest = [];
-    // }
-    // });
   }
 
   createPublicRoom() {
@@ -156,8 +121,5 @@ export default angular.module('projectTestApp.dashboardDirective', [])
     restrict: 'E',
     controller: DashboardCtrl,
     controllerAs: 'dashboardCtrl',
-    // bindings: {
-    //   userid: '@'
-    // }
   })
   .name;

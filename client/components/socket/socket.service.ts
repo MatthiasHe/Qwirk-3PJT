@@ -47,6 +47,36 @@ function Socket(socketFactory) {
         });
       },
 
+      syncMessages(modelName, array, cb) {
+        cb = cb || angular.noop;
+
+        /**
+         * Syncs item creation/updates on 'model:save'
+         */
+        socket.on(modelName + ':syncMessages', function (item) {
+
+          // replace oldItem if it exists
+          // otherwise just add item to the collection
+
+          cb(event, item, array);
+        });
+      },
+
+      syncTest(modelName, array, cb) {
+        cb = cb || angular.noop;
+
+        /**
+         * Syncs item creation/updates on 'model:save'
+         */
+        socket.on(modelName + ':syncTest', function (item) {
+
+          // replace oldItem if it exists
+          // otherwise just add item to the collection
+
+          cb(event, item, array);
+        });
+      },
+
       /**
        * Register listeners to sync an array with updates on a model
        *
@@ -100,6 +130,7 @@ function Socket(socketFactory) {
         socket.removeAllListeners(modelName + ':remove');
         socket.removeAllListeners(modelName + ':syncFriends');
         socket.removeAllListeners(modelName + ':syncRooms');
+        socket.removeAllListeners(modelName + ':syncMessages');
       }
     };
   }

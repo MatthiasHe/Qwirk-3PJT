@@ -162,14 +162,10 @@ export function rejectFriend(req, res) {
     User.findByIdAndUpdate(userId, {$pull: {request: newFriendId}}).then(newresponse => {
       User.findById(userId).populate('friends.user friends.room awaitingRequest request').exec()
         .then(user => {
-          console.log('LOLOLOL');
-          console.log(userId);
           userEvent.emit('syncFriends', user);
         });
       User.findById(newFriendId).populate('friends.user friends.room awaitingRequest request').exec()
         .then(user => {
-          console.log('LOLOLOL');
-          console.log(newFriendId);
           userEvent.emit('syncFriends', user);
         });
     });

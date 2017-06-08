@@ -90,12 +90,12 @@ class RoomComponent {
               this.isParticipant = true;
             }
           });
-          this.socket.syncRooms('room', this.users, function(event, item, array) {
-            if (item === self.room._id) {
-              self.$http.get(`api/rooms/${item}/getmessages`).then(room => {
-                self.messages = room.data.messages;
-              });
+          this.socket.syncMessages('room', this.message, function(event, item, array) {
+            if (item.roomId === self.room._id) {
+              self.messages.push(item);
             }
+          });
+          this.socket.syncRooms('room', this.users, function(event, item, array) {
             self.$http.get(`api/rooms/${self.roomId}/getparticipants`, { roomId: self.room._id} ).then(room => {
               if (room.data._id === self.room._id) {
                 self.users = room.data.members;
@@ -121,7 +121,7 @@ class RoomComponent {
   }
 
   $onDestroy() {
-    this.socket.unsyncUpdates('message');
+    this.socket.unsyncUpdates('room');
   }
 
   sendMessage() {
@@ -230,7 +230,6 @@ class RoomComponent {
         }
         this.$http.get(`api/rooms/${this.roomId}/getmessages`, { roomId: this.room._id }).then(room => {
           this.messages = room.data.messages;
-          this.socket.syncUpdates('message', this.messages);
         });
         this.$http.get(`api/rooms/${this.roomId}/getparticipants`, { roomId: this.room._id} ).then(room => {
           this.users = room.data.members;
@@ -249,14 +248,6 @@ class RoomComponent {
               this.isParticipant = true;
             }
           });
-          // TO DO
-          /*          this.friends.forEach(function (friend, index) {
-           room.data.members.forEach(user => {
-           if (friend._id === user._id) {
-           this.friends.splice(index, 1);
-           }
-           });
-           });*/
         });
       });
     });

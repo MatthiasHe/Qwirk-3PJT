@@ -51,7 +51,6 @@
     <li id="participants-nav" class="active">
       <a ng-click="roomCtrl.displayTheParticipants()"><i class="fa fa-users"></i></a>
     </li>
-    <!--<li><a href="#"><i class="fa fa-paperclip"></i></a></li>-->
     <li id="friends-nav">
       <a ng-click="roomCtrl.displayMyFriends()"><i class="fa fa-address-book"></i></a>
     </li>
@@ -60,9 +59,6 @@
   <div class="participants-container text-center" ng-if="roomCtrl.displayParticpants">
     <div class="back-to-room" ng-click="roomCtrl.displayChat()" ng-if="roomCtrl.displayProfile"><span>< Back to the room</span></div>
     <ul class="member-list" ng-repeat="participant in roomCtrl.users">
-      <!--<li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Cucu Ionel</span></li>-->
-      <!--<li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Christian Smith</span></li>-->
-      <!--<li><span class="status idle"><i class="fa fa-circle-o"></i></span><span>John Bradley</span><span class="time">10:45 pm</span></li>-->
       <li class="user-li">
         <span ng-if="participant.state === 'Offline'" class="status offline pull-left"><i class="fa fa-circle-o"></i></span>
         <span ng-if="participant.state === 'Online'" class="status online pull-left"><i class="fa fa-circle-o"></i></span>

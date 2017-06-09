@@ -15,6 +15,8 @@ export default class SignupController {
     password: ''
   };
   errors = {};
+  confirmPassword;
+  passwordsNotMatch = false;
   submitted = false;
   Auth;
   $state;
@@ -37,7 +39,7 @@ export default class SignupController {
   register(form) {
     this.submitted = true;
 
-    if (form.$valid) {
+    if (form.$valid && this.confirmPassword === this.user.password) {
       return this.Auth.createUser({
         name: this.user.name,
         email: this.user.email,
@@ -58,6 +60,8 @@ export default class SignupController {
           });
 
         });
+    } else {
+      this.passwordsNotMatch = true;
     }
   }
 

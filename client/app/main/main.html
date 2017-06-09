@@ -7,7 +7,7 @@
     </div>
   </div>
   <div class="window-area">
-    <div class="conversagtion-list">
+    <div class="conversation-list">
       <ul class="tabs">
         <li id="friends-tab" class="left-tab-li active">
           <a ng-click="mainCtrl.displayFriends()"><i class="fa fa-address-book"></i></a>
@@ -31,7 +31,7 @@
       <!--Friends list, go to room on click-->
       <ul ng-if="mainCtrl.display == 'friends'" ng-repeat="friend in mainCtrl.friends">
         <li>
-          <a> <i ng-if="friend.user.state == 'Online'" class="fa fa-circle-o online"></i>
+          <a> <i ng-if="friend.user.state == 'Available'" class="fa fa-circle-o online"></i>
             <i ng-if="friend.user.state == 'Busy'" class="fa fa-circle-o idle"></i>
             <i ng-if="friend.user.state == 'Offline'" class="fa fa-circle-o offline"></i>
             <span ng-if="!friend.nickname" ng-click="mainCtrl.setRoomId(friend.room._id)">{{friend.user.name}}</span>

@@ -12,6 +12,8 @@ export default class SettingsController {
     newPassword: '',
     confirmPassword: ''
   };
+  confirmPassword;
+  passwordsNotMatch;
   errors = {other: undefined};
   message = '';
   submitted = false;
@@ -47,7 +49,7 @@ export default class SettingsController {
   changePassword(form) {
     this.submitted = true;
 
-    if (form.$valid) {
+    if (form.$valid && this.confirmPassword === this.user.newPassword) {
       this.Auth.changePassword(this.user.oldPassword, this.user.newPassword)
         .then(() => {
           this.message = 'Password successfully changed.';
@@ -57,6 +59,8 @@ export default class SettingsController {
           this.errors.other = 'Incorrect password';
           this.message = '';
         });
+    } else {
+      this.passwordsNotMatch = true;
     }
   }
 

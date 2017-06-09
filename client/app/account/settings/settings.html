@@ -50,12 +50,12 @@
         </div>
         <div class="form-group">
           <label>Confirm New Password</label>
-          <input type="password" name="confirmPassword" class="form-control" ng-model="settingsCtrl.user.confirmPassword"
+          <input type="password" name="confirmPassword" class="form-control" ng-model="settingsCtrl.confirmPassword"
                  match="settingsCtrl.user.newPassword"
                  ng-minlength="3"
                  required=""/>
           <p class="help-block"
-             ng-show="form.confirmPassword.$error.match && settingsCtrl.submitted">
+             ng-show="settingsCtrl.passwordsNotMatch">
             Passwords must match.
           </p>
         </div>

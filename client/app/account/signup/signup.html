@@ -16,55 +16,55 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-lg-12">
-              <form id="register-form" role="form" name="form" ng-submit="vm.register(form)" class="text-center" novalidate>
-                <div ngf-drop ngf-select ng-model="vm.file" class="drop-box" id="file"
+              <form id="register-form" role="form" name="form" ng-submit="signupCtrl.register(form)" class="text-center" novalidate>
+                <div ngf-drop ngf-select ng-model="signupCtrl.file" class="drop-box" id="file"
                      ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="true"
-                     accept="image/*,application/pdf" ngf-change="vm.sendFile()"
+                     accept="image/*,application/pdf" ngf-change="signupCtrl.sendFile()"
                      ngf-pattern="'image/*,application/pdf'" ngf-select-disabled="true"
                      ngf-resize="{width: 100, height: 100, quality: 1, type: 'image/jpeg',
                ratio: '1:2', pattern='.jpg', restoreExif: false}" ngf-max-size="10MB">
-                  <img class="profile-img" ngf-src="vm.file"
+                  <img class="profile-img" ngf-src="signupCtrl.file"
                        alt=""/>
                 </div>
-                <div id='photo' class="btn btn-lg btn-file btn-default" ngf-select ng-model="vm.file" ngf-multiple="false" ngf-change="vm.prepareThumbmail()">
+                <div id='photo' class="btn btn-lg btn-file btn-default" ngf-select ng-model="signupCtrl.file" ngf-multiple="false" ngf-change="signupCtrl.prepareThumbmail()">
                   Select avatar
                 </div>
                 <div class="form-group">
-                  <input type="text" name="name" id="username" tabindex="1" class="form-control" placeholder="Username" value="" ng-model="vm.user.name" required>
-                  <p class="help-block" ng-show="form.name.$error.required && vm.submitted">
+                  <input type="text" name="name" id="username" tabindex="1" class="form-control" placeholder="Username" value="" ng-model="signupCtrl.user.name" required>
+                  <p class="help-block" ng-show="form.name.$error.required && signupCtrl.submitted">
                     A name is required
                   </p>
                 </div>
                 <div class="form-group">
-                  <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" ng-model="vm.user.email" required mongoose-error/>
-                  <p class="help-block" ng-show="form.email.$error.email && vm.submitted">
+                  <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" ng-model="signupCtrl.user.email" required mongoose-error/>
+                  <p class="help-block" ng-show="form.email.$error.email && signupCtrl.submitted">
                     Doesn't look like a valid email.
                   </p>
-                  <p class="help-block" ng-show="form.email.$error.required && vm.submitted">
+                  <p class="help-block" ng-show="form.email.$error.required && signupCtrl.submitted">
                     What's your email address?
                   </p>
                   <p class="help-block" ng-show="form.email.$error.mongoose">
-                    {{ vm.errors.email }}
+                    {{ signupCtrl.errors.email }}
                   </p>
                 </div>
                 <div class="form-group">
-                  <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" type="password" name="password" ng-model="vm.user.password"
+                  <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" type="password" name="password" ng-model="signupCtrl.user.password"
                          ng-minlength="3"
                          required
                          mongoose-error/>
                   <p class="help-block"
-                     ng-show="(form.password.$error.minlength || form.password.$error.required) && vm.submitted">
+                     ng-show="(form.password.$error.minlength || form.password.$error.required) && signupCtrl.submitted">
                     Password must be at least 3 characters.
                   </p>
                   <p class="help-block" ng-show="form.password.$error.mongoose">
-                    {{ vm.errors.password }}
+                    {{ signupCtrl.errors.password }}
                   </p>
                 </div>
-                <div class="form-group" ng-class="{ 'has-success': form.confirmPassword.$valid && vm.submitted, 'has-error': form.confirmPassword.$invalid && vm.submitted }">
-                  <input type="password" name="confirmPassword" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password" ng-model="vm.user.confirmPassword" match="vm.user.password"
+                <div class="form-group" ng-class="{ 'has-success': form.confirmPassword.$valid && signupCtrl.submitted, 'has-error': form.confirmPassword.$invalid && signupCtrl.submitted }">
+                  <input type="password" name="confirmPassword" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password" ng-model="signupCtrl.user.confirmPassword" match="signupCtrl.user.password"
                          ng-minlength="3" required/>
                   <p class="help-block"
-                     ng-show="form.confirmPassword.$error.match && vm.submitted">
+                     ng-show="form.confirmPassword.$error.match && signupCtrl.submitted">
                     Passwords must match.
                   </p>
                 </div>

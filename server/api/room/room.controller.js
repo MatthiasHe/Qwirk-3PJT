@@ -22,7 +22,7 @@ const multer = require('multer');
 var path = require('path');
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, '/Users/matt/Desktop/projectTest/client/assets/files');
+    cb(null, '/Users/matt/Desktop/Qwirk/client/assets/files');
   },
   filename(req, file, cb) {
     cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));

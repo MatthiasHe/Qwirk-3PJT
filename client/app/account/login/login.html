@@ -16,21 +16,21 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-lg-12">
-              <form id="login-form" style="display: block;" name="form" ng-submit="vm.login(form)" novalidate>
+              <form id="login-form" style="display: block;" name="form" ng-submit="loginCtrl.login(form)" novalidate>
                 <div class="form-group">
-                  <input id="username" tabindex="1" placeholder="Username" value="" type="email" name="email" class="form-control" ng-model="vm.user.email" required>
+                  <input id="username" tabindex="1" placeholder="Username" value="" type="email" name="email" class="form-control" ng-model="loginCtrl.user.email" required>
                 </div>
                 <div class="form-group">
-                  <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" ng-model="vm.user.password" required>
+                  <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" ng-model="loginCtrl.user.password" required>
                 </div>
                 <div class="form-group has-error">
-                  <p class="help-block" ng-show="form.email.$error.required && form.password.$error.required && vm.submitted">
+                  <p class="help-block" ng-show="form.email.$error.required && form.password.$error.required && loginCtrl.submitted">
                     Please enter your email and password.
                   </p>
-                  <p class="help-block" ng-show="form.email.$error.email && vm.submitted">
+                  <p class="help-block" ng-show="form.email.$error.email && loginCtrl.submitted">
                     Please enter a valid email.
                   </p>
-                  <p class="help-block">{{ vm.errors.login }}</p>
+                  <p class="help-block">{{ loginCtrl.errors.login }}</p>
                 </div>
                 <div class="form-group">
                   <div class="row">

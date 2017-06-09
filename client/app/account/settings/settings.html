@@ -4,61 +4,62 @@
       profile<i ui-sref="main" class="pull-left fa fa-angle-left" aria-hidden="true"></i></h1>
     <hr>
     <div class="col-sm-6 first-column-settings">
-      <form id="edit-profile-form" role="form" name="form" ng-submit="vm.editProfile()" class="text-center" novalidate>
-        <div ngf-drop ngf-select ng-model="vm.file" class="drop-box" id="file"
+      <form id="edit-profile-form" role="form" name="form" ng-submit="settingsCtrl.editProfile()" class="text-center" novalidate>
+        <div ngf-drop ngf-select ng-model="settingsCtrl.file" class="drop-box" id="file"
              ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="true"
-             accept="image/*,application/pdf" ngf-change="vm.sendFile()"
+             accept="image/*,application/pdf" ngf-change="settingsCtrl.sendFile()"
              ngf-pattern="'image/*,application/pdf'" ngf-select-disabled="true"
              ngf-resize="{width: 100, height: 100, quality: 1, type: 'image/jpeg',
                ratio: '1:2', pattern='.jpg', restoreExif: false}" ngf-max-size="10MB">
-          <img class="profile-img" ngf-src="vm.file"
+          <img class="profile-img" ngf-src="settingsCtrl.file"
                alt=""/>
         </div>
-        <div id='photo' class="btn btn-lg btn-file btn-default btn-avatar-settings" ngf-select ng-model="vm.file" ngf-multiple="false" ngf-change="vm.prepareThumbmail()">
+        <div id='photo' class="btn btn-lg btn-file btn-default btn-avatar-settings" ngf-select ng-model="settingsCtrl.file" ngf-multiple="false" ngf-change="settingsCtrl.prepareThumbmail()">
           Select new avatar
         </div>
-        <h2 class="birthdate-settings-title">Birthdate (Current : {{vm.birthDate | date:'dd-MM-yyyy'}})</h2>
-        <div uib-datepicker ng-model="vm.birthDate" class="well well-sm" datepicker-options="options"></div>
+        <h2 ng-if="settingsCtrl.birthDate" class="birthdate-settings-title">Birthdate (Current : {{settingsCtrl.birthDate | date:'dd-MM-yyyy'}})</h2>
+        <h2 ng-if="!settingsCtrl.birthDate" class="birthdate-settings-title">No current birthdate</h2>
+        <div uib-datepicker ng-model="settingsCtrl.birthDate" class="well well-sm" datepicker-options="options"></div>
         <h2>Bio</h2>
-        <textarea class="form-control" ng-model="vm.bio" placeholder="Write a bio..."></textarea>
-        <button ng-click="vm.editProfile()" class="text-center btn-save-profile btn btn-lg btn-primary" type="button">
+        <textarea class="form-control" ng-model="settingsCtrl.bio" placeholder="Write a bio..."></textarea>
+        <button ng-click="settingsCtrl.editProfile()" class="text-center btn-save-profile btn btn-lg btn-primary" type="button">
           Save changes
         </button>
       </form>
     </div>
     <div class="col-sm-6 second-column-settings">
       <h1 class="settings-password-title text-center">Change password</h1>
-      <form class="text-center form" name="form" ng-submit="vm.changePassword(form)" novalidate>
+      <form class="text-center form" name="form" ng-submit="settingsCtrl.changePassword(form)" novalidate>
         <div class="form-group">
           <label>Current Password</label>
-          <input type="password" name="password" class="form-control" ng-model="vm.user.oldPassword"
+          <input type="password" name="password" class="form-control" ng-model="settingsCtrl.user.oldPassword"
                  mongoose-error/>
           <p class="help-block" ng-show="form.password.$error.mongoose">
-            {{ vm.errors.other }}
+            {{ settingsCtrl.errors.other }}
           </p>
         </div>
         <div class="form-group">
           <label>New Password</label>
-          <input type="password" name="newPassword" class="form-control" ng-model="vm.user.newPassword"
+          <input type="password" name="newPassword" class="form-control" ng-model="settingsCtrl.user.newPassword"
                  ng-minlength="3"
                  required/>
           <p class="help-block"
-             ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || vm.submitted)">
+             ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || settingsCtrl.submitted)">
             Password must be at least 3 characters.
           </p>
         </div>
         <div class="form-group">
           <label>Confirm New Password</label>
-          <input type="password" name="confirmPassword" class="form-control" ng-model="vm.user.confirmPassword"
-                 match="vm.user.newPassword"
+          <input type="password" name="confirmPassword" class="form-control" ng-model="settingsCtrl.user.confirmPassword"
+                 match="settingsCtrl.user.newPassword"
                  ng-minlength="3"
                  required=""/>
           <p class="help-block"
-             ng-show="form.confirmPassword.$error.match && vm.submitted">
+             ng-show="form.confirmPassword.$error.match && settingsCtrl.submitted">
             Passwords must match.
           </p>
         </div>
-        <p class="help-block"> {{ vm.message }}</p>
+        <p class="help-block"> {{ settingsCtrl.message }}</p>
         <button class="btn btn-lg btn-primary" type="submit">Save new password</button>
       </form>
     </div>

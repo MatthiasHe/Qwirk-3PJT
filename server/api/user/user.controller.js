@@ -10,7 +10,7 @@ const multer = require('multer');
 var path = require('path');
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, '/Users/matt/Desktop/projectTest/client/assets/avatar');
+    cb(null, '/Users/matt/Desktop/Qwirk/client/assets/avatar');
   },
   filename: function(req, file, cb) {
     cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));

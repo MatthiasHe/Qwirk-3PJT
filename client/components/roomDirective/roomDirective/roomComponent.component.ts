@@ -23,7 +23,6 @@ class RoomComponent {
   isAdmin;
   canManage;
   moderators;
-  scope;
   roomid;
   profileDisplayId;
   displayProfile;

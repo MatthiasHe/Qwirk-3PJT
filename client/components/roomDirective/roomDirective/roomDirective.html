@@ -36,7 +36,6 @@
       <div class="input-area room-input">
         <div class="input-wrapper">
           <input type="text" class="form-control" placeholder="Enter Message or drag a file" ng-model="roomCtrl.message" autocomplete="off" required/>
-          <i class="fa fa-smile-o"></i>
         </div>
         <input type="button" value="Submit" class="send-btn">
       </div>
@@ -47,12 +46,17 @@
 <profile-directive userid="{{roomCtrl.profileDisplayId}}" ng-if="roomCtrl.displayProfile"></profile-directive>
 
 <div class="right-tabs">
-  <ul class="tabs">
+  <ul class="tabs" ng-if="(!roomCtrl.room.private || roomCtrl.room.privateMulti) && roomCtrl.isParticipant">
     <li id="participants-nav" class="active">
       <a ng-click="roomCtrl.displayTheParticipants()"><i class="fa fa-users"></i></a>
     </li>
     <li id="friends-nav">
       <a ng-click="roomCtrl.displayMyFriends()"><i class="fa fa-address-book"></i></a>
+    </li>
+  </ul>
+  <ul class="tabs" ng-if="roomCtrl.room.private && (!roomCtrl.room.privateMulti || !roomCtrl.isParticipant)">
+    <li class="participants-nav-full" class="active">
+      <a ng-click="roomCtrl.displayTheParticipants()"><i class="fa fa-users"></i></a>
     </li>
   </ul>
   <!--Particpants list-->

@@ -32,13 +32,14 @@ export class MainController {
   }
 
   $onInit() {
-    this.socket.unsyncUpdates('user');
-    this.socket.unsyncUpdates('room');
     this.display = 'friends';
     this.displayDashboard = true;
     this.displayRoom = false;
     this.$http.get('api/users/me').then(response => {
       this.currentUser = response.data;
+      if (this.currentUser.state === 'Offline') {
+        this.$http.post(`api/users/${this.currentUser._id}/setstate`, {state: 'Online'});
+      }
       this.userState = this.currentUser.state;
       this.friends = this.currentUser.friends;
       this.friendsRequest = this.currentUser.request;

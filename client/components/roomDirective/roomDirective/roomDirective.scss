@@ -75,9 +75,13 @@ b{
   position: relative;
 
   > .title{
+    font-size: 2em;
     overflow: hidden;
     text-align: center;
     font-weight: bold;
+    i {
+      padding-bottom: 0.2em;
+    }
   }
 
   > .expand{
@@ -589,4 +593,8 @@ ul.tabs-container{
 
 .btn-join {
   margin: auto;
+}
+
+.right-tabs > ul.tabs > li.participants-nav-full {
+  width: 100%;
 }

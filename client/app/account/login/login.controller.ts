@@ -34,9 +34,6 @@ export default class LoginController {
         password: this.user.password
       })
         .then(() => {
-          this.$http.get('api/users/me').then(response => {
-            this.$http.post(`api/users/${response.data._id}/setstate`, {state: 'Offline'});
-          });
           this.$state.go('main');
         })
         .catch(err => {

@@ -4,7 +4,7 @@ const angular = require('angular');
 const Upload = require('ng-file-upload');
 require('ng-embed');
 require('ng-notify');
-
+require('angularjs-scroll-glue');
 class RoomComponent {
   message: string;
   socket;
@@ -358,7 +358,7 @@ class RoomComponent {
 
 }
 
-export default angular.module('qwirkApp.roomDirective', ['ui.router', 'ngEmbed', Upload])
+export default angular.module('qwirkApp.roomDirective', ['ui.router', 'ngEmbed', Upload, 'luegg.directives'])
   .component('roomDirective', {
       template: require('./roomDirective.html'),
       restrict: 'E',

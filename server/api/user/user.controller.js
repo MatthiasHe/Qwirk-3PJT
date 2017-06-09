@@ -175,7 +175,7 @@ export function rejectFriend(req, res) {
 export function searchFriend(req, res) {
   var userList;
   var name = req.body.nickname;
-  User.find({name: new RegExp('^' + name)}).exec()
+  User.find({name: new RegExp('^' + name)}, '-salt -password').exec()
     .then(response => {
       userList = response;
       return res.json(userList);
@@ -185,14 +185,15 @@ export function searchFriend(req, res) {
 export function getFriends(req, res) {
   var userId = req.params.id;
   User.findOne({_id: userId}).exec()
-    .then(users => { // don't ever give out the password or salt
-      if(!users) {
+    .then(user => { // don't ever give out the password or salt
+      if(!user) {
         return res.status(401).end();
       }
-      return res.json(users.friends);
+      return res.json(user.friends);
     })
     .catch(err => next(err));
 }
+
 export function sendFriendRequest(req, res) {
   var userId = req.params.id;
   var friendId = req.body.friendId;

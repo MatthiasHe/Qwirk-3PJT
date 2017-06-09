@@ -1,6 +1,6 @@
 <div class="chat-area" ng-if="!roomCtrl.displayProfile">
   <div class="title text-center"><b>{{roomCtrl.room.name}}</b></div>
-  <div class="chat-list">
+  <div class="chat-list" scroll-glue>
     <ul ng-repeat="message in roomCtrl.messages">
       <li class="me">
         <div class="name">

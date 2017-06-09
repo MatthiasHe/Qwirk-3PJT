@@ -308,7 +308,9 @@ export function editProfile(req, res) {
   var userId = req.params.id;
   var bio = req.body.bio;
   var birthdate = req.body.birthDate;
-  User.findByIdAndUpdate(userId, {bio: bio, birthdate: birthdate}).then(response => {
+  var connectionport = req.body.connectionport;
+  User.findByIdAndUpdate(userId, {bio: bio, birthdate: birthdate, connectionport: connectionport}).then(response => {
+    res.json(response);
   });
 }
 

@@ -1,5 +1,7 @@
 'use strict';
 // @flow
+require('ng-notify');
+
 interface User {
   oldPassword: string;
   newPassword: string;
@@ -12,6 +14,7 @@ export default class SettingsController {
     newPassword: '',
     confirmPassword: ''
   };
+  ngNotify;
   confirmPassword;
   passwordsNotMatch;
   errors = {other: undefined};
@@ -24,12 +27,14 @@ export default class SettingsController {
   birthDate;
   file;
   bio;
+  connectionport;
 
   /*@ngInject*/
-  constructor(Auth, $http, Upload) {
+  constructor(Auth, $http, Upload, ngNotify) {
     this.Auth = Auth;
     this.$http = $http;
     this.upload = Upload;
+    this.ngNotify = ngNotify;
   }
 
   $onInit() {
@@ -52,7 +57,7 @@ export default class SettingsController {
     if (form.$valid && this.confirmPassword === this.user.newPassword) {
       this.Auth.changePassword(this.user.oldPassword, this.user.newPassword)
         .then(() => {
-          this.message = 'Password successfully changed.';
+          this.ngNotify.set('Password changed !', 'success');
         })
         .catch(() => {
           form.password.$setValidity('mongoose', false);
@@ -78,13 +83,19 @@ export default class SettingsController {
   }
 
   editProfile() {
-    // this.birthDate;
-    this.$http.post(`/api/users/${this.currentUser._id}/editprofile`, {bio: this.bio, birthDate: this.birthDate});
+    this.$http.post(`/api/users/${this.currentUser._id}/editprofile`, {
+      bio: this.bio,
+      birthDate: this.birthDate,
+      connectionport: this.connectionport
+    }).then(response => {
+      this.ngNotify.set('Changes saved !', 'success');
+    });
     this.sendAvatar();
   }
 
-  prepareThumbmail() {
-    const photo = <HTMLInputElement>document.getElementById('photo');
-    this.file = photo.files[0];
-  }
+  //
+  // prepareThumbmail() {
+  //   const photo = <HTMLInputElement>document.getElementById('photo');
+  //   this.file = photo.files[0];
+  // }
 }

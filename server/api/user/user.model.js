@@ -28,6 +28,7 @@ var UserSchema = new Schema({
   salt: String,
   state: {type: String, default: 'Online'},
   birthdate: Date,
+  connectionport: String,
   bio: String
 });
 

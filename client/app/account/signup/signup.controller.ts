@@ -1,6 +1,7 @@
 'use strict';
 // @flow
 const angular = require('angular');
+require('ng-notify');
 
 interface User {
   name: string;
@@ -25,7 +26,7 @@ export default class SignupController {
   $http;
 
   /*@ngInject*/
-  constructor(Auth, $state, Upload, $http) {
+  constructor(Auth, $state, Upload, $http, ngNotify) {
     this.Auth = Auth;
     this.$state = $state;
     this.upload = Upload;

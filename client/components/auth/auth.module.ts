@@ -15,7 +15,7 @@ function addInterceptor($httpProvider) {
   $httpProvider.interceptors.push('authInterceptor');
 }
 
-export default angular.module('projectTestApp.auth', [
+export default angular.module('qwirkApp.auth', [
   constants,
   util,
   ngCookies,

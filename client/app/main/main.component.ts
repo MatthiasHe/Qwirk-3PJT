@@ -148,7 +148,7 @@ export class MainController {
     angular.element( document.querySelector('#public-tab')).removeClass('active');
   }
 }
-export default angular.module('projectTestApp.main', [
+export default angular.module('qwirkApp.main', [
   uiRouter, 'ngNotify'])
   .config(routing)
   .component('main', {

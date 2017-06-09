@@ -135,6 +135,6 @@ function Socket(socketFactory) {
     };
   }
 
-export default angular.module('projectTestApp.socket', [])
+export default angular.module('qwirkApp.socket', [])
   .factory('socket', Socket)
   .name;

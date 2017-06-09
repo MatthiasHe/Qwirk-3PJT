@@ -362,7 +362,7 @@ class RoomComponent {
 
 }
 
-export default angular.module('projectTestApp.roomDirective', ['ui.router', 'ngEmbed', Upload])
+export default angular.module('qwirkApp.roomDirective', ['ui.router', 'ngEmbed', Upload])
   .component('roomDirective', {
       template: require('./roomDirective.html'),
       restrict: 'E',

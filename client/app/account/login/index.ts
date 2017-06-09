@@ -2,6 +2,6 @@
 const angular = require('angular');
 import LoginController from './login.controller';
 
-export default angular.module('projectTestApp.login', [])
+export default angular.module('qwirkApp.login', [])
   .controller('LoginController', LoginController)
   .name;

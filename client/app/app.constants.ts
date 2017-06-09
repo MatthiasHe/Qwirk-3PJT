@@ -1,6 +1,6 @@
 'use strict';
 const angular = require('angular');
 
-export default angular.module('projectTestApp.constants', [])
+export default angular.module('qwirkApp.constants', [])
   .constant('appConfig', require('../../server/config/environment/shared'))
   .name;

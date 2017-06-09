@@ -9,7 +9,7 @@ import settings from './settings';
 import signup from './signup';
 
 
-export default angular.module('projectTestApp.account', [
+export default angular.module('qwirkApp.account', [
   uiRouter,
   login,
   settings,

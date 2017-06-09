@@ -28,7 +28,7 @@ import socket from '../components/socket/socket.service';
 
 import './app.scss';
 
-angular.module('projectTestApp', [
+angular.module('qwirkApp', [
   ngCookies,
   ngResource,
   ngSanitize,
@@ -66,7 +66,7 @@ angular.module('projectTestApp', [
 angular
   .element(document)
   .ready(() => {
-    angular.bootstrap(document, ['projectTestApp'], {
+    angular.bootstrap(document, ['qwirkApp'], {
       strictDi: true
     });
   });

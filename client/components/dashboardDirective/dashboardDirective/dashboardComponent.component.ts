@@ -115,7 +115,7 @@ class DashboardCtrl {
   }
 }
 
-export default angular.module('projectTestApp.dashboardDirective', [])
+export default angular.module('qwirkApp.dashboardDirective', [])
   .component('dashboardDirective', {
     template: require('./dashboardDirective.html'),
     restrict: 'E',

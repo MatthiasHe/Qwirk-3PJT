@@ -7,7 +7,7 @@ module.exports = {
 
   // MongoDB connection options
   mongo: {
-    uri: 'localhost/projecttest-dev'
+    uri: 'localhost/qwirkApp-dev'
   },
 
   // Seed database on startup

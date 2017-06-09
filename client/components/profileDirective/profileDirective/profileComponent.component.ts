@@ -80,7 +80,7 @@ class ProfileCtrl {
 }
 
 
-export default angular.module('projectTestApp.profileDirective', [])
+export default angular.module('qwirkApp.profileDirective', [])
   .component('profileDirective', {
       template: require('./profileDirective.html'),
       restrict: 'E',

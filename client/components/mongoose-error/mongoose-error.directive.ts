@@ -4,7 +4,7 @@ const angular = require('angular');
 /**
  * Removes server error when user updates input
  */
-angular.module('projectTestApp')
+angular.module('qwirkApp')
   .directive('mongooseError', function() {
     return {
       restrict: 'A',

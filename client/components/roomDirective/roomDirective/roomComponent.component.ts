@@ -135,10 +135,6 @@ class RoomComponent {
     this.initEmbedOptions();
   }
 
-  $onDestroy() {
-    this.socket.unsyncUpdates('room');
-  }
-
   sendMessage() {
     this.$http.post('/api/rooms/createmessage', { text: this.message, author: this.currentUser._id, roomId: this.roomId });
     this.message = '';

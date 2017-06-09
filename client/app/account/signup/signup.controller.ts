@@ -34,7 +34,7 @@ export default class SignupController {
   }
 
   $onInit() {
-    this.file = 'https://www.mautic.org/media/images/default_avatar.png';
+    this.file = '/../../assets/pictures/Default-avatar.jpg';
   }
 
   register(form) {

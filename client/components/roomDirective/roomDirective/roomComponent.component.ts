@@ -1,8 +1,9 @@
 'use strict';
 /* eslint no-sync: 0 */
 const angular = require('angular');
-require('ng-embed');
 const Upload = require('ng-file-upload');
+require('ng-embed');
+require('ng-notify');
 
 class RoomComponent {
   message: string;
@@ -28,13 +29,17 @@ class RoomComponent {
   displayProfile;
   displayParticpants;
   displayFriends;
+  ngNotify;
+
+
 
   /*@ngInject*/
-  constructor(socket, $http, Upload) {
+  constructor(socket, $http, Upload, ngNotify) {
     this.message = '';
     this.socket = socket;
     this.$http = $http;
     this.upload = Upload;
+    this.ngNotify = ngNotify;
   }
 
   $onChanges(changes) {
@@ -92,6 +97,17 @@ class RoomComponent {
           this.socket.syncMessages('room', this.message, function(event, item, array) {
             if (item.roomId === self.room._id) {
               self.messages.push(item);
+            } else {
+              self.$http.get(`api/rooms/${item.roomId}`).then(response => {
+                if (response.data.members.includes(self.currentUser._id)) {
+                  self.ngNotify.set(`<span>New message in the room ${response.data.name}</span>`, {
+                    sticky: true,
+                    html: true,
+                    type: 'grimace',
+                    position: 'top'
+                  });
+                }
+              });
             }
           });
           this.socket.syncRooms('room', this.users, function(event, item, array) {

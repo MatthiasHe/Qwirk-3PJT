@@ -16,11 +16,13 @@ export default class LoginController {
   submitted = false;
   Auth;
   $state;
+  $http;
 
   /*@ngInject*/
-  constructor(Auth, $state) {
+  constructor(Auth, $state, $http) {
     this.Auth = Auth;
     this.$state = $state;
+    this.$http = $http;
   }
 
   login(form) {
@@ -32,7 +34,9 @@ export default class LoginController {
         password: this.user.password
       })
         .then(() => {
-          // Logged in, redirect to home
+          this.$http.get('api/users/me').then(response => {
+            this.$http.post(`api/users/${response.data._id}/setstate`, {state: 'Offline'});
+          });
           this.$state.go('main');
         })
         .catch(err => {

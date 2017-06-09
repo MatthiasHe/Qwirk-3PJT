@@ -1,13 +1,4 @@
 /* eslint-disable no-unused-vars,no-duplicate-imports */
-/**
- * Using Rails-like standard naming convention for endpoints.
- * GET     /api/rooms              ->  index
- * POST    /api/rooms              ->  create
- * GET     /api/rooms/:id          ->  show
- * PUT     /api/rooms/:id          ->  upsert
- * PATCH   /api/rooms/:id          ->  patch
- * DELETE  /api/rooms/:id          ->  destroy
- */
 
 'use strict';
 

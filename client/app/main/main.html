@@ -9,61 +9,60 @@
     <div class="conversation-list">
       <ul class="tabs">
         <li id="friends-tab" class="left-tab-li active">
-          <a ng-click="$ctrl.displayFriends()"><i class="fa fa-address-book"></i></a>
+          <a ng-click="mainCtrl.displayFriends()"><i class="fa fa-address-book"></i></a>
         </li>
         <li id="private-tab" class="left-tab-li">
-          <a ng-click="$ctrl.displayPrivateRooms()"><i class="fa fa-user-secret"></i></a>
+          <a ng-click="mainCtrl.displayPrivateRooms()"><i class="fa fa-user-secret"></i></a>
         </li>
         <li id="user-public-tab" class="left-tab-li">
-          <a ng-click="$ctrl.displayUserPublicRooms()"><i class="fa fa-comments"></i></a>
+          <a ng-click="mainCtrl.displayUserPublicRooms()"><i class="fa fa-comments"></i></a>
         </li>
         <li id="public-tab" class="left-tab-li">
-          <a ng-click="$ctrl.displayPublicRooms()"><i class="fa fa-comment-o"></i></a>
+          <a ng-click="mainCtrl.displayPublicRooms()"><i class="fa fa-comment-o"></i></a>
         </li>
       </ul>
       <ul class="dashboard-tabs">
-        <!--<li><a ng-click="$ctrl.setRoomId(room._id)"><i class="fa fa-comment"></i></i><span>room = {{$ctrl.roomId}}</span></a></li>-->
-        <li class="item"><a ng-click="$ctrl.displayTheDashboard()"><i class="fa fa-list-alt"></i><span>Dashboard</span></a>
+        <li class="item"><a ng-click="mainCtrl.displayTheDashboard()"><i class="fa fa-list-alt"></i><span>Dashboard</span></a>
         </li>
         <li class="item"><a disabled="true" href="#"><span class="mx-auto"></span></a></li>
         <!--<li class="item"><a disabled="true"><span class="mx-auto">My friends</span></a></li>-->
       </ul>
       <!--Friends list, go to room on click-->
-      <ul ng-if="$ctrl.display == 'friends'" ng-repeat="friend in $ctrl.friends">
+      <ul ng-if="mainCtrl.display == 'friends'" ng-repeat="friend in mainCtrl.friends">
         <li>
           <a> <i ng-if="friend.user.state == 'Online'" class="fa fa-circle-o online"></i>
             <i ng-if="friend.user.state == 'Busy'" class="fa fa-circle-o idle"></i>
             <i ng-if="friend.user.state == 'Offline'" class="fa fa-circle-o offline"></i>
-            <span ng-if="!friend.nickname" ng-click="$ctrl.setRoomId(friend.room._id)">{{friend.user.name}}</span>
-            <span ng-if="friend.nickname" ng-click="$ctrl.setRoomId(friend.room._id)">{{friend.nickname}}</span>
-            <i ng-click="$ctrl.deleteFriend(friend.user._id)" class="fa fa-times"></i> </a>
+            <span ng-if="!friend.nickname" ng-click="mainCtrl.setRoomId(friend.room._id)">{{friend.user.name}}</span>
+            <span ng-if="friend.nickname" ng-click="mainCtrl.setRoomId(friend.room._id)">{{friend.nickname}}</span>
+            <i ng-click="mainCtrl.deleteFriend(friend.user._id)" class="fa fa-times"></i> </a>
         </li>
       </ul>
       <!--My private rooms where I am, go to room on click-->
-      <ul ng-if="$ctrl.display == 'privateRooms'" ng-repeat="room in $ctrl.userPrivateRooms">
-        <li><a ng-click="$ctrl.setRoomId(room._id)"><i class="fa fa-user-secret"></i></i><span>{{room.name}}</span></a></li>
+      <ul ng-if="mainCtrl.display == 'privateRooms'" ng-repeat="room in mainCtrl.userPrivateRooms">
+        <li><a ng-click="mainCtrl.setRoomId(room._id)"><i class="fa fa-user-secret"></i></i><span>{{room.name}}</span></a></li>
       </ul>
       <!--My rooms where I am, go to room on click-->
-      <ul ng-if="$ctrl.display == 'publicUserRooms'" ng-repeat="room in $ctrl.userRooms">
-        <li><a ng-click="$ctrl.setRoomId(room._id)"><i class="fa fa fa-comments"></i></i><span>{{room.name}}</span></a></li>
+      <ul ng-if="mainCtrl.display == 'publicUserRooms'" ng-repeat="room in mainCtrl.userRooms">
+        <li><a ng-click="mainCtrl.setRoomId(room._id)"><i class="fa fa fa-comments"></i></i><span>{{room.name}}</span></a></li>
       </ul>
       <!--My rooms where I am not, go to room on click-->
-      <ul ng-if="$ctrl.display == 'publicRooms'" ng-repeat="room in $ctrl.publicRooms">
-        <li><a ng-click="$ctrl.setRoomId(room._id)"><i class="fa fa-comments-o"></i></i><span>{{room.name}}</span></a></li>
+      <ul ng-if="mainCtrl.display == 'publicRooms'" ng-repeat="room in mainCtrl.publicRooms">
+        <li><a ng-click="mainCtrl.setRoomId(room._id)"><i class="fa fa-comments-o"></i></i><span>{{room.name}}</span></a></li>
       </ul>
       <div class="my-account">
         <div class="image">
-          <img src="{{$ctrl.currentUser.avatar}}">
-          <i ng-if="$ctrl.userState == 'Online'" class="fa fa-circle online"></i>
-          <i ng-if="$ctrl.userState == 'Busy'" class="fa fa-circle idle"></i>
+          <img src="{{mainCtrl.currentUser.avatar}}">
+          <i ng-if="mainCtrl.userState == 'Online'" class="fa fa-circle online"></i>
+          <i ng-if="mainCtrl.userState == 'Busy'" class="fa fa-circle idle"></i>
         </div>
         <div class="name">
           <div uib-dropdown>
-            <span uib-dropdown-toggle>{{$ctrl.currentUser.name}}</span> <i class="fa fa-angle-down"></i>
+            <span uib-dropdown-toggle>{{mainCtrl.currentUser.name}}</span> <i class="fa fa-angle-down"></i>
             <ul uib-dropdown-menu class="state-dropdown">
-              <li ng-click="$ctrl.setUserState('Online')" class="dropdown-li">
+              <li ng-click="mainCtrl.setUserState('Online')" class="dropdown-li">
                 <i class="fa fa-circle online"></i><a class="anchor-dropdown">Available</a></li>
-              <li ng-click="$ctrl.setUserState('Busy')" class="dropdown-li">
+              <li ng-click="mainCtrl.setUserState('Busy')" class="dropdown-li">
                 <i class="fa fa-circle idle"></i><a class="anchor-dropdown">Busy</a></li>
             </ul>
           </div>
@@ -71,7 +70,7 @@
         </div>
       </div>
     </div>
-    <dashboard-directive ng-if="$ctrl.displayDashboard"></dashboard-directive>
-    <room-directive ng-if="$ctrl.displayRoom" roomid="{{$ctrl.roomId}}"></room-directive>
+    <dashboard-directive ng-if="mainCtrl.displayDashboard"></dashboard-directive>
+    <room-directive ng-if="mainCtrl.displayRoom" roomid="{{mainCtrl.roomId}}"></room-directive>
   </div>
 </div>

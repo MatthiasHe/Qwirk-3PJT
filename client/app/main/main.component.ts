@@ -152,6 +152,7 @@ export default angular.module('projectTestApp.main', [
   .config(routing)
   .component('main', {
     template: require('./main.html'),
-    controller: MainController
+    controller: MainController,
+    controllerAs: 'mainCtrl'
   })
   .name;

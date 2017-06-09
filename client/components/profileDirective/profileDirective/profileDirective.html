@@ -13,9 +13,9 @@
       <button class="btn btn-success btn-nickname" type="button">Validate</button>
     </form>
     <hr>
-    <p ng-if="profileCtrl.bio"><strong>Date de naissance: </strong><br>
+    <p class="birthdate-profile" ng-if="profileCtrl.bio"><strong>Date de naissance: </strong><br>
       Birthdate (Current : {{profileCtrl.birthDate | date:'dd-MM-yyyy'}})</p>
-    <p ng-if="!profileCtrl.bio"><strong>Date de naissance: </strong><br>
+    <p class="birthdate-profile" ng-if="!profileCtrl.bio"><strong>Date de naissance: </strong><br>
       Cet utilisateur n'a pas renseigné de date de naissance encore</p>
     <p ng-if="profileCtrl.bio != ('') || !profileCtrl.bio"><strong>Bio: </strong><br>
       {{profileCtrl.user.bio}}</p>

@@ -43,6 +43,7 @@ export default class SettingsController {
       this.file = this.currentUser.avatar;
       this.birthDate = this.currentUser.birthdate;
       this.bio = this.currentUser.bio;
+      this.connectionport = this.currentUser.connectionport;
     });
   }
 

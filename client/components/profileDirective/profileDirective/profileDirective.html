@@ -13,8 +13,14 @@
       <button class="btn btn-success btn-nickname" type="button">Validate</button>
     </form>
     <hr>
-    <p><strong>Bio: </strong><br>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sem dui, tempor sit amet commodo a, vulputate vel tellus.</p>
+    <p ng-if="profileCtrl.bio"><strong>Date de naissance: </strong><br>
+      Birthdate (Current : {{profileCtrl.birthDate | date:'dd-MM-yyyy'}})</p>
+    <p ng-if="!profileCtrl.bio"><strong>Date de naissance: </strong><br>
+      Cet utilisateur n'a pas renseigné de date de naissance encore</p>
+    <p ng-if="profileCtrl.bio != ('') || !profileCtrl.bio"><strong>Bio: </strong><br>
+      {{profileCtrl.user.bio}}</p>
+    <p ng-if="profileCtrl.bio == '' || profileCtrl.bio"><strong>Bio: </strong><br>
+      Cet utilisateur n'a pas renseigné de bio encore.</p>
     <br>
   </div>
 </div>

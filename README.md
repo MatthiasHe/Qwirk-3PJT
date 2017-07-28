@@ -1,5 +1,21 @@
 # Qwirk
 
+### Introduction
+
+Qwirk is my third year-end project at Supinfo.
+It's a web chat application with an account system, a friends system and some others features like files sharing.
+
+DONE :
+- Account
+- Friends
+- Chat
+- Drag and drop for files in chat
+
+TO DO :
+- Video and audio conversation
+- Emoji
+- UX/DESIGN
+
 ### Prerequisites
 
 - [Git](https://git-scm.com/)

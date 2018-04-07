@@ -2,7 +2,7 @@
 
 ### Introduction
 
-Qwirk is my third year-end project at Supinfo.
+Qwirk is my third year project at Supinfo.
 It's a web chat application with an account system, a friends system and some others features like files sharing.
 
 DONE :

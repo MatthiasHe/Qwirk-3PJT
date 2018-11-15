@@ -12,7 +12,7 @@ DONE :
 - Drag and drop for files in chat
 
 TO DO :
-- Code refactoring
+- Code refactoring (the code is really bad)
 - Video and audio conversation
 - Emoji
 - UX/DESIGN
